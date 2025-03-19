@@ -5,6 +5,10 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+@plugin "daisyui" {
+    prefix: "q-";
+}
+
 @plugin "daisyui/theme" {
     name: "dark";
     default: true;
