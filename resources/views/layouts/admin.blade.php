@@ -12,5 +12,6 @@
 </head>
 <body>
 @yield('admin')
+<x-admin.footer></x-admin.footer>
 </body>
 </html>
