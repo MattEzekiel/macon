@@ -1,3 +1,3 @@
-<button type="submit" class="q-btn q-btn-neutral">
+<button type="submit" class="btn btn-neutral">
     {{ $slot }}
 </button>

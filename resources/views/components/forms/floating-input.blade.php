@@ -9,15 +9,15 @@
 ])
 
 <label
-    for="{{ $id }}" class="q-floating-label">
+        for="{{ $id }}" class="floating-label">
     <span>{{ $label }}</span>
     <input
-        type="{{ $type }}"
-        name="{{ $name }}"
-        id="{{ $id }}"
-        placeholder="{{ $placeholder }}"
-        class="q-input q-input-md {{ count($errors) > 0 ? 'q-input-error' : '' }}"
-        @required($required)
+            type="{{ $type }}"
+            name="{{ $name }}"
+            id="{{ $id }}"
+            placeholder="{{ $placeholder }}"
+            class="input input-md {{ count($errors) > 0 ? 'input-error' : '' }}"
+            @required($required)
     />
 </label>
 <p class="validator-hint {{ count($errors) > 0 ? 'validator-hint-error' : 'hidden' }}">

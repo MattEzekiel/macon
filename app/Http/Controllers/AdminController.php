@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -19,8 +20,21 @@ class AdminController extends Controller
         return view('admin.login');
     }
 
-    public function login(Request $request)
+    public function login(Request $request): RedirectResponse
     {
-        dd($request->all());
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (auth('admin')->attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->route('admin.dashboard');
+        }
+
+        return back()->with('error', 'Las credenciales son incorrectas');
     }
 }

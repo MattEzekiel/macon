@@ -7,15 +7,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::prefix('admin')->group(function () {
-    Route::get('login', [AdminController::class, 'loginForm'])->name('loginForm');
-    Route::post('login', [AdminController::class, 'login'])->name('login');
+    Route::get('login', [AdminController::class, 'loginForm'])->name('login');
+    Route::post('login', [AdminController::class, 'login'])->name('admin.login');
 
-    Route::middleware(['auth', 'admin'])->group(function () {
+    Route::middleware(['admin'])->group(function () {
         Route::get('/', function () {
             redirect()->route('dashboard');
         });
-       Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     });
 })->name('admin.');
