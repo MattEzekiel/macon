@@ -11,7 +11,9 @@
     @endif
 </head>
 <body>
-@yield('admin')
+<x-admin.sidebar>
+    @yield('admin')
+</x-admin.sidebar>
 <x-admin.footer></x-admin.footer>
 </body>
 </html>
