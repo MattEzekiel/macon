@@ -11,6 +11,6 @@
     @endif
 </head>
 <body>
-@yield('general')
+@yield('admin')
 </body>
 </html>
