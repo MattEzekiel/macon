@@ -37,4 +37,24 @@ class AdminController extends Controller
 
         return back()->with('error', 'Las credenciales son incorrectas');
     }
+
+    public function clients(): View|Application|Factory
+    {
+        return view('admin.clients.index');
+    }
+
+    public function ClientStore(Request $request)
+    {
+        dd($request->all());
+    }
+
+    public function QR(): View|Application|Factory
+    {
+        return view('admin.qr.index');
+    }
+
+    public function contactos(): View|Application|Factory
+    {
+        return view('admin.contacto.index');
+    }
 }

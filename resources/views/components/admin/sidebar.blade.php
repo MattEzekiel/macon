@@ -1,3 +1,4 @@
+@php use Illuminate\Routing\Route; @endphp
 <div class="drawer lg:drawer-open lg:p-0 px-5 py-2.5">
     <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col-reverse lg:gap-0 gap-y-5 lg:flex-col justify-center">
@@ -15,8 +16,35 @@
     <nav class="drawer-side">
         <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay" aria-labelledby="Close menu"></label>
         <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-            <li><a>Sidebar Item 1</a></li>
-            <li><a>Sidebar Item 2</a></li>
+            <li class="leading-8 text-2xl text-neutral-content text-center pb-2.5 mb-2.5 border-b-2">{{ env('APP_NAME') }}</li>
+            <li class="mb-2.5">
+                <a href="{{ route('admin.dashboard') }}"
+                   class="[&>svg]:w-4 {{ request()->routeIs('admin.dashboard') ? 'bg-base-content text-neutral' : '' }}">
+                    <x-microns-home />
+                    Dashboard
+                </a>
+            </li>
+            <li class="mb-2.5">
+                <a href="{{ route('admin.clients') }}"
+                   class="[&>svg]:w-4 {{ request()->routeIs('admin.clients') ? 'bg-base-content text-neutral' : '' }}">
+                    <x-fas-users />
+                    Clientes
+                </a>
+            </li>
+            <li class="mb-2.5">
+                <a href="{{ route('admin.qrs') }}"
+                   class="[&>svg]:w-4 {{ request()->routeIs('admin.qrs') ? 'bg-base-content text-neutral' : '' }}">
+                    <x-vaadin-qrcode />
+                    QR's
+                </a>
+            </li>
+            <li class="mb-2.5">
+                <a href="{{ route('admin.contactos') }}"
+                   class="[&>svg]:w-4 {{ request()->routeIs('admin.contactos') ? 'bg-base-content text-neutral' : '' }}">
+                    <x-uiw-mail />
+                    Contacto
+                </a>
+            </li>
         </ul>
     </nav>
 </div>

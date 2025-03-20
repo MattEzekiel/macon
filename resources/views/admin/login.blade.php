@@ -24,7 +24,7 @@
                     placeholder="Ingrese su contraseña"
                     required={{ true }}
             />
-            <div class="float-end">
+            <div class="lg:float-end">
                 <x-forms.submit-button>
                     Ingresar
                 </x-forms.submit-button>

@@ -16,7 +16,7 @@
             name="{{ $name }}"
             id="{{ $id }}"
             placeholder="{{ $placeholder }}"
-            class="input input-md {{ count($errors) > 0 ? 'input-error' : '' }}"
+            class="input input-md w-full {{ count($errors) > 0 ? 'input-error' : '' }}"
             @required($required)
     />
 </label>
