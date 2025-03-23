@@ -23,6 +23,7 @@ Route::prefix('admin')->group(function () {
             Route::get('edit-clients/{id}', [AdminController::class, 'editClient'])->name('admin.edit.client');
             Route::post('store', [AdminController::class, 'ClientStore'])->name('admin.client.store');
             Route::put('update/${id}', [AdminController::class, 'ClientUpdate'])->name('admin.client.update');
+            Route::delete('delete/{id}', [AdminController::class, 'ClientDelete'])->name('admin.client.delete');
         });
 
         Route::get('qrs', [AdminController::class, 'QR'])->name('admin.qrs');

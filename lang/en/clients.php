@@ -12,4 +12,6 @@ return [
     'created_error' => 'There was an error while creating the client',
     'updated_successfully' => 'Client updated successfully',
     'updated_error' => 'There was an error while updating the client',
+    'deleted_successfully' => 'Client deleted successfully',
+    'deleted_error' => 'There was an error while deleting the client',
 ];

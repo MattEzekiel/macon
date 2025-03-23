@@ -15,5 +15,6 @@
     @yield('admin')
 </x-admin.sidebar>
 <x-admin.footer></x-admin.footer>
+@stack('scripts')
 </body>
 </html>

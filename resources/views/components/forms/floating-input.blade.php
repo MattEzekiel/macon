@@ -7,8 +7,9 @@
     'error' => null,
     'value' => '',
     'required' => false,
+    'disabled' => false
 ])
-<div>
+<div class="w-full">
     <label
             for="{{ $id }}" class="floating-label">
         <span>{{ $label }}</span>
@@ -20,6 +21,7 @@
                 class="input input-md w-full {{ count($errors) > 0 ? 'input-error' : '' }}"
                 value="{{ $value }}"
                 @required($required)
+                @disabled($disabled)
         />
     </label>
     <p class="validator-hint {{ $error ? 'validator-hint-error bg-error text-error-content p-1.5 rounded' : 'hidden' }}">

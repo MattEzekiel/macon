@@ -141,6 +141,20 @@ class AdminController extends Controller
         }
     }
 
+    public function ClientDelete(int $id): RedirectResponse
+    {
+        try {
+            $client = Clients::findOrFail($id);
+            $client->delete();
+            return redirect()->route('admin.clients')->with('success', __('clients.deleted_successfully'));
+        } catch (Exception $exception) {
+            if (env('APP_ENV') === 'local') {
+                Log::error($exception->getMessage());
+            }
+            return back()->with('error', __('clients.deleted_error'));
+        }
+    }
+
     public function QR(): View|Application|Factory
     {
         return view('admin.qr.index');
