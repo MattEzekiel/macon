@@ -19,7 +19,8 @@ Route::prefix('admin')->group(function () {
 
         Route::group(['clients'], function () {
             Route::get('clients', [AdminController::class, 'clients'])->name('admin.clients');
-            Route::post('new-client', [AdminController::class, 'ClientStore'])->name('admin.client.store');
+            Route::get('new-clients', [AdminController::class, 'newClient'])->name('admin.new.client');
+            Route::post('store', [AdminController::class, 'ClientStore'])->name('admin.client.store');
         });
 
         Route::get('qrs', [AdminController::class, 'QR'])->name('admin.qrs');
