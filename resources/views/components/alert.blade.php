@@ -1,15 +1,15 @@
-@props(['type' => ''])
+@props(['variant' => ''])
 @php
-    $type_value = match ($type) {
-        'success' => 'success',
-        'error' => 'error',
-        'warning' => 'warning',
-        default => 'info',
+    $type_value = match ($variant) {
+        'success' => 'alert-success',
+        'error' => 'alert-error',
+        'warning' => 'alert-warning',
+        default => 'alert-info',
     };
 @endphp
-@if($type !== '')
-    <p role="alert" class="alert alert-soft alert-{{ $type_value }}">
-        @include('components.icons.' . $type_value . '-icon')
+@if($variant)
+    <div role="alert" class="alert {{ $type_value }} alert-soft">
+        @include('components.icons.' . $variant . '-icon')
         <span>{{ $slot }}</span>
-    </p>
+    </div>
 @endif

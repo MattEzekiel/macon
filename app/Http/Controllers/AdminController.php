@@ -54,37 +54,37 @@ class AdminController extends Controller
 
     public function ClientStore(Request $request): RedirectResponse
     {
-        $validated = $request->validate(
-            [
-                'legal_name' => 'required',
-                'tax_id' => 'required',
-                'contact_name' => 'required',
-                'contact_email' => 'required|email',
-                'contact_phone' => 'required',
-                'legal_address' => 'required',
-            ],
-            [
-                'legal_name.required' => __('clients.legal_name') . ' es requerido',
-                'tax_id.required' => __('clients.tax_id') . ' es requerido',
-                'contact_name.required' => __('clients.contact_name') . ' es requerido',
-                'contact_email.required' => __('clients.contact_email') . ' es requerido',
-                'contact_email.email' => __('clients.contact_email') . ' es inválido',
-                'contact_phone.required' => __('clients.contact_phone') . ' es requerido',
-                'legal_address.required' => __('clients.legal_address') . ' es requerido',
-            ]
-        );
-
         try {
+            $validated = $request->validate(
+                [
+                    'legal_name' => 'required',
+                    'tax_id' => 'required',
+                    'contact_name' => 'required',
+                    'contact_email' => 'required|email',
+                    'contact_phone' => 'required',
+                    'legal_address' => 'required',
+                ],
+                [
+                    'legal_name.required' => __('clients.legal_name') . ' es requerido',
+                    'tax_id.required' => __('clients.tax_id') . ' es requerido',
+                    'contact_name.required' => __('clients.contact_name') . ' es requerido',
+                    'contact_email.required' => __('clients.contact_email') . ' es requerido',
+                    'contact_email.email' => __('clients.contact_email') . ' es inválido',
+                    'contact_phone.required' => __('clients.contact_phone') . ' es requerido',
+                    'legal_address.required' => __('clients.legal_address') . ' es requerido',
+                ]
+            );
+
             $client = new Clients();
             $client->fill($validated);
             $client->save();
 
-            return redirect()->route('admin.clients')->with('success', __('client.created_successfully'));
+            return redirect()->route('admin.clients')->with('success', __('clients.created_successfully'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
-            return back()->with('error', __('client.created_error'));
+            return back()->with('error', __('clients.created_error'));
         }
     }
 

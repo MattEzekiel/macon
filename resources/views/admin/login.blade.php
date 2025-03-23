@@ -5,7 +5,7 @@
               class="md:w-1/4 mx-auto border border-white rounded shadow p-10 space-y-5">
             <x-heading1>Ingrese sus credenciales</x-heading1>
             @if(session('error'))
-                <x-alert type="error">{{ session('error') }}</x-alert>
+                <x-alert variant="error">{{ session('error') }}</x-alert>
             @endif
             @csrf
             <x-forms.floating-input
