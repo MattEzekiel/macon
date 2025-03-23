@@ -1,6 +1,9 @@
-<form id="create-user" action="{{ route('admin.client.store') }}" method="post"
+<form id="create-user"
+      action="{{ isset($client) ? route('admin.client.update', ['id' => $client->id]) : route('admin.client.store') }}"
+      method="post"
       class="w-full grid lg:grid-cols-2 gap-2.5">
     <p class="mb-5 mt-3 col-span-2">{{ __('clients.complete_the_fields') }}</p>
+    @method(isset($client) ? 'PUT' : 'POST')
     @csrf
     @forelse($form_data as $input => $value)
         <x-forms.floating-input
@@ -10,7 +13,8 @@
                 label="{{ __('clients.'.$input) }}"
                 placeholder="{{ __('clients.'.$input) }}"
                 error="{{ $errors->has($input) ? $errors->first($input) : null }}"
-                {{--                required={{ true }}--}}
+                value="{{ old($input, $client->{$input}) }}"
+                required={{ true }}
         />
     @empty
     @endforelse

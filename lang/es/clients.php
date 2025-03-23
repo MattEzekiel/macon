@@ -10,4 +10,6 @@ return [
     'complete_the_fields' => 'Complete los siguientes campos:',
     'created_successfully' => 'Cliente creado correctamente',
     'created_error' => 'No se pudo crear el cliente',
+    'updated_successfully' => 'Cliente actualizado correctamente',
+    'updated_error' => 'No se pudo actualizar los datos del cliente',
 ];

@@ -20,7 +20,9 @@ Route::prefix('admin')->group(function () {
         Route::group(['clients'], function () {
             Route::get('clients', [AdminController::class, 'clients'])->name('admin.clients');
             Route::get('new-clients', [AdminController::class, 'newClient'])->name('admin.new.client');
+            Route::get('edit-clients/{id}', [AdminController::class, 'editClient'])->name('admin.edit.client');
             Route::post('store', [AdminController::class, 'ClientStore'])->name('admin.client.store');
+            Route::put('update/${id}', [AdminController::class, 'ClientUpdate'])->name('admin.client.update');
         });
 
         Route::get('qrs', [AdminController::class, 'QR'])->name('admin.qrs');

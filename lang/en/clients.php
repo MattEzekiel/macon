@@ -10,4 +10,6 @@ return [
     'complete_the_fields' => 'Complete the fields:',
     'created_successfully' => 'Client created successfully',
     'created_error' => 'There was an error while creating the client',
+    'updated_successfully' => 'Client updated successfully',
+    'updated_error' => 'There was an error while updating the client',
 ];

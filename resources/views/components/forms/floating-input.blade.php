@@ -5,6 +5,7 @@
     'placeholder' => '',
     'type' => 'text',
     'error' => null,
+    'value' => '',
     'required' => false,
 ])
 <div>
@@ -17,6 +18,7 @@
                 id="{{ $id }}"
                 placeholder="{{ $placeholder }}"
                 class="input input-md w-full {{ count($errors) > 0 ? 'input-error' : '' }}"
+                value="{{ $value }}"
                 @required($required)
         />
     </label>

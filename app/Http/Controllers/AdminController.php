@@ -28,6 +28,10 @@ class AdminController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+        ], [
+            'email.required' => 'El correo es requerido',
+            'email.email' => 'El correo es inválido',
+            'password.required' => 'La contraseña es requerida',
         ]);
 
         $credentials = $request->only('email', 'password');
@@ -38,18 +42,31 @@ class AdminController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
-        return back()->with('error', 'Las credenciales son incorrectas');
+        return back()->with('error', 'Las credenciales son incorrectas')->withInput();
     }
 
     public function clients(): View|Application|Factory
     {
-        return view('admin.clients.index');
+        $data = Clients::select(['id', 'legal_name', 'tax_id', 'contact_name', 'contact_email', 'contact_phone', 'legal_address', 'created_at', 'updated_at']);
+
+        $clients = $data
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.clients.index', compact('clients'));
     }
 
     public function newClient(): View|Application|Factory
     {
         $form_data = (new Clients)->getFormData();
         return view('admin.clients.new-client', compact('form_data'));
+    }
+
+    public function editClient(int $id): View|Application|Factory
+    {
+        $form_data = (new Clients)->getFormData();
+        $client = Clients::findOrFail($id);
+        return view('admin.clients.edit-client', compact('form_data', 'client'));
     }
 
     public function ClientStore(Request $request): RedirectResponse
@@ -85,6 +102,42 @@ class AdminController extends Controller
                 Log::error($exception->getMessage());
             }
             return back()->with('error', __('clients.created_error'));
+        }
+    }
+
+    public function ClientUpdate(int $id, Request $request): RedirectResponse
+    {
+        try {
+            $client = Clients::findOrFail($id);
+            $validated = $request->validate(
+                [
+                    'legal_name' => 'required',
+                    'tax_id' => 'required',
+                    'contact_name' => 'required',
+                    'contact_email' => 'required|email',
+                    'contact_phone' => 'required',
+                    'legal_address' => 'required',
+                ],
+                [
+                    'legal_name.required' => __('clients.legal_name') . ' es requerido',
+                    'tax_id.required' => __('clients.tax_id') . ' es requerido',
+                    'contact_name.required' => __('clients.contact_name') . ' es requerido',
+                    'contact_email.required' => __('clients.contact_email') . ' es requerido',
+                    'contact_email.email' => __('clients.contact_email') . ' es inválido',
+                    'contact_phone.required' => __('clients.contact_phone') . ' es requerido',
+                    'legal_address.required' => __('clients.legal_address') . ' es requerido',
+                ]
+            );
+
+            $client->fill($validated);
+            $client->save();
+
+            return redirect()->route('admin.clients')->with('success', __('clients.updated_successfully'));
+        } catch (Exception $exception) {
+            if (env('APP_ENV') === 'local') {
+                Log::error($exception->getMessage());
+            }
+            return back()->with('error', __('clients.updated_error'));
         }
     }
 
