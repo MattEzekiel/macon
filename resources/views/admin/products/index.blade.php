@@ -2,6 +2,6 @@
 
 @section('admin')
     <x-heading1>
-        Contacto
+        Productos
     </x-heading1>
 @endsection

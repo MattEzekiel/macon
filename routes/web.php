@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\QRController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,15 +22,16 @@ Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
         Route::group(['clients'], function () {
-            Route::get('clients', [AdminController::class, 'clients'])->name('admin.clients');
-            Route::get('new-clients', [AdminController::class, 'newClient'])->name('admin.new.client');
-            Route::get('edit-clients/{id}', [AdminController::class, 'editClient'])->name('admin.edit.client');
-            Route::post('store', [AdminController::class, 'ClientStore'])->name('admin.client.store');
-            Route::put('update/${id}', [AdminController::class, 'ClientUpdate'])->name('admin.client.update');
-            Route::delete('delete/{id}', [AdminController::class, 'ClientDelete'])->name('admin.client.delete');
+            Route::get('clients', [ClientsController::class, 'index'])->name('admin.clients');
+            Route::get('new-clients', [ClientsController::class, 'newClient'])->name('admin.new.client');
+            Route::get('edit-clients/{id}', [ClientsController::class, 'editClient'])->name('admin.edit.client');
+            Route::post('store', [ClientsController::class, 'ClientStore'])->name('admin.client.store');
+            Route::put('update/${id}', [ClientsController::class, 'ClientUpdate'])->name('admin.client.update');
+            Route::delete('delete/{id}', [ClientsController::class, 'ClientDelete'])->name('admin.client.delete');
         });
 
-        Route::get('qrs', [AdminController::class, 'QR'])->name('admin.qrs');
-        Route::get('contactos', [AdminController::class, 'contactos'])->name('admin.contactos');
+        Route::get('products', [ProductsController::class, 'index'])->name('admin.products');
+        Route::get('qrs', [QRController::class, 'index'])->name('admin.qrs');
+        Route::get('contactos', [ContactController::class, 'index'])->name('admin.contactos');
     });
 });

@@ -1,9 +1,7 @@
 @extends('layouts.admin')
 
 @section('admin')
-    <main>
-        <div>
-            QR's
-        </div>
-    </main>
+    <x-heading1>
+        QR's
+    </x-heading1>
 @endsection

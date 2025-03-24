@@ -13,14 +13,14 @@
                 label="{{ __('clients.'.$input) }}"
                 placeholder="{{ __('clients.'.$input) }}"
                 error="{{ $errors->has($input) ? $errors->first($input) : null }}"
-                value="{{ old($input, $client->{$input}) }}"
+                value="{{ old($input, isset($client) ? $client->{$input} : '') }}"
                 required={{ true }}
         />
     @empty
     @endforelse
     <div class="col-span-2 flex lg:justify-end items-center">
         <x-forms.submit-button btn_color="btn-success">
-            Crear nuevo cliente
+            {{ isset($client) ? 'Actualizar datos del cliente' : 'Crear nuevo cliente' }}
         </x-forms.submit-button>
     </div>
 </form>

@@ -32,6 +32,13 @@
                 </a>
             </li>
             <li class="mb-2.5">
+                <a href="{{ route('admin.products') }}"
+                   class="[&>svg]:w-4 {{ request()->routeIs('admin.products') ? 'bg-base-content text-neutral' : '' }}">
+                    <x-polaris-product-icon />
+                    Productos
+                </a>
+            </li>
+            <li class="mb-2.5">
                 <a href="{{ route('admin.qrs') }}"
                    class="[&>svg]:w-4 {{ request()->routeIs('admin.qrs') ? 'bg-base-content text-neutral' : '' }}">
                     <x-vaadin-qrcode />

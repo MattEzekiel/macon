@@ -14,6 +14,7 @@
     "codeat3/blade-microns": "^1.6",
     "codeat3/blade-uiw-icons": "^1.6",
     "codeat3/blade-vaadin-icons": "^1.6",
+    "eduard9969/blade-polaris-icons": "^2.8",
     "laravel/framework": "^12.0",
     "laravel/tinker": "^2.10.1",
     "owenvoke/blade-fontawesome": "^2.9"
