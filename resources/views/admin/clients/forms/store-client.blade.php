@@ -1,4 +1,4 @@
-<form id="create-user"
+<form id="{{ isset($client) ? 'update-client' : 'create-client' }}"
       action="{{ isset($client) ? route('admin.client.update', ['id' => $client->id]) : route('admin.client.store') }}"
       method="post"
       class="w-full grid lg:grid-cols-2 gap-2.5">

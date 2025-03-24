@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 
 @section('admin')
+    @if(session('success'))
+        @component('components.alert', ['variant' => 'success'])
+            {{ __(session('success')) }}
+        @endcomponent
+    @endif
     <x-heading1>
         Clientes
     </x-heading1>
@@ -84,12 +89,13 @@
                 </tr>
             @empty
                 <tr>
-                    <td class="text-center text-2xl bg-content-200" colspan="100%">No hay clientes</td>
+                    <td class="text-center text-2xl bg-content-200 py-2.5" colspan="100%">No hay clientes</td>
                 </tr>
             @endforelse
             </tbody>
         </table>
     </div>
+    {{  $clients->appends(request()->query())->links() }}
 @endsection
 @push('scripts')
     <script>
