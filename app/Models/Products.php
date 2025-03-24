@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Products extends Model
@@ -40,5 +42,15 @@ class Products extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(Clients::class);
+    }
+
+    public function files(): HasMany
+    {
+        return $this->hasMany(Files::class);
+    }
+
+    public function qrs(): HasOne
+    {
+        return $this->hasOne(QRs::class);
     }
 }

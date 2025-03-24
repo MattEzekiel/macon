@@ -5,25 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class QRs extends Model
+class Files extends Model
 {
-    protected $table = 'qrs';
+    protected $table = 'files';
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
         'product_id',
-        'client_id',
-        'url_qrcode',
+        'file_url',
     ];
 
     public function product(): BelongsTo
     {
         return $this->belongsTo(Products::class);
-    }
-
-    public function client(): BelongsTo
-    {
-        return $this->belongsTo(Clients::class);
     }
 }
