@@ -128,4 +128,18 @@ class ProductsController extends Controller
             return back()->with('error', __('products.updated_error'));
         }
     }
+
+    public function ProductDelete(int $id): RedirectResponse
+    {
+        try {
+            $product = Products::findOrFail($id);
+            $product->delete();
+            return redirect()->route('admin.products')->with('success', __('products.deleted_successfully'));
+        } catch (Exception $exception) {
+            if (env('APP_ENV') === 'local') {
+                Log::error($exception->getMessage());
+            }
+            return back()->with('error', __('products.deleted_error'));
+        }
+    }
 }

@@ -12,4 +12,6 @@ return [
     'complete_the_fields' => 'Complete los campos:',
     'updated_successfully' => 'Producto actualizado correctamente',
     'updated_error' => 'No se pudo actualizar los datos del producto',
+    'deleted_successfully' => 'Producto eliminado correctamente',
+    'deleted_error' => 'No se pudo eliminar el producto',
 ];

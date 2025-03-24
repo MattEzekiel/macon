@@ -38,6 +38,7 @@ Route::prefix('admin')->group(function () {
 
             Route::post('store', [ProductsController::class, 'ProductStore'])->name('admin.product.store');
             Route::put('update/${id}', [ProductsController::class, 'ProductUpdate'])->name('admin.product.update');
+            Route::delete('delete/{id}', [ProductsController::class, 'ProductDelete'])->name('admin.product.delete');
         });
 
         Route::get('qrs', [QRController::class, 'index'])->name('admin.qrs');
