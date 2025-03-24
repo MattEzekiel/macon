@@ -16,7 +16,7 @@
                     id="{{ $input }}"
                     label="{{ __('products.'.$input) }}"
                     error="{{ $errors->has($input) ? $errors->first($input) : null }}"
-                    value="{{ old($input, isset($product) ? $product->{$input} : '') }}"
+                    value="{{ old($input, isset($product) ? $product->client_id : '') }}"
                     required="{{ true }}"
                     placeholder="Seleccione un cliente"
                     :options="$clients->map(fn($client) => json_decode(json_encode(['id' => $client->id, 'value' => $client->legal_name])))"

@@ -7,9 +7,9 @@
         @endcomponent
     @endif
     <x-heading1>
-        Nuevo producto
+        Editar producto: <b>#{{ $product->id }}</b> - {{ $product->name }}
     </x-heading1>
     <div class="mt-3.5">
-        @include('admin.products.forms.store-product')
+        @include('admin.products.forms.store-product', ['$product' => $product])
     </div>
 @endsection
