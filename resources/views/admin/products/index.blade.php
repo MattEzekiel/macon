@@ -95,7 +95,7 @@
         </table>
     </div>
 
-    {{  $products->appends(request()->query())->links() }}
+    {{ $products->appends(request()->query())->links() }}
 @endsection
 @push('scripts')
     <script>

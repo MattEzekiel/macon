@@ -39,6 +39,13 @@
                 </a>
             </li>
             <li class="mb-2.5">
+                <a href="{{ route('admin.users') }}"
+                   class="[&>svg]:w-4 {{ request()->routeIs('admin.users') ? 'bg-base-content text-neutral' : '' }}">
+                    <x-fas-user />
+                    Users
+                </a>
+            </li>
+            <li class="mb-2.5">
                 <a href="{{ route('admin.qrs') }}"
                    class="[&>svg]:w-4 {{ request()->routeIs('admin.qrs') ? 'bg-base-content text-neutral' : '' }}">
                     <x-vaadin-qrcode />

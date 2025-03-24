@@ -5,6 +5,7 @@ use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\QRController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -39,6 +40,10 @@ Route::prefix('admin')->group(function () {
             Route::post('store', [ProductsController::class, 'ProductStore'])->name('admin.product.store');
             Route::put('update/${id}', [ProductsController::class, 'ProductUpdate'])->name('admin.product.update');
             Route::delete('delete/{id}', [ProductsController::class, 'ProductDelete'])->name('admin.product.delete');
+        });
+
+        Route::prefix('users')->group(function () {
+            Route::get('users', [UserController::class, 'index'])->name('admin.users');
         });
 
         Route::get('qrs', [QRController::class, 'index'])->name('admin.qrs');
