@@ -28,7 +28,7 @@ Route::prefix('admin')->group(function () {
             Route::get('edit-clients/{id}', [ClientsController::class, 'editClient'])->name('admin.edit.client');
 
             Route::post('store', [ClientsController::class, 'ClientStore'])->name('admin.client.store');
-            Route::put('update/${id}', [ClientsController::class, 'ClientUpdate'])->name('admin.client.update');
+            Route::put('update/{id}', [ClientsController::class, 'ClientUpdate'])->name('admin.client.update');
             Route::delete('delete/{id}', [ClientsController::class, 'ClientDelete'])->name('admin.client.delete');
         });
 
@@ -38,15 +38,18 @@ Route::prefix('admin')->group(function () {
             Route::get('edit-product/{id}', [ProductsController::class, 'editProduct'])->name('admin.edit.product');
 
             Route::post('store', [ProductsController::class, 'ProductStore'])->name('admin.product.store');
-            Route::put('update/${id}', [ProductsController::class, 'ProductUpdate'])->name('admin.product.update');
+            Route::put('update/{id}', [ProductsController::class, 'ProductUpdate'])->name('admin.product.update');
             Route::delete('delete/{id}', [ProductsController::class, 'ProductDelete'])->name('admin.product.delete');
         });
 
         Route::prefix('users')->group(function () {
             Route::get('users', [UserController::class, 'index'])->name('admin.users');
             Route::get('new-user', [UserController::class, 'newUser'])->name('admin.new.user');
+            Route::get('edit-user/{id}', [UserController::class, 'editUser'])->name('admin.edit.user');
 
             Route::post('store', [UserController::class, 'UserStore'])->name('admin.user.store');
+            Route::put('update/{id}', [UserController::class, 'userUpdate'])->name('admin.user.update');
+            Route::delete('delete/{id}', [UserController::class, 'UserDelete'])->name('admin.user.delete');
         });
 
         Route::get('qrs', [QRController::class, 'index'])->name('admin.qrs');

@@ -21,9 +21,7 @@
                 class="textarea w-full {{ count($errors) > 0 ? 'textarea-error' : '' }}"
                 @required($required)
                 @disabled($disabled)
-        >
-            {{ $value }}
-        </textarea>
+        >{{ $value }}</textarea>
     </label>
     <p class="validator-hint {{ $error ? 'validator-hint-error bg-error text-error-content p-1.5 rounded' : 'hidden' }}">
         {{ $error }}

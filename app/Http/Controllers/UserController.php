@@ -34,12 +34,12 @@ class UserController extends Controller
         return view('admin.users.new-user', compact('form_data', 'clients'));
     }
 
-    public function editProduct(int $id): View|Application|Factory
+    public function editUser(int $id): View|Application|Factory
     {
         $user = User::findOrFail($id);
         $clients = Clients::select('id', 'legal_name')->get();
         $form_data = (new User)->getFormData();
-        return view('admin.users.edit-product', compact('user', 'clients', 'form_data'));
+        return view('admin.users.edit-user', compact('user', 'clients', 'form_data'));
     }
 
     public function UserStore(Request $request): RedirectResponse

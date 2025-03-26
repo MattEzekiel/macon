@@ -10,6 +10,6 @@
         Editar usuario: <b>#{{ $user->id }}</b> - {{ $user->name }}
     </x-heading1>
     <div class="mt-3.5">
-        @include('admin.products.forms.store-product', ['product' => $user])
+        @include('admin.users.forms.store-user', ['user' => $user])
     </div>
 @endsection

@@ -32,7 +32,7 @@
                 <td>{{$user->client->lega_name ?? __('users.no_client')}}</td>
                 <td>
                     <x-button-link
-                            href="#"
+                            href="{{ route('admin.edit.user', ['id' => $user->id]) }}"
                             class="btn-xs btn-warning btn-soft"
                     >
                         Editar

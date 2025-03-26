@@ -1,5 +1,5 @@
 <form id="{{ isset($user) ? 'update-user' : 'create-user' }}"
-      action="{{ isset($user) ? route('admin.users.update', ['id' => $user->id]) : route('admin.user.store') }}"
+      action="{{ isset($user) ? route('admin.user.update', ['id' => $user->id]) : route('admin.user.store') }}"
       method="post"
       class="w-full grid lg:grid-cols-2 gap-2.5">
     <p class="mb-5 mt-3 col-span-2">{{ __('users.complete_the_fields') }}</p>
