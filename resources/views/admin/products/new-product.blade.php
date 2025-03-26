@@ -9,6 +9,7 @@
     <x-heading1>
         Nuevo producto
     </x-heading1>
+    <x-stepper :steps="['Crear producto', 'Subir archivos', 'Generar QR']" :current="0" />
     <div class="mt-3.5">
         @include('admin.products.forms.store-product')
     </div>
