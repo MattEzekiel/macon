@@ -91,7 +91,7 @@ class ProductsController extends Controller
 
             $product->save();
 
-            return redirect()->route('admin.products')->with('success', __('products.created_successfully'));
+            return redirect()->route('admin.new.files', ['id' => $product->id])->with('success', __('products.created_successfully'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());

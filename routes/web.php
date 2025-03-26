@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FilesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\QRController;
 use App\Http\Controllers\UserController;
@@ -42,6 +43,19 @@ Route::prefix('admin')->group(function () {
             Route::delete('delete/{id}', [ProductsController::class, 'ProductDelete'])->name('admin.product.delete');
         });
 
+        Route::prefix('files')->group(function () {
+            Route::get('new-file/{id}', [FilesController::class, 'newFiles'])->name('admin.new.files');
+
+            Route::post('store', [FilesController::class, 'FileStore'])->name('admin.file.store');
+        });
+
+        Route::prefix('qr')->group(function () {
+            Route::get('qrs', [QRController::class, 'index'])->name('admin.qrs');
+            Route::get('new-file/{id?}', [QRController::class, 'newQR'])->name('admin.new.qr');
+
+            Route::post('store', [QRController::class, 'QRStore'])->name('admin.qr.store');
+        });
+
         Route::prefix('users')->group(function () {
             Route::get('users', [UserController::class, 'index'])->name('admin.users');
             Route::get('new-user', [UserController::class, 'newUser'])->name('admin.new.user');
@@ -52,7 +66,6 @@ Route::prefix('admin')->group(function () {
             Route::delete('delete/{id}', [UserController::class, 'UserDelete'])->name('admin.user.delete');
         });
 
-        Route::get('qrs', [QRController::class, 'index'])->name('admin.qrs');
         Route::get('contactos', [ContactController::class, 'index'])->name('admin.contactos');
     });
 });
