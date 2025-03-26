@@ -44,6 +44,9 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('users')->group(function () {
             Route::get('users', [UserController::class, 'index'])->name('admin.users');
+            Route::get('new-user', [UserController::class, 'newUser'])->name('admin.new.user');
+
+            Route::post('store', [UserController::class, 'UserStore'])->name('admin.user.store');
         });
 
         Route::get('qrs', [QRController::class, 'index'])->name('admin.qrs');

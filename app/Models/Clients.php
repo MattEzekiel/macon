@@ -50,4 +50,9 @@ class Clients extends Model
     {
         return $this->hasMany(Products::class);
     }
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
 }

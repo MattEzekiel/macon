@@ -11,6 +11,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
@@ -54,26 +55,35 @@ class ProductsController extends Controller
 
     public function ProductStore(Request $request): RedirectResponse
     {
-        try {
-            $validated = $request->validate(
-                [
-                    'name' => 'required',
-                    'client' => 'required',
-                    'description' => 'required',
-                    'brand' => 'required',
-                    'model' => 'required',
-                    'origin' => 'required',
-                ],
-                [
-                    'name.required' => __('products.name') . ' es requerido',
-                    'client.required' => __('products.client') . ' es requerido',
-                    'description.required' => __('products.description') . ' es requerido',
-                    'brand.required' => __('products.brand') . ' es requerido',
-                    'model.required' => __('products.model') . ' es requerido',
-                    'origin.required' => __('products.origin') . ' es requerido',
-                ]
-            );
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+                'client' => 'required',
+                'description' => 'required',
+                'brand' => 'required',
+                'model' => 'required',
+                'origin' => 'required',
+            ],
+            [
+                'name.required' => __('products.name') . ' es requerido',
+                'client.required' => __('products.client') . ' es requerido',
+                'description.required' => __('products.description') . ' es requerido',
+                'brand.required' => __('products.brand') . ' es requerido',
+                'model.required' => __('products.model') . ' es requerido',
+                'origin.required' => __('products.origin') . ' es requerido',
+            ]
+        );
 
+        if ($validator->fails()) {
+            return back()
+                ->with('error', __('products.created_error'))
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try {
+            $validated = $validator->validated();
             $product = new Products();
             $product->fill($validated);
             $client = Clients::findOrFail($validated['client']);
@@ -86,33 +96,42 @@ class ProductsController extends Controller
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
-            return back()->with('error', __('products.created_error'));
+            return back()->with('error', __('products.created_error'))->withInput();
         }
     }
 
     public function ProductUpdate(int $id, Request $request): RedirectResponse
     {
-        $product = Products::findOrFail($id);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+                'client' => 'required',
+                'description' => 'required',
+                'brand' => 'required',
+                'model' => 'required',
+                'origin' => 'required',
+            ],
+            [
+                'name.required' => __('products.name') . ' es requerido',
+                'client.required' => __('products.client') . ' es requerido',
+                'description.required' => __('products.description') . ' es requerido',
+                'brand.required' => __('products.brand') . ' es requerido',
+                'model.required' => __('products.model') . ' es requerido',
+                'origin.required' => __('products.origin') . ' es requerido',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return back()
+                ->with('error', __('products.created_error'))
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         try {
-            $validated = $request->validate(
-                [
-                    'name' => 'required',
-                    'client' => 'required',
-                    'description' => 'required',
-                    'brand' => 'required',
-                    'model' => 'required',
-                    'origin' => 'required',
-                ],
-                [
-                    'name.required' => __('products.name') . ' es requerido',
-                    'client.required' => __('products.client') . ' es requerido',
-                    'description.required' => __('products.description') . ' es requerido',
-                    'brand.required' => __('products.brand') . ' es requerido',
-                    'model.required' => __('products.model') . ' es requerido',
-                    'origin.required' => __('products.origin') . ' es requerido',
-                ]
-            );
+            $validated = $validator->validated();
+            $product = Products::findOrFail($id);
 
             $product->fill($validated);
             $client = Clients::findOrFail($validated['client']);
@@ -125,7 +144,7 @@ class ProductsController extends Controller
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
-            return back()->with('error', __('products.updated_error'));
+            return back()->with('error', __('products.updated_error'))->withInput();
         }
     }
 
