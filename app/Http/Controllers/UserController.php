@@ -17,10 +17,10 @@ class UserController extends Controller
 {
     public function index(): View|Application|Factory
     {
-        $users = User::select('id', 'email', 'name');
+        $users = User::select('id', 'email', 'name', 'client_id')
+            ->with('client');
 
         $users = $users->orderBy('created_at', 'desc')
-            ->with('client')
             ->paginate(10)
             ->withQueryString();
 
@@ -131,6 +131,20 @@ class UserController extends Controller
                 Log::error($exception->getMessage());
             }
             return back()->with('error', __('users.created_error'))->withInput();
+        }
+    }
+
+    public function UserDelete(int $id): RedirectResponse
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            return redirect()->route('admin.users')->with('success', __('users.deleted_successfully'));
+        } catch (Exception $exception) {
+            if (env('APP_ENV') === 'local') {
+                Log::error($exception->getMessage());
+            }
+            return back()->with('error', __('users.deleted_error'));
         }
     }
 }

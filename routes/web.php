@@ -48,7 +48,7 @@ Route::prefix('admin')->group(function () {
             Route::get('edit-user/{id}', [UserController::class, 'editUser'])->name('admin.edit.user');
 
             Route::post('store', [UserController::class, 'UserStore'])->name('admin.user.store');
-            Route::put('update/{id}', [UserController::class, 'userUpdate'])->name('admin.user.update');
+            Route::put('update/{id}', [UserController::class, 'UserUpdate'])->name('admin.user.update');
             Route::delete('delete/{id}', [UserController::class, 'UserDelete'])->name('admin.user.delete');
         });
 

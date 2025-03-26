@@ -42,7 +42,7 @@
                     >
                         Editar
                     </x-button-link>
-                    <button class="btn btn-xs btn-error btn-soft btn-delete-client"
+                    <button class="btn btn-xs btn-error btn-soft btn-delete-button"
                             data-id="{{'modal-' . $client->id }}">
                         Eliminar
                     </button>
@@ -55,7 +55,7 @@
                                     <form id="{{ 'delete-user-' . $client->id }}"
                                           action="{{ route('admin.client.delete', ['id' => $client->id]) }}"
                                           method="post"
-                                          class="w-full grid grid-cols-1 gap-2.5 delete-client">
+                                          class="w-full grid grid-cols-1 gap-2.5 delete-button">
                                         <p class="mb-5 mt-3">Escriba: <span
                                                     class="text-error">{{ $client->legal_name }}</span> para
                                             eliminarlo</p>
@@ -98,8 +98,8 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const forms = document.querySelectorAll('.delete-client');
-            const buttons_delete = document.querySelectorAll('.btn-delete-client');
+            const forms = document.querySelectorAll('.delete-button');
+            const buttons_delete = document.querySelectorAll('.btn-delete-button');
             buttons_delete.forEach(button => {
                 button.addEventListener('click', () => {
                     const modal = document.getElementById(button.getAttribute('data-id'));

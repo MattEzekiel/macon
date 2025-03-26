@@ -13,4 +13,6 @@ return [
     'created_error' => 'There was an error while creating the user',
     'created_successfully' => 'User created successfully',
     'password_min' => 'The password must be at least 8 characters',
+    'deleted_successfully' => 'User deleted successfully',
+    'deleted_error' => 'There was an error while deleting the user',
 ];
