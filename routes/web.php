@@ -10,8 +10,8 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('links');
+})->name('home');
 
 Route::prefix('admin')->group(function () {
     Route::get('login', [AdminController::class, 'loginForm'])->name('login');
@@ -51,7 +51,7 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('qr')->group(function () {
             Route::get('qrs', [QRController::class, 'index'])->name('admin.qrs');
-            Route::get('new-file/{id?}', [QRController::class, 'newQR'])->name('admin.new.qr');
+            Route::get('new-qr/{id?}', [QRController::class, 'newQR'])->name('admin.new.qr');
 
             Route::post('store', [QRController::class, 'QRStore'])->name('admin.qr.store');
         });

@@ -284,3 +284,4 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 public/files/**
+public/qr_codes/**

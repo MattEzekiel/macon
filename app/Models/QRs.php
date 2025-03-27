@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class QRs extends Model
 {
-    protected $table = 'qrs';
+    protected $table = '_q_r';
 
     protected $primaryKey = 'id';
 
