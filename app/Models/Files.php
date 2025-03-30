@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Files extends Model
@@ -17,10 +17,12 @@ class Files extends Model
     protected $fillable = [
         'product_id',
         'file_url',
+        'original_file_name',
+        'file_name',
     ];
 
-    public function product(): BelongsTo
+    public function product(): BelongsToMany
     {
-        return $this->belongsTo(Products::class);
+        return $this->belongsToMany(Products::class, 'files', 'product_id', 'id');
     }
 }

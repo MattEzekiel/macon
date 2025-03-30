@@ -13,6 +13,8 @@ Route::get('/', function () {
     return view('links');
 })->name('home');
 
+Route::get('/{payload}', [QRController::class, 'DisplayData'])->name('public_qr');
+
 Route::prefix('admin')->group(function () {
     Route::get('login', [AdminController::class, 'loginForm'])->name('login');
     Route::post('login', [AdminController::class, 'login'])->name('admin.login');

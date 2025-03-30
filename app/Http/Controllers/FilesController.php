@@ -49,14 +49,14 @@ class FilesController extends Controller
             $client_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->client->legal_name));
             $product_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->name));
 
-            $base_path = public_path("files/{$client_name}/{$product_name}");
+            $base_path = public_path(strtolower("files/{$client_name}/{$product_name}"));
 
             if (!file_exists($base_path)) {
                 mkdir($base_path, 0777, true);
             }
 
             foreach ($request->file('files') as $file) {
-                $original_name = $file->getClientOriginalName();
+                $original_name = strtolower($file->getClientOriginalName());
                 $file_name = uniqid() . '_' . $original_name;
 
                 $file->move($base_path, $file_name);
@@ -64,7 +64,8 @@ class FilesController extends Controller
                 $files = new Files();
                 $files->create([
                     'product_id' => $product->id,
-                    'file_url' => "files/{$client_name}/{$product_name}/{$file_name}"
+                    'file_url' => strtolower("files/{$client_name}/{$product_name}/{$file_name}"),
+                    'original_file_name' => $original_name,
                 ]);
             }
 

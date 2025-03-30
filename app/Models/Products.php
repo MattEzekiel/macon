@@ -46,7 +46,7 @@ class Products extends Model
 
     public function files(): HasMany
     {
-        return $this->hasMany(Files::class);
+        return $this->hasMany(Files::class, 'product_id', 'id');
     }
 
     public function qrs(): HasOne

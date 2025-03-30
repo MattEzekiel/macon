@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Files;
 use App\Models\Products;
 use App\Models\QRs;
 use Exception;
@@ -18,28 +19,21 @@ class QRController extends Controller
 {
     public function index(): View|Application|Factory
     {
-        return view('admin.qr.index');
+        $qrs = QRs::with('product', 'client', 'product.files')->paginate(10)->withQueryString();
+        return view('admin.qr.index', compact('qrs'));
     }
 
     public function newQR(int|null $id = null): View|Application|Factory
     {
-        $product = null;
-        $qr_code = null;
-        $url = null;
         if ($id) {
-            $product = Products::with('client')->findOrFail($id);
-            $payload = [
-                'product_id' => $product->id,
-                'client_id' => $product->client->id,
-            ];
-            $encrypted_payload = Crypt::encrypt($payload);
-            $url = route('home', ['payload' => $encrypted_payload]);
-            $qr_code = QrCode::margin(0)->size(200)->generate($url);
+            $product = Products::with('client', 'files')->findOrFail($id);
         } else {
-            $product = Products::select('id', 'name')->get();
+            $product = Products::select('id', 'name')->with('files')->get();
         }
 
-        return view('admin.qr.new-qr', compact('product', 'qr_code', 'url'));
+        $files = $product->files()->get();
+
+        return view('admin.qr.new-qr', compact('product', 'files'));
     }
 
     public function QRStore(Request $request)
@@ -49,12 +43,16 @@ class QRController extends Controller
                 [
                     'product' => 'required|exists:products,id',
                     'client' => 'required|exists:clients,id',
-                    'url' => 'required',
+                    'file_names.*' => 'required',
+                    'original_names.*' => 'required',
                 ],
                 [
                     'product.required' => 'El producto es requerido',
                     'client.required' => 'El cliente es requerido',
-                    'url.required' => 'La URL es requerida',
+                    'product.exists' => 'El producto no existe',
+                    'client.exists' => 'El cliente no existe',
+                    'file_names.*.required' => 'Los archivos son requeridos',
+                    'original_names.*.required' => 'Los nombres originales son requeridos',
                 ]
             );
 
@@ -65,26 +63,47 @@ class QRController extends Controller
                     ->withInput();
             }
 
+            $combined = [];
+            foreach ($request->file_names as $key => $file_name) {
+                $combined[] = [
+                    'file_name' => $file_name,
+                    'original_name' => $request->original_names[$key]
+                ];
+            }
+
+            foreach ($combined as $file_name) {
+                $file = Files::where('product_id', $request->product)->where('original_file_name', $file_name['original_name'])->sole();
+                $file->file_name = $file_name['file_name'];
+                $file->save();
+            }
+
             $product = Products::with('client')->findOrFail($request->product);
-            $client_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->client->legal_name));
-            $product_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->name));
+            $client_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', strtolower($product->client->legal_name)));
+            $product_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', strtolower($product->name)));
 
-            $qr_filename = "{$client_name}_{$product_name}_" . uniqid() . '.png';
-            $qr_path = public_path('qr_codes/' . $qr_filename);
+            $payload = [
+                'product_id' => $product->id,
+                'client_id' => $product->client->id
+            ];
 
-            if (!file_exists(public_path('qr_codes'))) {
-                mkdir(public_path('qr_codes'), 0777, true);
+            $qr_filename = uniqid() . '.png';
+            $local_path = 'qr_codes/' . $client_name . '/' . $product_name . '/' . $qr_filename;
+            $qr_path = public_path($local_path);
+
+            $directory = dirname(public_path($local_path));
+            if (!file_exists($directory)) {
+                mkdir($directory, 0777, true);
             }
 
             QrCode::size(200)
                 ->margin(0)
                 ->format('png')
-                ->generate($request->url, $qr_path);
+                ->generate(Crypt::encrypt(route('public_qr', ['payload' => base64_encode(json_encode($payload))])), $qr_path);
 
             QRs::create([
                 'product_id' => $request->product,
                 'client_id' => $request->client,
-                'url_qrcode' => 'qr_codes/' . $qr_filename
+                'url_qrcode' => Crypt::encrypt($local_path),
             ]);
 
             return redirect()->route('admin.qrs')->with('success', 'QR creado correctamente');
