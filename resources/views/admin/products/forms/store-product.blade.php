@@ -45,9 +45,17 @@
         @endif
     @empty
     @endforelse
-    <div class="col-span-2 flex lg:justify-end items-center">
-        <x-forms.submit-button btn_color="btn-success">
-            {{ isset($product) ? 'Actualizar datos del producto' : 'Crear nuevo producto' }}
+    @if(isset($product))
+        <input type="hidden" name="submit_action" id="submit_action" value="">
+    @endif
+    <div class="col-span-2 flex lg:justify-end items-center gap-5">
+        <x-forms.submit-button btn_color="btn-success" class="{{ isset($product) ? 'btn-outline' : '' }}">
+            {{ isset($product) ? 'Actualizar y terminar' : 'Crear nuevo producto' }}
         </x-forms.submit-button>
+        @if(isset($product))
+            <x-forms.submit-button btn_color="btn-success" value="update_and_continue">
+                Actualizar y continuar
+            </x-forms.submit-button>
+        @endif
     </div>
 </form>

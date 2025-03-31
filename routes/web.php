@@ -26,7 +26,7 @@ Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
         Route::prefix('clients')->group(function () {
-            Route::get('clients', [ClientsController::class, 'index'])->name('admin.clients');
+            Route::get('/', [ClientsController::class, 'index'])->name('admin.clients');
             Route::get('new-client', [ClientsController::class, 'newClient'])->name('admin.new.client');
             Route::get('edit-clients/{id}', [ClientsController::class, 'editClient'])->name('admin.edit.client');
 
@@ -36,7 +36,7 @@ Route::prefix('admin')->group(function () {
         });
 
         Route::prefix('products')->group(function () {
-            Route::get('products', [ProductsController::class, 'index'])->name('admin.products');
+            Route::get('/', [ProductsController::class, 'index'])->name('admin.products');
             Route::get('new-product', [ProductsController::class, 'newProduct'])->name('admin.new.product');
             Route::get('edit-product/{id}', [ProductsController::class, 'editProduct'])->name('admin.edit.product');
 
@@ -47,12 +47,17 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('files')->group(function () {
             Route::get('new-file/{id}', [FilesController::class, 'newFiles'])->name('admin.new.files');
+            Route::get('edit-file/{id}', [FilesController::class, 'editFiles'])->name('admin.edit.files');
+            Route::get('name-file/{id}', [FilesController::class, 'nameFiles'])->name('admin.name.files');
 
             Route::post('store', [FilesController::class, 'FileStore'])->name('admin.file.store');
+            Route::put('update', [FilesController::class, 'FileUpdate'])->name('admin.file.update');
+            Route::put('rename', [FilesController::class, 'FileRename'])->name('admin.file.name');
+            Route::delete('delete/{id}', [FilesController::class, 'FileDelete'])->name('admin.file.delete');
         });
 
         Route::prefix('qr')->group(function () {
-            Route::get('qrs', [QRController::class, 'index'])->name('admin.qrs');
+            Route::get('/', [QRController::class, 'index'])->name('admin.qrs');
             Route::get('new-qr/{id?}', [QRController::class, 'newQR'])->name('admin.new.qr');
 
             Route::post('store', [QRController::class, 'QRStore'])->name('admin.qr.store');
