@@ -9,7 +9,7 @@
   ],
   "license": "MIT",
   "require": {
-    "php": "^8.4.5",
+    "php": "^8.4.0",
     "blade-ui-kit/blade-ui-kit": "^0.7.0",
     "blade-ui-kit/blade-zondicons": "^1.6",
     "codeat3/blade-microns": "^1.6",
