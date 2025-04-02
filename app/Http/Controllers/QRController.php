@@ -97,7 +97,7 @@ class QRController extends Controller
 
             QrCode::size(200)
                 ->margin(0)
-                ->format('png')
+                ->format('svg')
                 ->generate(Crypt::encrypt(route('public_qr', ['payload' => base64_encode(json_encode($payload))])), $qr_path);
 
             QRs::create([

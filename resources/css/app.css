@@ -1,3 +1,4 @@
+@import url('montserrat-arabic/stylesheet.css');
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -47,3 +48,25 @@
     'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
+.montserrat {
+    font-family: 'Montserrat-Arabic', sans-serif;
+    font-weight: 400;
+}
+
+.ticks {
+    position: relative;
+    width: 50px;
+    height: 50px;
+
+    img {
+        position: absolute;
+    }
+
+    img:nth-child(1) {
+        top: -10px;
+    }
+
+    img:nth-child(2) {
+        bottom: -5px;
+    }
+}

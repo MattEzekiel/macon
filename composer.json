@@ -11,7 +11,9 @@
   "require": {
     "php": "^8.4.5",
     "blade-ui-kit/blade-ui-kit": "^0.7.0",
+    "blade-ui-kit/blade-zondicons": "^1.6",
     "codeat3/blade-microns": "^1.6",
+    "codeat3/blade-teeny-icons": "^1.11",
     "codeat3/blade-uiw-icons": "^1.6",
     "codeat3/blade-vaadin-icons": "^1.6",
     "eduard9969/blade-polaris-icons": "^2.8",
