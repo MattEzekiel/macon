@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clients;
 use App\Models\Files;
 use App\Models\Products;
 use App\Models\QRs;
@@ -86,7 +87,7 @@ class QRController extends Controller
                 'client_id' => $product->client->id
             ];
 
-            $qr_filename = uniqid() . '.png';
+            $qr_filename = uniqid() . '.svg';
             $local_path = 'qr_codes/' . $client_name . '/' . $product_name . '/' . $qr_filename;
             $qr_path = public_path($local_path);
 
@@ -98,7 +99,7 @@ class QRController extends Controller
             QrCode::size(200)
                 ->margin(0)
                 ->format('svg')
-                ->generate(Crypt::encrypt(route('public_qr', ['payload' => base64_encode(json_encode($payload))])), $qr_path);
+                ->generate(route('public_qr', ['payload' => Crypt::encrypt(json_encode($payload))]), $qr_path);
 
             QRs::create([
                 'product_id' => $request->product,
@@ -113,5 +114,17 @@ class QRController extends Controller
             }
             return back()->with('error', 'Falló la generación del QR');
         }
+    }
+
+    public function DisplayData(string $payload): View|Application|Factory
+    {
+        // http://localhost/quique-app/public/search/eyJpdiI6Ik1hOFBmeTVyTURnS2lkaTU0NS9rUlE9PSIsInZhbHVlIjoiaFpEYlRxT2FGaDFNcmhsUWgvZ3ZKU3EzMERIRXphZTRWSGxiNUtLNjREVWxycUs5V0RBaE8zbklrNzA1eVRociIsIm1hYyI6ImRmZmRkNjA0ODI4YmYwZTM5MzNiMjUwMjc4NzlmNmQ3M2E3OTJjYjc4YWEzZTk1MmU4Zjk1NDc4MjNiZTg5MjUiLCJ0YWciOiIifQ==
+        $data = json_decode(Crypt::decrypt($payload));
+        if (Clients::where('id', $data->client_id)->exists() && Products::where('id', $data->product_id)->exists()) {
+            $files = Files::where('product_id', $data->product_id)->get();
+        } else {
+            $files = [];
+        }
+        return view('links', compact('files'));
     }
 }
