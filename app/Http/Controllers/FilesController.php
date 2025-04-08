@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class FilesController extends Controller
 {
@@ -64,25 +65,15 @@ class FilesController extends Controller
             $client_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->client->legal_name));
             $product_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->name));
 
-            $base_path = public_path(strtolower("files/{$client_name}/{$product_name}"));
+            $base_path = strtolower("files/{$client_name}/{$product_name}");
 
-            if (!file_exists($base_path)) {
-                mkdir($base_path, 0777, true);
+            if (!file_exists(public_path($base_path))) {
+                mkdir(public_path($base_path), 0777, true);
             }
 
-            foreach ($request->file('files') as $file) {
-                $original_name = strtolower($file->getClientOriginalName());
-                $file_name = uniqid() . '_' . $original_name;
+            $files = $request->allFiles();
 
-                $file->move($base_path, $file_name);
-
-                $files = new Files();
-                $files->create([
-                    'product_id' => $product->id,
-                    'file_url' => strtolower("files/{$client_name}/{$product_name}/{$file_name}"),
-                    'original_file_name' => $original_name,
-                ]);
-            }
+            $this->saveFiles($files['files'], $base_path, $product->id);
 
             return redirect()
                 ->route('admin.new.qr', ['id' => $product->id])
@@ -92,6 +83,29 @@ class FilesController extends Controller
                 Log::error($exception->getMessage());
             }
             return back()->with('error', 'Hubo un error al subir el archivo');
+        }
+    }
+
+    protected function saveFiles($files, string $base_path, int $product_id)
+    {
+        foreach ($files as $file) {
+            $original_name = strtolower($file->getClientOriginalName());
+            $file_name = uniqid() . '_' . Str::random(10);
+            $file_size = $file->getSize();
+
+            $move_result = $file->move($base_path, $file_name);
+            $file_exists = file_exists("{$base_path}/{$file_name}");
+
+            if (!$move_result || !$file_exists) {
+                continue;
+            }
+
+            Files::create([
+                'product_id' => $product_id,
+                'file_url' => strtolower("{$base_path}/{$file_name}"),
+                'original_file_name' => $original_name,
+                'file_size' => $file_size,
+            ]);
         }
     }
 
@@ -124,25 +138,14 @@ class FilesController extends Controller
             $client_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->client->legal_name));
             $product_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->name));
 
-            $base_path = public_path(strtolower("files/{$client_name}/{$product_name}"));
+            $base_path = strtolower("files/{$client_name}/{$product_name}");
 
-            if (!file_exists($base_path)) {
-                mkdir($base_path, 0777, true);
+            if (!file_exists(public_path($base_path))) {
+                mkdir(public_path($base_path), 0777, true);
             }
 
-            foreach ($request->file('files') as $file) {
-                $original_name = strtolower($file->getClientOriginalName());
-                $file_name = uniqid() . '_' . $original_name;
-
-                $file->move($base_path, $file_name);
-
-                $files = new Files();
-                $files->create([
-                    'product_id' => $product->id,
-                    'file_url' => strtolower("files/{$client_name}/{$product_name}/{$file_name}"),
-                    'original_file_name' => $original_name,
-                ]);
-            }
+            $files = $request->allFiles();
+            $this->saveFiles($files['files'], $base_path, $product->id);
 
             return redirect()
                 ->route('admin.name.files', ['id' => $product->id])
@@ -186,13 +189,15 @@ class FilesController extends Controller
             foreach ($request->file_names as $key => $file_name) {
                 $combined[] = [
                     'file_name' => $file_name,
-                    'original_name' => $request->original_names[$key]
+                    'original_name' => $request->original_names[$key],
+                    'id' => $request->files_ids[$key],
                 ];
             }
 
-            foreach ($combined as $file_name) {
-                $file = Files::where('product_id', $request->product)->where('original_file_name', $file_name['original_name'])->sole();
-                $file->file_name = $file_name['file_name'];
+            foreach ($combined as $file) {
+                $file = Files::where('product_id', $request->product)->where('original_file_name', $file['original_name'])->where('id', $file['id'])->firstOrFail();
+
+                $file->file_name = $file['file_name'];
                 $file->save();
             }
 

@@ -5,7 +5,7 @@
     <input type="hidden" name="client" id="client" value="{{ $product->client->id }}">
     <div class="flex flex-wrap justify-items-center items-center gap-5 mt-5">
         @foreach($files as $file)
-            <div class="flex-1 border rounded shadow border-gray-700">
+            <div class="flex-1 border rounded shadow border-gray-700 min-w-3xs">
                 <object class="aspect-square w-full mb-3.5" data="{{ asset($file->file_url) }}"></object>
                 <x-forms.floating-input
                         type="text"
@@ -22,6 +22,12 @@
                         name="original_names[]"
                         value="{{ $file->original_file_name }}"
                         id="{{ $file->id }}_name"
+                >
+                <input
+                        type="hidden"
+                        name="files_ids[]"
+                        value="{{ $file->id }}"
+                        id="{{ $file->id }}_id"
                 >
             </div>
         @endforeach
