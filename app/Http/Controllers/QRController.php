@@ -118,13 +118,13 @@ class QRController extends Controller
 
     public function DisplayData(string $payload): View|Application|Factory
     {
-        // http://localhost/quique-app/public/search/eyJpdiI6Ik1hOFBmeTVyTURnS2lkaTU0NS9rUlE9PSIsInZhbHVlIjoiaFpEYlRxT2FGaDFNcmhsUWgvZ3ZKU3EzMERIRXphZTRWSGxiNUtLNjREVWxycUs5V0RBaE8zbklrNzA1eVRociIsIm1hYyI6ImRmZmRkNjA0ODI4YmYwZTM5MzNiMjUwMjc4NzlmNmQ3M2E3OTJjYjc4YWEzZTk1MmU4Zjk1NDc4MjNiZTg5MjUiLCJ0YWciOiIifQ==
         $data = json_decode(Crypt::decrypt($payload));
         if (Clients::where('id', $data->client_id)->exists() && Products::where('id', $data->product_id)->exists()) {
+            $product = Products::with('client')->findOrFail($data->product_id);
             $files = Files::where('product_id', $data->product_id)->get();
-        } else {
-            $files = [];
+            return view('links', compact('files', 'product'));
         }
-        return view('links', compact('files'));
+        
+        return view('links', ['files' => [], 'product' => null]);
     }
 }
