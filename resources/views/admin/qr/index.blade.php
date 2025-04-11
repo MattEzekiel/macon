@@ -40,13 +40,15 @@
                     <dialog id="my_modal_{{ $qr->id }}" class="modal">
                         <div class="modal-box">
                             <div class="printer">
-                                <img class="w-100 mx-auto" src="{{ asset(Crypt::decrypt($qr->url_qrcode)) }}"
-                                     alt="Código QR de {{ $qr->product->name }}">
-                                <div class="flex justify-center items-center gap-5 mt-5">
-                                    <h2 class="text-6xl montserrat print:text-black">AR</h2>
-                                    <div class="ticks">
-                                        <img src="{{ asset('assets/ok.svg') }}" alt="tick svg">
-                                        <img src="{{ asset('assets/ok.svg') }}" alt="tick svg">
+                                <div class="bg-white p-8 rounded-[2rem] shadow-lg" style="border-radius: 2rem; border: 2px solid #e5e7eb;">
+                                    <img class="w-100 mx-auto" src="{{ asset(Crypt::decrypt($qr->url_qrcode)) }}"
+                                         alt="Código QR de {{ $qr->product->name }}">
+                                    <div class="flex justify-center items-center gap-5 mt-5">
+                                        <h2 class="text-6xl montserrat" style="color: #000000 !important;">AR</h2>
+                                        <div class="ticks">
+                                            <img src="{{ asset('assets/ok.svg') }}" alt="tick svg">
+                                            <img src="{{ asset('assets/ok.svg') }}" alt="tick svg">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -93,10 +95,10 @@
 
             // Opciones modificadas para html2canvas
             html2canvas(element, {
-                scale: 2,
+                scale: 2, 
                 useCORS: true,
                 allowTaint: true,
-                backgroundColor: '#ffffff',
+                backgroundColor: null,
                 logging: true,
                 removeContainer: true
             }).then(canvas => {
@@ -108,6 +110,7 @@
 
                     // Añadir la imagen al PDF
                     const imgData = canvas.toDataURL('image/png');
+                    pdf.setFillColor(255, 255, 255, 0); // Fondo transparente
                     pdf.addImage(imgData, 'PNG', 10, yPosition, imgWidth, imgHeight);
 
                     // Descargar el PDF
