@@ -120,11 +120,11 @@ class QRController extends Controller
     {
         $data = json_decode(Crypt::decrypt($payload));
         if (Clients::where('id', $data->client_id)->exists() && Products::where('id', $data->product_id)->exists()) {
-            $product = Products::with('client')->findOrFail($data->product_id);
+            $product = Products::with('client')->find($data->product_id);
             $files = Files::where('product_id', $data->product_id)->get();
             return view('links', compact('files', 'product'));
         }
-        
+
         return view('links', ['files' => [], 'product' => null]);
     }
 }
