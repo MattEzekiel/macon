@@ -125,6 +125,6 @@ class QRController extends Controller
             return view('links', compact('files', 'product'));
         }
 
-        return view('links', ['files' => [], 'product' => null]);
+        return view('links', ['files' => [], 'product']);
     }
 }
