@@ -22,6 +22,9 @@
             <th>{{ __('clients.contact_email') }}</th>
             <th>{{ __('clients.contact_phone') }}</th>
             <th>{{ __('clients.legal_address') }}</th>
+            <th>{{ __('clients.products') }}</th>
+            <th>{{ __('clients.files') }}</th>
+            <th>{{ __('clients.qrs') }}</th>
             <th>Acciones</th>
         </tr>
         </thead>
@@ -35,6 +38,9 @@
                 <td>{{ $client->contact_email }}</td>
                 <td>{{ $client->contact_phone }}</td>
                 <td>{{ $client->legal_address }}</td>
+                <td>{{ $client->products()->count() }}</td>
+                <td>{{ $client->files_count }}</td>
+                <td>{{ $client->qrs()->count() }}</td>
                 <td>
                     <x-button-link
                             href="{{ route('admin.edit.client', ['id' => $client->id]) }}"

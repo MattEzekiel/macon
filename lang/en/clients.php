@@ -14,4 +14,7 @@ return [
     'updated_error' => 'There was an error while updating the client',
     'deleted_successfully' => 'Client deleted successfully',
     'deleted_error' => 'There was an error while deleting the client',
+    'products' => 'Products',
+    'files' => 'Files',
+    'qrs' => 'QRs',
 ];

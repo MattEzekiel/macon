@@ -20,7 +20,9 @@ class QRController extends Controller
 {
     public function index(): View|Application|Factory
     {
-        $qrs = QRs::with('product', 'client', 'product.files')->paginate(10)->withQueryString();
+        $qrs = QRs::with('product', 'client', 'product.files')
+            ->paginate(10)
+            ->withQueryString();
         return view('admin.qr.index', compact('qrs'));
     }
 

@@ -26,7 +26,7 @@
                 <td>{{ $qr->id }}</td>
                 <td>{{ $qr->client->legal_name }}</td>
                 <td>{{ $qr->product->name }}</td>
-                <td>{{ count($qr->product->files) }}</td>
+                <td>{{ $qr->product->files->count() }}</td>
                 <td>
                     <div class="tooltip" data-tip="zoom">
                         <button class="relative cursor-pointer group" onclick="my_modal_{{ $qr->id }}.showModal()">
@@ -40,7 +40,8 @@
                     <dialog id="my_modal_{{ $qr->id }}" class="modal">
                         <div class="modal-box">
                             <div class="printer">
-                                <div class="bg-white p-8 rounded-[2rem] shadow-lg" style="border-radius: 2rem; border: 2px solid #e5e7eb;">
+                                <div class="bg-white p-8 rounded-[2rem] shadow-lg"
+                                     style="border-radius: 2rem; border: 2px solid #e5e7eb;">
                                     <img class="w-100 mx-auto" src="{{ asset(Crypt::decrypt($qr->url_qrcode)) }}"
                                          alt="Código QR de {{ $qr->product->name }}">
                                     <div class="flex justify-center items-center gap-5 mt-5">
@@ -95,7 +96,7 @@
 
             // Opciones modificadas para html2canvas
             html2canvas(element, {
-                scale: 2, 
+                scale: 2,
                 useCORS: true,
                 allowTaint: true,
                 backgroundColor: null,
