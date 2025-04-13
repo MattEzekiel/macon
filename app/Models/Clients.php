@@ -48,7 +48,12 @@ class Clients extends Model
 
     public function products(): HasMany
     {
-        return $this->hasMany(Products::class);
+        return $this->hasMany(Products::class, 'client_id');
+    }
+
+    public function qrs(): HasMany
+    {
+        return $this->hasMany(QRs::class, 'client_id');
     }
 
     public function users(): HasMany

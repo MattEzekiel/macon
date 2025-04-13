@@ -51,6 +51,6 @@ class Products extends Model
 
     public function qrs(): HasOne
     {
-        return $this->hasOne(QRs::class);
+        return $this->hasOne(QRs::class, 'product_id');
     }
 }

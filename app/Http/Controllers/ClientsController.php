@@ -19,9 +19,20 @@ class ClientsController extends Controller
         $data = Clients::select(['id', 'legal_name', 'tax_id', 'contact_name', 'contact_email', 'contact_phone', 'legal_address', 'created_at', 'updated_at']);
 
         $clients = $data
+            ->with(['products', 'products.files', 'qrs'])
             ->orderBy('created_at', 'desc')
             ->paginate(10)
             ->withQueryString();
+
+        foreach ($clients as $client) {
+            $fileCount = 0;
+            if ($client->products->count() > 0) {
+                foreach ($client->products as $product) {
+                    $fileCount += $product->files->count();
+                }
+            }
+            $client->files_count = $fileCount;
+        }
 
         return view('admin.clients.index', compact('clients'));
     }
