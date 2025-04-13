@@ -14,4 +14,5 @@ return [
     'updated_error' => 'No se pudo actualizar los datos del producto',
     'deleted_successfully' => 'Producto eliminado correctamente',
     'deleted_error' => 'No se pudo eliminar el producto',
+    'files' => 'Archivos',
 ];
