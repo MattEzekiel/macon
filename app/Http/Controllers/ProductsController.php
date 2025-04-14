@@ -26,7 +26,7 @@ class ProductsController extends Controller
             'model',
             'origin',
             'created_at',
-            'updated_at'
+            'updated_at',
         ]);
 
         $products = $products
@@ -42,6 +42,7 @@ class ProductsController extends Controller
     {
         $clients = Clients::select('id', 'legal_name')->get();
         $form_data = (new Products)->getFormData();
+
         return view('admin.products.new-product', compact('clients', 'form_data'));
     }
 
@@ -50,6 +51,7 @@ class ProductsController extends Controller
         $product = Products::findOrFail($id);
         $clients = Clients::select('id', 'legal_name')->get();
         $form_data = (new Products)->getFormData();
+
         return view('admin.products.edit-product', compact('product', 'clients', 'form_data'));
     }
 
@@ -66,12 +68,12 @@ class ProductsController extends Controller
                 'origin' => 'required',
             ],
             [
-                'name.required' => __('products.name') . ' es requerido',
-                'client.required' => __('products.client') . ' es requerido',
-                'description.required' => __('products.description') . ' es requerido',
-                'brand.required' => __('products.brand') . ' es requerido',
-                'model.required' => __('products.model') . ' es requerido',
-                'origin.required' => __('products.origin') . ' es requerido',
+                'name.required' => __('products.name').' es requerido',
+                'client.required' => __('products.client').' es requerido',
+                'description.required' => __('products.description').' es requerido',
+                'brand.required' => __('products.brand').' es requerido',
+                'model.required' => __('products.model').' es requerido',
+                'origin.required' => __('products.origin').' es requerido',
             ]
         );
 
@@ -84,7 +86,7 @@ class ProductsController extends Controller
 
         try {
             $validated = $validator->validated();
-            $product = new Products();
+            $product = new Products;
             $product->fill($validated);
             $client = Clients::findOrFail($validated['client']);
             $product->client_id = $client->id;
@@ -96,6 +98,7 @@ class ProductsController extends Controller
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
+
             return back()->with('error', __('products.created_error'))->withInput();
         }
     }
@@ -113,12 +116,12 @@ class ProductsController extends Controller
                 'origin' => 'required',
             ],
             [
-                'name.required' => __('products.name') . ' es requerido',
-                'client.required' => __('products.client') . ' es requerido',
-                'description.required' => __('products.description') . ' es requerido',
-                'brand.required' => __('products.brand') . ' es requerido',
-                'model.required' => __('products.model') . ' es requerido',
-                'origin.required' => __('products.origin') . ' es requerido',
+                'name.required' => __('products.name').' es requerido',
+                'client.required' => __('products.client').' es requerido',
+                'description.required' => __('products.description').' es requerido',
+                'brand.required' => __('products.brand').' es requerido',
+                'model.required' => __('products.model').' es requerido',
+                'origin.required' => __('products.origin').' es requerido',
             ]
         );
 
@@ -148,6 +151,7 @@ class ProductsController extends Controller
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
+
             return back()->with('error', __('products.updated_error'))->withInput();
         }
     }
@@ -157,11 +161,13 @@ class ProductsController extends Controller
         try {
             $product = Products::findOrFail($id);
             $product->delete();
+
             return redirect()->route('admin.products')->with('success', __('products.deleted_successfully'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
+
             return back()->with('error', __('products.deleted_error'));
         }
     }

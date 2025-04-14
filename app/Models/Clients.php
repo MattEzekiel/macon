@@ -11,9 +11,13 @@ class Clients extends Model
     use SoftDeletes;
 
     public $incrementing = true;
+
     public $timestamps = true;
+
     protected $table = 'clients';
+
     protected $primaryKey = 'id';
+
     protected $fillable = [
         'legal_name',
         'tax_id',
@@ -22,6 +26,7 @@ class Clients extends Model
         'contact_phone',
         'legal_address',
     ];
+
     protected $casts = [
         'id' => 'integer',
         'legal_name' => 'string',

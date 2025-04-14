@@ -5,7 +5,7 @@
 # ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php
 
 # O Para Laravel Pint
-./vendor/bin/pint
+php vendor/bin/pint
 
 # O Para PHPCS
 # ./vendor/bin/phpcbf
