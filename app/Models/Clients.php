@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Clients extends Model
@@ -49,6 +50,18 @@ class Clients extends Model
     public function products(): HasMany
     {
         return $this->hasMany(Products::class, 'client_id');
+    }
+
+    public function files(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Files::class,
+            Products::class,
+            'client_id',
+            'product_id',
+            'id',
+            'id'
+        );
     }
 
     public function qrs(): HasMany
