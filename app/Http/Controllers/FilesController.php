@@ -223,4 +223,11 @@ class FilesController extends Controller
             return back()->with('error', __('files.deleted_error'));
         }
     }
+
+    public function incrementVisits($id)
+    {
+        $file = Files::findOrFail($id);
+        $file->increment('visits_count');
+        return redirect($file->file_url);
+    }
 }
