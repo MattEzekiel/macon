@@ -10,7 +10,10 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
 @yield('general')
+<footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+    <p class="py-5">Macon &copy; - {{ date('Y') }}</p>
+</footer>
 </body>
 </html>

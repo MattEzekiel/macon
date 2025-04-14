@@ -21,6 +21,7 @@
             <th>{{ __('products.brand') }}</th>
             <th>{{ __('products.model') }}</th>
             <th>{{ __('products.origin') }}</th>
+            <th>{{ __('products.files') }}</th>
             <th>Acciones</th>
         </tr>
         </thead>
@@ -34,6 +35,7 @@
                 <td>{{ $product->brand }}</td>
                 <td>{{ $product->model }}</td>
                 <td>{{ $product->origin }}</td>
+                <td>{{ $product->files->count() }}</td>
                 <td>
                     <x-button-link
                             href="{{ route('admin.edit.product', ['id' => $product->id]) }}"

@@ -30,7 +30,7 @@ class ProductsController extends Controller
         ]);
 
         $products = $products
-            ->with('client')
+            ->with('client', 'files')
             ->orderBy('created_at', 'desc')
             ->paginate(10)
             ->withQueryString();

@@ -1,6 +1,6 @@
 @extends('layouts.general')
 @section('general')
-    <main class="min-h-screen bg-gradient-to-b from-base-200 to-base-300 p-6">
+    <main class="flex-1 bg-gradient-to-b from-base-200 to-base-300 p-6">
         <div class="max-w-2xl mx-auto">
             @if($product)
                 <div class="text-center mb-8">
