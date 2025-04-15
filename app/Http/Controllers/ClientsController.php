@@ -16,9 +16,6 @@ class ClientsController extends Controller
 {
     public function index(Request $request): View|Application|Factory
     {
-        $filters = $request->only(['deleted', 'client']);
-        $search_options = Clients::searcher();
-
         $data = Clients::select(['id', 'legal_name', 'tax_id', 'contact_name', 'contact_email', 'contact_phone', 'legal_address', 'created_at', 'updated_at']);
 
         $data->when($request->deleted, function ($query, $deletion) {

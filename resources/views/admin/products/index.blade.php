@@ -11,6 +11,7 @@
     <x-button-link href="{{ route('admin.new.product') }}">
         Crear nuevo producto
     </x-button-link>
+    @include('admin.products.forms.searcher')
     <x-table-default>
         <thead class="bg-accent-content">
         <tr>
