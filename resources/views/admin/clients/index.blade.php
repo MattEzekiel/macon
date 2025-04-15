@@ -12,6 +12,7 @@
     <x-button-link href="{{ route('admin.new.client') }}">
         Crear nuevo cliente
     </x-button-link>
+    @include('admin.clients.forms.searcher')
     <x-table-default>
         <thead class="bg-accent-content">
         <tr>

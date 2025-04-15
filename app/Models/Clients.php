@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
 class Clients extends Model
 {
@@ -37,9 +38,38 @@ class Clients extends Model
         'legal_address' => 'string',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
-    public function getFormData(): array
+    public static function searcher(array $request = []): array
+    {
+        $clientQuery = Clients::select(['id', 'legal_name']);
+
+        if (isset($request['deleted']) && $request['deleted'] == '1') {
+            $clientQuery->onlyTrashed();
+        } elseif (!isset($request['deleted']) || $request['deleted'] == '2') {
+            $clientQuery->withTrashed();
+        }
+
+        $clients = $clientQuery->get();
+
+        return [
+            'client' => [
+                'type' => 'select',
+                'data' => $clients,
+            ],
+            'deleted' => [
+                'type' => 'select',
+                'data' => Collection::make([
+                    ['id' => '0', 'value' => 'No'],
+                    ['id' => '1', 'value' => 'Si'],
+                    ['id' => '2', 'value' => 'Todos']
+                ]),
+            ],
+        ];
+    }
+
+    public static function getFormData(): array
     {
         return [
             'legal_name' => 'text',
