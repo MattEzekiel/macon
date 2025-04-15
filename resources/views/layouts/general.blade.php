@@ -15,5 +15,6 @@
 <footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
     <p class="py-5">Macon &copy; - {{ date('Y') }}</p>
 </footer>
+@stack('scripts')
 </body>
 </html>

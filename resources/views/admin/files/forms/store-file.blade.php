@@ -42,21 +42,29 @@
 
                 reader.onload = function(e) {
                     const fileContainer = document.createElement('div');
-                    fileContainer.className = 'mb-5 relative';
+                    fileContainer.className = 'w-80 border rounded shadow border-gray-700 p-4 transition-all duration-300 hover:shadow-xl group';
                     fileContainer.id = `container-${fileId}`;
 
                     const pdf = document.createElement('object');
-                    pdf.className = 'aspect-square w-48 h-48 mb-3.5';
+                    pdf.className = 'aspect-square w-full mb-3.5 max-w-[250px] mx-auto';
                     pdf.data = e.target.result;
                     pdf.type = 'application/pdf';
 
                     const fileInfo = document.createElement('div');
+                    fileInfo.className = 'space-y-2';
+
+                    const iconTemplate = document.createElement('template');
+                    iconTemplate.innerHTML = `<x-icons.file-icon class="h-6 w-6 text-gray-50 group-hover:text-gray-300 transition-all duration-300"></x-icons.file-icon>`;
+                    
                     fileInfo.innerHTML = `
-                <p><span class="text-sm">Nombre original:</span> ${file.name}</p>
-            `;
+                        <div class="flex items-center space-x-3">
+                            ${iconTemplate.innerHTML}
+                            <span class="text-lg font-medium text-gray-50 transition-all duration-300 group-hover:text-gray-300">${file.name}</span>
+                        </div>
+                    `;
 
                     const deleteButton = document.createElement('button');
-                    deleteButton.className = 'btn btn-xs btn-error btn-soft mt-2';
+                    deleteButton.className = 'btn btn-xs btn-error btn-soft mt-4 mx-auto block transition-colors duration-300';
                     deleteButton.textContent = 'Eliminar';
                     deleteButton.setAttribute('type', 'button');
                     deleteButton.addEventListener('click', () => removePreviewFile(fileId, index));
