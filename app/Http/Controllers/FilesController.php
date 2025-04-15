@@ -224,10 +224,9 @@ class FilesController extends Controller
         }
     }
 
-    public function incrementVisits($id)
+    public function incrementVisits($id): void
     {
         $file = Files::findOrFail($id);
         $file->increment('visits_count');
-        return redirect($file->file_url);
     }
 }
