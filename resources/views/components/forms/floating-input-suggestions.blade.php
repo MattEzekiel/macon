@@ -37,6 +37,4 @@
     <p class="validator-hint {{ $error ? 'validator-hint-error bg-error text-error-content p-1.5 rounded' : 'hidden' }}">
         {{ $error }}
     </p>
-
-
 </div>
