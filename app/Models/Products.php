@@ -34,7 +34,7 @@ class Products extends Model
 
         if (isset($request['deleted']) && $request['deleted'] == '1') {
             $productsQuery->onlyTrashed();
-        } elseif (!isset($request['deleted']) || $request['deleted'] == '2') {
+        } elseif (! isset($request['deleted']) || $request['deleted'] == '2') {
             $productsQuery->withTrashed();
         }
 
@@ -48,26 +48,26 @@ class Products extends Model
             ],
             'name' => [
                 'type' => 'suggestion',
-                'data' => $products->map(fn($product) => json_decode(json_encode(['id' => $product->id, 'value' => $product->name]))),
+                'data' => $products->map(fn ($product) => json_decode(json_encode(['id' => $product->id, 'value' => $product->name]))),
             ],
             'brand' => [
                 'type' => 'suggestion',
-                'data' => $products->map(fn($product) => json_decode(json_encode(['id' => $product->id, 'value' => $product->brand]))),
+                'data' => $products->map(fn ($product) => json_decode(json_encode(['id' => $product->id, 'value' => $product->brand]))),
             ],
             'model' => [
                 'type' => 'suggestion',
-                'data' => $products->map(fn($product) => json_decode(json_encode(['id' => $product->id, 'value' => $product->model]))),
+                'data' => $products->map(fn ($product) => json_decode(json_encode(['id' => $product->id, 'value' => $product->model]))),
             ],
             'origin' => [
                 'type' => 'suggestion',
-                'data' => $products->map(fn($product) => json_decode(json_encode(['id' => $product->id, 'value' => $product->origin]))),
+                'data' => $products->map(fn ($product) => json_decode(json_encode(['id' => $product->id, 'value' => $product->origin]))),
             ],
             'deleted' => [
                 'type' => 'select',
                 'data' => Collection::make([
                     ['id' => '0', 'value' => 'No'],
                     ['id' => '1', 'value' => 'Si'],
-                    ['id' => '2', 'value' => 'Todos']
+                    ['id' => '2', 'value' => 'Todos'],
                 ]),
             ],
         ];

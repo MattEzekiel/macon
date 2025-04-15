@@ -77,13 +77,13 @@ class ClientsController extends Controller
                 'legal_address' => 'required',
             ],
             [
-                'legal_name.required' => __('clients.legal_name') . ' es requerido',
-                'tax_id.required' => __('clients.tax_id') . ' es requerido',
-                'contact_name.required' => __('clients.contact_name') . ' es requerido',
-                'contact_email.required' => __('clients.contact_email') . ' es requerido',
-                'contact_email.email' => __('clients.contact_email') . ' es inválido',
-                'contact_phone.required' => __('clients.contact_phone') . ' es requerido',
-                'legal_address.required' => __('clients.legal_address') . ' es requerido',
+                'legal_name.required' => __('clients.legal_name').' es requerido',
+                'tax_id.required' => __('clients.tax_id').' es requerido',
+                'contact_name.required' => __('clients.contact_name').' es requerido',
+                'contact_email.required' => __('clients.contact_email').' es requerido',
+                'contact_email.email' => __('clients.contact_email').' es inválido',
+                'contact_phone.required' => __('clients.contact_phone').' es requerido',
+                'legal_address.required' => __('clients.legal_address').' es requerido',
             ]
         );
 
@@ -123,13 +123,13 @@ class ClientsController extends Controller
                 'legal_address' => 'required',
             ],
             [
-                'legal_name.required' => __('clients.legal_name') . ' es requerido',
-                'tax_id.required' => __('clients.tax_id') . ' es requerido',
-                'contact_name.required' => __('clients.contact_name') . ' es requerido',
-                'contact_email.required' => __('clients.contact_email') . ' es requerido',
-                'contact_email.email' => __('clients.contact_email') . ' es inválido',
-                'contact_phone.required' => __('clients.contact_phone') . ' es requerido',
-                'legal_address.required' => __('clients.legal_address') . ' es requerido',
+                'legal_name.required' => __('clients.legal_name').' es requerido',
+                'tax_id.required' => __('clients.tax_id').' es requerido',
+                'contact_name.required' => __('clients.contact_name').' es requerido',
+                'contact_email.required' => __('clients.contact_email').' es requerido',
+                'contact_email.email' => __('clients.contact_email').' es inválido',
+                'contact_phone.required' => __('clients.contact_phone').' es requerido',
+                'legal_address.required' => __('clients.legal_address').' es requerido',
             ]
         );
 

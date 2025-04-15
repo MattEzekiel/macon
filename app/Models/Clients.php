@@ -48,7 +48,7 @@ class Clients extends Model
 
         if (isset($request['deleted']) && $request['deleted'] == '1') {
             $clientQuery->onlyTrashed();
-        } elseif (!isset($request['deleted']) || $request['deleted'] == '2') {
+        } elseif (! isset($request['deleted']) || $request['deleted'] == '2') {
             $clientQuery->withTrashed();
         }
 
@@ -64,7 +64,7 @@ class Clients extends Model
                 'data' => Collection::make([
                     ['id' => '0', 'value' => 'No'],
                     ['id' => '1', 'value' => 'Si'],
-                    ['id' => '2', 'value' => 'Todos']
+                    ['id' => '2', 'value' => 'Todos'],
                 ]),
             ],
         ];

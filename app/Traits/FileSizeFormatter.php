@@ -7,7 +7,7 @@ trait FileSizeFormatter
     public function formatFileSize($size)
     {
         $unit = 'B';
-        
+
         switch (true) {
             case $size >= 1024 * 1024 * 1024:
                 $size = $size / (1024 * 1024 * 1024);
@@ -22,7 +22,7 @@ trait FileSizeFormatter
                 $unit = 'KB';
                 break;
         }
-        
-        return number_format($size, 2) . ' ' . $unit;
+
+        return number_format($size, 2).' '.$unit;
     }
-} 
+}

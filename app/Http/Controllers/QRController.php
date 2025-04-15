@@ -128,8 +128,8 @@ class QRController extends Controller
             $files = Files::where('product_id', $data->product_id)->get();
 
             QRs::where('product_id', $data->product_id)
-               ->where('client_id', $data->client_id)
-               ->increment('visits_count');
+                ->where('client_id', $data->client_id)
+                ->increment('visits_count');
 
             return view('links', compact('files', 'product'));
         }

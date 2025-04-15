@@ -31,6 +31,7 @@
         @forelse($list as $option)
             <option value="{{ $option->id }}">{{ $option->value }}</option>
         @empty
+            <option value=""></option>
         @endforelse
     </datalist>
     <p class="validator-hint {{ $error ? 'validator-hint-error bg-error text-error-content p-1.5 rounded' : 'hidden' }}">

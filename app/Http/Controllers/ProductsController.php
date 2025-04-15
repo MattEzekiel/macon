@@ -27,7 +27,7 @@ class ProductsController extends Controller
             'origin',
             'created_at',
             'updated_at',
-            'deleted_at'
+            'deleted_at',
         ]);
 
         $products->when(request()->client, function ($query, $id) {
@@ -35,19 +35,19 @@ class ProductsController extends Controller
         });
 
         $products->when(request()->name, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
 
         $products->when(request()->brand, function ($query, $brand) {
-            $query->where('brand', 'like', '%' . $brand . '%');
+            $query->where('brand', 'like', '%'.$brand.'%');
         });
 
         $products->when(request()->model, function ($query, $model) {
-            $query->where('model', 'like', '%' . $model . '%');
+            $query->where('model', 'like', '%'.$model.'%');
         });
 
         $products->when(request()->origin, function ($query, $origin) {
-            $query->where('origin', 'like', '%' . $origin . '%');
+            $query->where('origin', 'like', '%'.$origin.'%');
         });
 
         $products->when(request()->deleted, function ($query, $deletion) {
@@ -97,12 +97,12 @@ class ProductsController extends Controller
                 'origin' => 'required',
             ],
             [
-                'name.required' => __('products.name') . ' es requerido',
-                'client.required' => __('products.client') . ' es requerido',
-                'description.required' => __('products.description') . ' es requerido',
-                'brand.required' => __('products.brand') . ' es requerido',
-                'model.required' => __('products.model') . ' es requerido',
-                'origin.required' => __('products.origin') . ' es requerido',
+                'name.required' => __('products.name').' es requerido',
+                'client.required' => __('products.client').' es requerido',
+                'description.required' => __('products.description').' es requerido',
+                'brand.required' => __('products.brand').' es requerido',
+                'model.required' => __('products.model').' es requerido',
+                'origin.required' => __('products.origin').' es requerido',
             ]
         );
 
@@ -145,12 +145,12 @@ class ProductsController extends Controller
                 'origin' => 'required',
             ],
             [
-                'name.required' => __('products.name') . ' es requerido',
-                'client.required' => __('products.client') . ' es requerido',
-                'description.required' => __('products.description') . ' es requerido',
-                'brand.required' => __('products.brand') . ' es requerido',
-                'model.required' => __('products.model') . ' es requerido',
-                'origin.required' => __('products.origin') . ' es requerido',
+                'name.required' => __('products.name').' es requerido',
+                'client.required' => __('products.client').' es requerido',
+                'description.required' => __('products.description').' es requerido',
+                'brand.required' => __('products.brand').' es requerido',
+                'model.required' => __('products.model').' es requerido',
+                'origin.required' => __('products.origin').' es requerido',
             ]
         );
 
