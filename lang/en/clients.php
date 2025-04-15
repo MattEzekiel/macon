@@ -18,5 +18,6 @@ return [
     'files' => 'Files',
     'qrs' => 'QRs',
     'client' => 'Client',
+    'clients' => 'Clients',
     'deleted' => 'Client deleted',
 ];

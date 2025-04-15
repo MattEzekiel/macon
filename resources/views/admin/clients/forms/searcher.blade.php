@@ -7,6 +7,10 @@
         @foreach($fields as $key => $value)
             @if($key === 'client')
                 <div class="flex-1">
+                    @php
+                        $client_data = $value['data']->map(fn($option) => json_decode(json_encode(['id' => $option->id,
+                            'value' => $option->legal_name])));
+                    @endphp
                     <x-forms.floating-select
                             name="{{ $key }}"
                             id="{{ $key }}"
@@ -14,12 +18,15 @@
                             error="{{ $errors->has($key) ? $errors->first($key) : null }}"
                             value="{{ old($key, request()->get($key)) }}"
                             required={{ false }}
-                            placeholder="{{ __('clients.' . $key) }}"
-                            :options="$value['data']->map(fn($option) => json_decode(json_encode(['id' => $option->id, 'value' => $option->legal_name])))"
+                            :options="$client_data"
                     />
                 </div>
             @else
                 <div class="flex-1">
+                    @php
+                        $formated_data = $value['data']->map(fn($option) => json_decode(json_encode(['id' => $option['id'],
+                            'value' => $option['value']])));
+                    @endphp
                     <x-forms.floating-select
                             name="{{ $key }}"
                             id="{{ $key }}"
@@ -27,8 +34,7 @@
                             error="{{ $errors->has($key) ? $errors->first($key) : null }}"
                             value="{{ old($key, request()->get($key)) }}"
                             required={{ false }}
-                        placeholder="{{ __('clients.' . $key) }}"
-                            :options="$value['data']->map(fn($option) => json_decode(json_encode(['id' => $option['id'], 'value' => $option['value']])))"
+                            :options="$formated_data"
                     />
                 </div>
             @endif
