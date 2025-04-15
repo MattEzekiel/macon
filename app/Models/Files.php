@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Files extends Model
@@ -22,8 +22,8 @@ class Files extends Model
         'file_size'
     ];
 
-    public function product(): BelongsToMany
+    public function product(): BelongsTo
     {
-        return $this->belongsToMany(Products::class, 'files', 'product_id', 'id');
+        return $this->belongsTo(Products::class, 'product_id');
     }
 }

@@ -20,9 +20,7 @@ class QRController extends Controller
 {
     public function index(): View|Application|Factory
     {
-        $qrs = QRs::with('product', 'client', 'product.files')
-            ->paginate(10)
-            ->withQueryString();
+        $qrs = QRs::with('product', 'client', 'product.files')->paginate(10)->withQueryString();
         return view('admin.qr.index', compact('qrs'));
     }
 
@@ -124,9 +122,14 @@ class QRController extends Controller
         if (Clients::where('id', $data->client_id)->exists() && Products::where('id', $data->product_id)->exists()) {
             $product = Products::with('client')->find($data->product_id);
             $files = Files::where('product_id', $data->product_id)->get();
+            
+            QRs::where('product_id', $data->product_id)
+               ->where('client_id', $data->client_id)
+               ->increment('visits_count');
+               
             return view('links', compact('files', 'product'));
         }
-
+        
         return view('links', ['files' => [], 'product']);
     }
 }

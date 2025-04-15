@@ -76,3 +76,5 @@ Route::prefix('admin')->group(function () {
         Route::get('contactos', [ContactController::class, 'index'])->name('admin.contactos');
     });
 });
+
+Route::get('/files/{id}/increment-visits', [FilesController::class, 'incrementVisits'])->name('files.increment-visits');
