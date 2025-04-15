@@ -82,9 +82,47 @@ class Clients extends Model
         ];
     }
 
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::deleting(function ($client) {
+            $client->products()->each(function ($product) {
+                $product->delete();
+            });
+
+            $client->qrs()->each(function ($qr) {
+                $qr->delete();
+            });
+
+            $client->files()->each(function ($file) {
+                $file->delete();
+            });
+        });
+
+        static::restoring(function ($client) {
+            $client->products()->withTrashed()->each(function ($product) {
+                $product->restore();
+            });
+
+            $client->qrs()->withTrashed()->each(function ($qr) {
+                $qr->restore();
+            });
+
+            $client->files()->withTrashed()->each(function ($file) {
+                $file->restore();
+            });
+        });
+    }
+
     public function products(): HasMany
     {
         return $this->hasMany(Products::class, 'client_id');
+    }
+
+    public function qrs(): HasMany
+    {
+        return $this->hasMany(QRs::class, 'client_id');
     }
 
     public function files(): HasManyThrough
@@ -97,11 +135,6 @@ class Clients extends Model
             'id',
             'id'
         );
-    }
-
-    public function qrs(): HasMany
-    {
-        return $this->hasMany(QRs::class, 'client_id');
     }
 
     public function users(): HasMany

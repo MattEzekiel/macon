@@ -44,48 +44,62 @@
                     >
                         Editar
                     </x-button-link>
-                    <button class="btn btn-xs btn-error btn-soft btn-delete-button"
-                            data-id="{{'modal-' . $product->id }}">
-                        Eliminar
-                    </button>
-                    <dialog id="{{'modal-' . $product->id }}" class="modal">
-                        <div class="modal-box">
-                            <h3 class="text-lg font-bold">¿Desea eliminar el producto?</h3>
-                            <small class="py-2 text-xs">Presione ESC para cerrar</small>
-                            <div class="modal-action mt-2.5">
-                                <div class="w-full">
-                                    <form id="{{ 'delete-product-' . $product->id }}"
-                                          action="{{ route('admin.product.delete', ['id' => $product->id]) }}"
-                                          method="post"
-                                          class="w-full grid grid-cols-1 gap-2.5 delete-button">
-                                        <p class="mb-5 mt-3">Escriba: <span
-                                                    class="text-error">{{ $product->name }}</span> para
-                                            eliminarlo</p>
-                                        @method('DELETE')
-                                        @csrf
-                                        <x-forms.floating-input
-                                                type="text"
-                                                name="{{ $product->id }}_name"
-                                                id="{{ $product->id }}_name"
-                                                label="{{ __('products.name') }}"
-                                                placeholder="{{ __('products.name') }}"
-                                                required="{{ true }}"
-                                        />
-                                    </form>
-                                    <div class="flex flex-wrap lg:justify-end items-center mt-2.5 gap-2.5">
-                                        <form method="dialog">
-                                            <button class="btn">Cerrar</button>
+                    @if($product->deleted_at === null)
+                        <button class="btn btn-xs btn-error btn-soft btn-delete-button"
+                                data-id="{{'modal-' . $product->id }}">
+                            Eliminar
+                        </button>
+                        <dialog id="{{'modal-' . $product->id }}" class="modal">
+                            <div class="modal-box">
+                                <h3 class="text-lg font-bold">¿Desea eliminar el producto?</h3>
+                                <small class="py-2 text-xs">Presione ESC para cerrar</small>
+                                <div class="modal-action mt-2.5">
+                                    <div class="w-full">
+                                        <form id="{{ 'delete-product-' . $product->id }}"
+                                              action="{{ route('admin.product.delete', ['id' => $product->id]) }}"
+                                              method="post"
+                                              class="w-full grid grid-cols-1 gap-2.5 delete-button">
+                                            <p class="mb-5 mt-3">Escriba: <span
+                                                        class="text-error">{{ $product->name }}</span> para
+                                                eliminarlo</p>
+                                            @method('DELETE')
+                                            @csrf
+                                            <x-forms.floating-input
+                                                    type="text"
+                                                    name="{{ $product->id }}_name"
+                                                    id="{{ $product->id }}_name"
+                                                    label="{{ __('products.name') }}"
+                                                    placeholder="{{ __('products.name') }}"
+                                                    required="{{ true }}"
+                                            />
                                         </form>
-                                        <button type="submit"
-                                                form="{{'delete-product-' . $product->id }}"
-                                                disabled
-                                                class="btn btn-soft btn-error">Eliminar producto
-                                        </button>
+                                        <div class="flex flex-wrap lg:justify-end items-center mt-2.5 gap-2.5">
+                                            <form method="dialog">
+                                                <button class="btn">Cerrar</button>
+                                            </form>
+                                            <button type="submit"
+                                                    form="{{'delete-product-' . $product->id }}"
+                                                    disabled
+                                                    class="btn btn-soft btn-error">Eliminar producto
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </dialog>
+                        </dialog>
+                    @else
+                        <form
+                                action="{{ route('admin.product.restore', ['id' => $product->id]) }}"
+                                method="post"
+                                class="inline"
+                        >
+                            @csrf
+                            @method('PATCH')
+                            <button class="btn btn-xs btn-success btn-soft">
+                                Restaurar
+                            </button>
+                        </form>
+                    @endif
                 </td>
             </tr>
         @empty

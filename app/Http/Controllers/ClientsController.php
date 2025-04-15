@@ -16,7 +16,7 @@ class ClientsController extends Controller
 {
     public function index(Request $request): View|Application|Factory
     {
-        $data = Clients::select(['id', 'legal_name', 'tax_id', 'contact_name', 'contact_email', 'contact_phone', 'legal_address', 'created_at', 'updated_at']);
+        $data = Clients::select(['id', 'legal_name', 'tax_id', 'contact_name', 'contact_email', 'contact_phone', 'legal_address', 'created_at', 'updated_at', 'deleted_at']);
 
         $data->when($request->deleted, function ($query, $deletion) {
             if ($deletion == '1') {
@@ -170,6 +170,22 @@ class ClientsController extends Controller
             }
 
             return back()->with('error', __('clients.deleted_error'));
+        }
+    }
+
+    public function ClientRestore(int $id): RedirectResponse
+    {
+        try {
+            $client = Clients::withTrashed()->findOrFail($id);
+            $client->restore();
+
+            return redirect()->back()->with('success', __('clients.restored_successfully'));
+        } catch (Exception $exception) {
+            if (env('APP_ENV') === 'local') {
+                Log::error($exception->getMessage());
+            }
+
+            return back()->with('error', __('clients.restored_error'));
         }
     }
 }

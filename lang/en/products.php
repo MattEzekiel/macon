@@ -17,4 +17,6 @@ return [
     'files' => 'Files',
     'deleted' => 'Product deleted',
     'product_name' => 'Product name',
+    'restored_successfully' => 'Product restored successfully',
+    'restored_error' => 'There was an error while restoring the product',
 ];

@@ -20,4 +20,6 @@ return [
     'client' => 'Client',
     'clients' => 'Clients',
     'deleted' => 'Client deleted',
+    'restored_successfully' => 'Client restored successfully',
+    'restored_error' => 'There was an error while restoring the client',
 ];

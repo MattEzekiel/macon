@@ -27,6 +27,7 @@ class ProductsController extends Controller
             'origin',
             'created_at',
             'updated_at',
+            'deleted_at'
         ]);
 
         $products->when(request()->client, function ($query, $id) {
@@ -197,6 +198,22 @@ class ProductsController extends Controller
             }
 
             return back()->with('error', __('products.deleted_error'));
+        }
+    }
+
+    public function ProductRestore(int $id): RedirectResponse
+    {
+        try {
+            $product = Products::withTrashed()->findOrFail($id);
+            $product->restore();
+
+            return redirect()->back()->with('success', __('products.restored_successfully'));
+        } catch (Exception $exception) {
+            if (env('APP_ENV') === 'local') {
+                Log::error($exception->getMessage());
+            }
+
+            return back()->with('error', __('products.restored_error'));
         }
     }
 }

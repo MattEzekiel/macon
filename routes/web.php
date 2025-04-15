@@ -33,6 +33,7 @@ Route::prefix('admin')->group(function () {
             Route::post('store', [ClientsController::class, 'ClientStore'])->name('admin.client.store');
             Route::put('update/{id}', [ClientsController::class, 'ClientUpdate'])->name('admin.client.update');
             Route::delete('delete/{id}', [ClientsController::class, 'ClientDelete'])->name('admin.client.delete');
+            Route::patch('restore/{id}', [ClientsController::class, 'ClientRestore'])->name('admin.client.restore');
         });
 
         Route::prefix('products')->group(function () {
@@ -43,6 +44,7 @@ Route::prefix('admin')->group(function () {
             Route::post('store', [ProductsController::class, 'ProductStore'])->name('admin.product.store');
             Route::put('update/{id}', [ProductsController::class, 'ProductUpdate'])->name('admin.product.update');
             Route::delete('delete/{id}', [ProductsController::class, 'ProductDelete'])->name('admin.product.delete');
+            Route::patch('restore/{id}', [ProductsController::class, 'ProductRestore'])->name('admin.product.restore');
         });
 
         Route::prefix('files')->group(function () {

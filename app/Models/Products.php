@@ -73,6 +73,41 @@ class Products extends Model
         ];
     }
 
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::deleting(function ($product) {
+            $product->files()->each(function ($file) {
+                $file->delete();
+            });
+
+            $product->qrs()->each(function ($qr) {
+                $qr->delete();
+            });
+        });
+
+        static::restoring(function ($product) {
+            $product->files()->withTrashed()->each(function ($file) {
+                $file->restore();
+            });
+
+            $product->qrs()->withTrashed()->each(function ($qr) {
+                $qr->restore();
+            });
+        });
+    }
+
+    public function files(): HasMany
+    {
+        return $this->hasMany(Files::class, 'product_id', 'id');
+    }
+
+    public function qrs(): HasOne
+    {
+        return $this->hasOne(QRs::class, 'product_id');
+    }
+
     public function getFormData(): array
     {
         return [
@@ -88,15 +123,5 @@ class Products extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(Clients::class);
-    }
-
-    public function files(): HasMany
-    {
-        return $this->hasMany(Files::class, 'product_id', 'id');
-    }
-
-    public function qrs(): HasOne
-    {
-        return $this->hasOne(QRs::class, 'product_id');
     }
 }
