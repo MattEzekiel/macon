@@ -13,13 +13,34 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Traits\FileSizeFormatter;
 
 class FilesController extends Controller
 {
+    use FileSizeFormatter;
+
+    public function index(): View|Application|Factory
+    {
+        $files = Files::with(['product.client'])
+            ->select([
+                'id',
+                'file_name',
+                'original_file_name',
+                'file_url',
+                'product_id',
+                'file_size',
+                'created_at'
+            ])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.files.index', compact('files'));
+    }
+
     public function newFiles(int $id): View|Application|Factory
     {
         $product = Products::findOrFail($id);
-
         return view('admin.files.new-file', compact('product'));
     }
 
@@ -27,7 +48,6 @@ class FilesController extends Controller
     {
         $product = Products::with('files')->findOrFail($id);
         $product->file_edition = true;
-
         return view('admin.files.edit-file', compact('product'));
     }
 
@@ -35,7 +55,6 @@ class FilesController extends Controller
     {
         $product = Products::with('files')->findOrFail($id);
         $files = $product->files()->get();
-
         return view('admin.files.name-file', compact('product', 'files'));
     }
 
@@ -70,7 +89,7 @@ class FilesController extends Controller
 
             $base_path = strtolower("files/{$client_name}/{$product_name}");
 
-            if (! file_exists(public_path($base_path))) {
+            if (!file_exists(public_path($base_path))) {
                 mkdir(public_path($base_path), 0777, true);
             }
 
@@ -85,7 +104,6 @@ class FilesController extends Controller
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
-
             return back()->with('error', 'Hubo un error al subir el archivo');
         }
     }
@@ -94,13 +112,13 @@ class FilesController extends Controller
     {
         foreach ($files as $file) {
             $original_name = strtolower($file->getClientOriginalName());
-            $file_name = uniqid().'_'.Str::random(10);
+            $file_name = uniqid() . '_' . Str::random(10);
             $file_size = $file->getSize();
 
             $move_result = $file->move($base_path, $file_name);
             $file_exists = file_exists("{$base_path}/{$file_name}");
 
-            if (! $move_result || ! $file_exists) {
+            if (!$move_result || !$file_exists) {
                 continue;
             }
 
@@ -120,12 +138,11 @@ class FilesController extends Controller
                 $request->all(),
                 [
                     'product' => 'required|exists:products,id',
-                    'files.*' => 'required|mimes:pdf|max:10240',
+                    'files.*' => 'nullable|mimes:pdf|max:10240',
                 ],
                 [
                     'product.required' => 'El producto es requerido',
                     'product.exists' => 'El producto no existe',
-                    'files.*.required' => 'Los archivos son requeridos',
                     'files.*.mimes' => 'Los archivos deben ser en formato PDF',
                     'files.*.max' => 'Cada archivo no debe superar los 10 MB',
                 ]
@@ -139,26 +156,28 @@ class FilesController extends Controller
 
             $product = Products::with('client')->findOrFail($request->product);
 
-            $client_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->client->legal_name));
-            $product_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->name));
+            // Si hay archivos nuevos, procesarlos
+            if ($request->hasFile('files')) {
+                $client_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->client->legal_name));
+                $product_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->name));
 
-            $base_path = strtolower("files/{$client_name}/{$product_name}");
+                $base_path = strtolower("files/{$client_name}/{$product_name}");
 
-            if (! file_exists(public_path($base_path))) {
-                mkdir(public_path($base_path), 0777, true);
+                if (!file_exists(public_path($base_path))) {
+                    mkdir(public_path($base_path), 0777, true);
+                }
+
+                $files = $request->allFiles();
+                $this->saveFiles($files['files'], $base_path, $product->id);
             }
-
-            $files = $request->allFiles();
-            $this->saveFiles($files['files'], $base_path, $product->id);
 
             return redirect()
                 ->route('admin.name.files', ['id' => $product->id])
-                ->with('success', 'Los archivos se han subido correctamente');
+                ->with('success', 'Los archivos se han actualizado correctamente');
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
-
             return back()->with('error', 'Hubo un error al subir el archivo');
         }
     }
@@ -171,68 +190,90 @@ class FilesController extends Controller
                     'product' => 'required|exists:products,id',
                     'client' => 'required|exists:clients,id',
                     'file_names.*' => 'required',
-                    'original_names.*' => 'required',
+                    'files_ids.*' => 'required|exists:files,id',
                 ],
                 [
                     'product.required' => 'El producto es requerido',
                     'client.required' => 'El cliente es requerido',
                     'product.exists' => 'El producto no existe',
                     'client.exists' => 'El cliente no existe',
-                    'file_names.*.required' => 'Los archivos son requeridos',
-                    'original_names.*.required' => 'Los nombres originales son requeridos',
+                    'file_names.*.required' => 'Los nombres de archivo son requeridos',
+                    'files_ids.*.required' => 'Los IDs de archivo son requeridos',
+                    'files_ids.*.exists' => 'Uno o más archivos no existen',
                 ]
             );
 
             if ($validator->fails()) {
                 return back()
-                    ->with('error', 'Falló la generación del QR')
+                    ->with('error', 'Error al renombrar los archivos')
                     ->withErrors($validator)
                     ->withInput();
             }
 
-            $combined = [];
-            foreach ($request->file_names as $key => $file_name) {
-                $combined[] = [
-                    'file_name' => $file_name,
-                    'original_name' => $request->original_names[$key],
-                    'id' => $request->files_ids[$key],
-                ];
-            }
-
-            foreach ($combined as $file) {
-                $file = Files::where('product_id', $request->product)->where('original_file_name', $file['original_name'])->where('id', $file['id'])->firstOrFail();
-
-                $file->file_name = $file['file_name'];
+            foreach ($request->files_ids as $key => $file_id) {
+                $file = Files::findOrFail($file_id);
+                $file->file_name = $request->file_names[$key];
                 $file->save();
             }
 
-            return redirect()->route('admin.products')->with('success', 'Archivos renombreados correctamente');
+            return redirect()->route('admin.products')->with('success', 'Archivos renombrados correctamente');
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
-
-            return back()->with('error', 'Algo falló, intentelo de nuevo');
+            return back()->with('error', 'Error al renombrar los archivos');
         }
-
     }
 
-    public function FileDelete(int $id): RedirectResponse
+    public function FileDelete(int $id): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         try {
-            Files::findOrFail($id)->delete();
-
-            return redirect()->back()->with('success', __('files.deleted_successfully'));
-        } catch (Exception $exception) {
-            if (env('APP_ENV') === 'local') {
-                Log::error($exception->getMessage());
+            Log::info('Iniciando eliminación de archivo', ['file_id' => $id]);
+            
+            $file = Files::findOrFail($id);
+            Log::info('Archivo encontrado', [
+                'file_id' => $id,
+                'file_name' => $file->file_name,
+                'original_name' => $file->original_file_name
+            ]);
+            
+            $deleted = $file->delete();
+            Log::info('Resultado de eliminación', [
+                'file_id' => $id,
+                'deleted' => $deleted
+            ]);
+            
+            if (!$deleted) {
+                throw new Exception('No se pudo eliminar el archivo');
             }
+            
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Archivo eliminado correctamente'
+                ]);
+            }
+            
+            return redirect()->back()->with('success', 'Archivo eliminado correctamente');
+        } catch (Exception $exception) {
+            Log::error('Error al eliminar archivo', [
+                'file_id' => $id,
+                'error' => $exception->getMessage(),
+                'trace' => $exception->getTraceAsString()
+            ]);
 
-            return back()->with('error', __('files.deleted_error'));
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No se pudo eliminar el archivo'
+                ], 500);
+            }
+            
+            return back()->with('error', 'No se pudo eliminar el archivo');
         }
     }
 
-    public function IncrementVisits($id): void
+    public function incrementVisits($id): void
     {
         $file = Files::findOrFail($id);
         $file->increment('visits_count');

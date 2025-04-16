@@ -39,6 +39,13 @@
                 </a>
             </li>
             <li class="mb-2.5">
+                <a href="{{ route('admin.files') }}"
+                   class="[&>svg]:w-4 {{ request()->routeIs('admin.files') ? 'bg-base-content text-neutral' : '' }}">
+                    <x-icons.file-icon class="w-4 h-4"/>
+                    Archivos
+                </a>
+            </li>
+            <li class="mb-2.5">
                 <a href="{{ route('admin.qrs') }}"
                    class="[&>svg]:w-4 {{ request()->routeIs('admin.qrs') ? 'bg-base-content text-neutral' : '' }}">
                     <x-vaadin-qrcode />
