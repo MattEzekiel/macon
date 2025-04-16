@@ -46,6 +46,7 @@ Route::prefix('admin')->group(function () {
         });
 
         Route::prefix('files')->group(function () {
+            Route::get('/', [FilesController::class, 'index'])->name('admin.files');
             Route::get('new-file/{id}', [FilesController::class, 'newFiles'])->name('admin.new.files');
             Route::get('edit-file/{id}', [FilesController::class, 'editFiles'])->name('admin.edit.files');
             Route::get('name-file/{id}', [FilesController::class, 'nameFiles'])->name('admin.name.files');

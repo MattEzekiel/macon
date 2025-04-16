@@ -15,7 +15,7 @@
                         <h2 class="text-xl font-semibold text-gray-200">Total de Archivos</h2>
                         <p class="text-3xl font-bold text-indigo-400 mt-2">{{ number_format($totalFiles) }}</p>
                     </div>
-                    <div class="bg-indigo-700 p-3 rounded-full">
+                    <div class="bg-indigo-700 p-3 rounded-full text-indigo-200">
                         <x-icons.file-icon />
                     </div>
                 </div>
