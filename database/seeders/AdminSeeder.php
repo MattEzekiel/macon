@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
             'name' => 'Quique',
             'email' => 'admin@admin.com',
             'password' => Hash::make('AFasfasasf255581'),
-//            'verified_at' => Carbon::now(),
+            //            'verified_at' => Carbon::now(),
         ]);
     }
 }

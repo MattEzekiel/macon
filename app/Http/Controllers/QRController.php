@@ -18,13 +18,28 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class QRController extends Controller
 {
-    public function index(): View|Application|Factory
+    public function index(Request $request): View|Application|Factory
     {
-        $qrs = QRs::with('product', 'client', 'product.files')->paginate(10)->withQueryString();
+        $data = QRs::with('product', 'client', 'product.files');
+
+        $data->when($request->client, function ($query, $id) {
+            $query->where('client_id', $id);
+        });
+
+        $data->when($request->product, function ($query, $name) {
+            $query->whereHas('product', function ($q) use ($name) {
+                $q->where('name', 'like', '%'.$name.'%');
+            });
+        });
+
+        $qrs = $data->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
         return view('admin.qr.index', compact('qrs'));
     }
 
-    public function newQR(int|null $id = null): View|Application|Factory
+    public function newQR(?int $id = null): View|Application|Factory
     {
         if ($id) {
             $product = Products::with('client', 'files')->findOrFail($id);
@@ -68,7 +83,7 @@ class QRController extends Controller
             foreach ($request->file_names as $key => $file_name) {
                 $combined[] = [
                     'file_name' => $file_name,
-                    'original_name' => $request->original_names[$key]
+                    'original_name' => $request->original_names[$key],
                 ];
             }
 
@@ -84,15 +99,15 @@ class QRController extends Controller
 
             $payload = [
                 'product_id' => $product->id,
-                'client_id' => $product->client->id
+                'client_id' => $product->client->id,
             ];
 
-            $qr_filename = uniqid() . '.svg';
-            $local_path = 'qr_codes/' . $client_name . '/' . $product_name . '/' . $qr_filename;
+            $qr_filename = uniqid().'.svg';
+            $local_path = 'qr_codes/'.$client_name.'/'.$product_name.'/'.$qr_filename;
             $qr_path = public_path($local_path);
 
             $directory = dirname(public_path($local_path));
-            if (!file_exists($directory)) {
+            if (! file_exists($directory)) {
                 mkdir($directory, 0777, true);
             }
 
@@ -112,6 +127,7 @@ class QRController extends Controller
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
+
             return back()->with('error', 'Falló la generación del QR');
         }
     }
@@ -122,14 +138,14 @@ class QRController extends Controller
         if (Clients::where('id', $data->client_id)->exists() && Products::where('id', $data->product_id)->exists()) {
             $product = Products::with('client')->find($data->product_id);
             $files = Files::where('product_id', $data->product_id)->get();
-            
+
             QRs::where('product_id', $data->product_id)
-               ->where('client_id', $data->client_id)
-               ->increment('visits_count');
-               
+                ->where('client_id', $data->client_id)
+                ->increment('visits_count');
+
             return view('links', compact('files', 'product'));
         }
-        
+
         return view('links', ['files' => [], 'product']);
     }
 }

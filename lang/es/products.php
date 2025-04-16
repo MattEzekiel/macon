@@ -15,4 +15,8 @@ return [
     'deleted_successfully' => 'Producto eliminado correctamente',
     'deleted_error' => 'No se pudo eliminar el producto',
     'files' => 'Archivos',
+    'deleted' => 'Producto eliminado',
+    'product_name' => 'Nombre del producto',
+    'restored_successfully' => 'Producto restaurado correctamente',
+    'restored_error' => 'No se pudo restaurar el producto',
 ];

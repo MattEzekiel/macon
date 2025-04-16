@@ -31,6 +31,7 @@ class UserController extends Controller
     {
         $clients = Clients::select('id', 'legal_name')->get();
         $form_data = (new User)->getFormData();
+
         return view('admin.users.new-user', compact('form_data', 'clients'));
     }
 
@@ -39,6 +40,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $clients = Clients::select('id', 'legal_name')->get();
         $form_data = (new User)->getFormData();
+
         return view('admin.users.edit-user', compact('user', 'clients', 'form_data'));
     }
 
@@ -54,13 +56,13 @@ class UserController extends Controller
                 'confirm_password' => 'required|same:password',
             ],
             [
-                'name.required' => __('users.name') . ' es requerido',
-                'client.required' => __('users.client') . ' es requerido',
-                'email.required' => __('users.email') . ' es requerido',
-                'password.required' => __('users.password') . ' es requerido',
-                'password.min' => __('users.password_min') . ' es requerido',
-                'confirm_password.required' => __('users.confirm_password') . ' es requerido',
-                'confirm_password.same' => __('users.confirm_password') . ' y ' . __('users.password') . ' no coincide',
+                'name.required' => __('users.name').' es requerido',
+                'client.required' => __('users.client').' es requerido',
+                'email.required' => __('users.email').' es requerido',
+                'password.required' => __('users.password').' es requerido',
+                'password.min' => __('users.password_min').' es requerido',
+                'confirm_password.required' => __('users.confirm_password').' es requerido',
+                'confirm_password.same' => __('users.confirm_password').' y '.__('users.password').' no coincide',
             ]
         );
 
@@ -72,7 +74,7 @@ class UserController extends Controller
         }
         try {
             $validated = $validator->validated();
-            $user = new User();
+            $user = new User;
             $user->fill($validated);
             $client = Clients::findOrFail($validated['client']);
             $user->client_id = $client->id;
@@ -84,6 +86,7 @@ class UserController extends Controller
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
+
             return back()->with('error', __('users.created_error'))->withInput();
         }
     }
@@ -100,13 +103,13 @@ class UserController extends Controller
                 'confirm_password' => 'required|same:password',
             ],
             [
-                'name.required' => __('users.name') . ' es requerido',
-                'client.required' => __('users.client') . ' es requerido',
-                'email.required' => __('users.email') . ' es requerido',
-                'password.required' => __('users.password') . ' es requerido',
-                'password.min' => __('users.password_min') . ' es requerido',
-                'confirm_password.required' => __('users.confirm_password') . ' es requerido',
-                'confirm_password.same' => __('users.confirm_password') . ' y ' . __('users.password') . ' no coincide',
+                'name.required' => __('users.name').' es requerido',
+                'client.required' => __('users.client').' es requerido',
+                'email.required' => __('users.email').' es requerido',
+                'password.required' => __('users.password').' es requerido',
+                'password.min' => __('users.password_min').' es requerido',
+                'confirm_password.required' => __('users.confirm_password').' es requerido',
+                'confirm_password.same' => __('users.confirm_password').' y '.__('users.password').' no coincide',
             ]
         );
 
@@ -130,6 +133,7 @@ class UserController extends Controller
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
+
             return back()->with('error', __('users.created_error'))->withInput();
         }
     }
@@ -139,11 +143,13 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
             $user->delete();
+
             return redirect()->route('admin.users')->with('success', __('users.deleted_successfully'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
+
             return back()->with('error', __('users.deleted_error'));
         }
     }

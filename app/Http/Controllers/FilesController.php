@@ -41,6 +41,7 @@ class FilesController extends Controller
     public function newFiles(int $id): View|Application|Factory
     {
         $product = Products::findOrFail($id);
+
         return view('admin.files.new-file', compact('product'));
     }
 
@@ -48,6 +49,7 @@ class FilesController extends Controller
     {
         $product = Products::with('files')->findOrFail($id);
         $product->file_edition = true;
+
         return view('admin.files.edit-file', compact('product'));
     }
 
@@ -55,6 +57,7 @@ class FilesController extends Controller
     {
         $product = Products::with('files')->findOrFail($id);
         $files = $product->files()->get();
+
         return view('admin.files.name-file', compact('product', 'files'));
     }
 
@@ -89,7 +92,7 @@ class FilesController extends Controller
 
             $base_path = strtolower("files/{$client_name}/{$product_name}");
 
-            if (!file_exists(public_path($base_path))) {
+            if (! file_exists(public_path($base_path))) {
                 mkdir(public_path($base_path), 0777, true);
             }
 
@@ -104,6 +107,7 @@ class FilesController extends Controller
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
+
             return back()->with('error', 'Hubo un error al subir el archivo');
         }
     }
@@ -112,13 +116,13 @@ class FilesController extends Controller
     {
         foreach ($files as $file) {
             $original_name = strtolower($file->getClientOriginalName());
-            $file_name = uniqid() . '_' . Str::random(10);
+            $file_name = uniqid().'_'.Str::random(10);
             $file_size = $file->getSize();
 
             $move_result = $file->move($base_path, $file_name);
             $file_exists = file_exists("{$base_path}/{$file_name}");
 
-            if (!$move_result || !$file_exists) {
+            if (! $move_result || ! $file_exists) {
                 continue;
             }
 
@@ -178,6 +182,7 @@ class FilesController extends Controller
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
+
             return back()->with('error', 'Hubo un error al subir el archivo');
         }
     }
@@ -221,13 +226,16 @@ class FilesController extends Controller
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
+
             return back()->with('error', 'Error al renombrar los archivos');
+
         }
     }
 
     public function FileDelete(int $id): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         try {
+
             Log::info('Iniciando eliminación de archivo', ['file_id' => $id]);
             
             $file = Files::findOrFail($id);
@@ -255,6 +263,7 @@ class FilesController extends Controller
             }
             
             return redirect()->back()->with('success', 'Archivo eliminado correctamente');
+
         } catch (Exception $exception) {
             Log::error('Error al eliminar archivo', [
                 'file_id' => $id,
@@ -270,6 +279,7 @@ class FilesController extends Controller
             }
             
             return back()->with('error', 'No se pudo eliminar el archivo');
+
         }
     }
 
