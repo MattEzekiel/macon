@@ -19,7 +19,7 @@ class Files extends Model
         'file_url',
         'original_file_name',
         'file_name',
-        'file_size'
+        'file_size',
     ];
 
     public function product(): BelongsTo

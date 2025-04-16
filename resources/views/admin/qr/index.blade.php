@@ -10,14 +10,15 @@
     <x-heading1>
         QR's
     </x-heading1>
+    @include('admin.qr.forms.searcher')
     <x-table-default>
         <thead class="bg-accent-content">
         <tr>
             <th>#</th>
-            <th>Cliente</th>
-            <th>Producto</th>
-            <th>Archivos</th>
-            <th>Imagen</th>
+            <th>{{__('qrs.client')}}</th>
+            <th>{{ __('qrs.product') }}</th>
+            <th>{{ __('qrs.files') }}</th>
+            <th>{{ __('qrs.qr') }}</th>
         </tr>
         </thead>
         <tbody>

@@ -2,37 +2,41 @@
     'name',
     'id',
     'label',
+    'placeholder' => '',
+    'type' => 'text',
     'error' => null,
     'value' => '',
     'required' => false,
     'disabled' => false,
-    'options' => [],
-    'placeholder' => 'Seleccione una opción'
+    'list' => [],
+    'list_id'
 ])
 <div class="w-full">
     <label
             for="{{ $id }}" class="floating-label">
         <span>{{ $label }}</span>
-        <select
+        <input
+                type="{{ $type }}"
                 name="{{ $name }}"
                 id="{{ $id }}"
+                placeholder="{{ $placeholder }}"
                 class="input input-md w-full {{ count($errors) > 0 ? 'input-error' : '' }}"
+                value="{{ $value }}"
                 @required($required)
                 @disabled($disabled)
-        >
-            @if(count($options) > 0)
-                @if(!$value)
-                    <option selected disabled>{{ $placeholder }}</option>
-                @endif
-                @foreach($options as $option)
-                    <option @selected($value == $option->id) value="{{ $option->id }}">{{ $option->value }}</option>
-                @endforeach
-            @else
-                <option selected disabled>{{ __('general.no_options') }}</option>
-            @endif
-        </select>
+                list="{{ $list_id }}"
+        />
     </label>
+    <datalist id="{{ $list_id }}">
+        @forelse($list as $option)
+            <option value="{{ $option->id }}">{{ $option->value }}</option>
+        @empty
+            <option value=""></option>
+        @endforelse
+    </datalist>
     <p class="validator-hint {{ $error ? 'validator-hint-error bg-error text-error-content p-1.5 rounded' : 'hidden' }}">
         {{ $error }}
     </p>
+
+    
 </div>
