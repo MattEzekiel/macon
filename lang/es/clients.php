@@ -17,4 +17,9 @@ return [
     'products' => 'Productos',
     'files' => 'Archivos',
     'qrs' => 'QRs',
+    'client' => 'Cliente',
+    'clients' => 'Clientes',
+    'deleted' => 'Cliente eliminado',
+    'restored_successfully' => 'Cliente restaurado correctamente',
+    'restored_error' => 'No se pudo restaurar el cliente',
 ];

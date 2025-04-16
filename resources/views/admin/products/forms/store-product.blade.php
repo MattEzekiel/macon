@@ -8,7 +8,6 @@
     @forelse($form_data as $input => $value)
         @if($input === 'client')
             <x-forms.floating-select
-                    type="{{ $value }}"
                     name="{{ $input }}"
                     id="{{ $input }}"
                     label="{{ __('products.'.$input) }}"
