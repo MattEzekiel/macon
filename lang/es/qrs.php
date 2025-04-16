@@ -1,6 +1,8 @@
 <?php
 
 return [
-    'client' => 'Client',
-    'product' => 'Product',
+    'client' => 'Cliente',
+    'product' => 'Producto',
+    'files' => 'Archivos',
+    'qr' => 'QR',
 ];

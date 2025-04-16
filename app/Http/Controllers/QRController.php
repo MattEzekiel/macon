@@ -18,9 +18,21 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class QRController extends Controller
 {
-    public function index(): View|Application|Factory
+    public function index(Request $request): View|Application|Factory
     {
-        $qrs = QRs::with('product', 'client', 'product.files')
+        $data = QRs::with('product', 'client', 'product.files');
+
+        $data->when($request->client, function ($query, $id) {
+            $query->where('client_id', $id);
+        });
+
+        $data->when($request->product, function ($query, $name) {
+            $query->whereHas('product', function ($q) use ($name) {
+                $q->where('name', 'like', '%'.$name.'%');
+            });
+        });
+
+        $qrs = $data->orderBy('created_at', 'desc')
             ->paginate(10)
             ->withQueryString();
 

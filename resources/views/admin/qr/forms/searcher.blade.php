@@ -1,41 +1,36 @@
 @php
-    use App\Models\Clients;
-    $fields = new Clients()->searcher(request()->all());
+    use App\Models\QRs;
+    $fields = new QRs()->searcher();
 @endphp
 @if(count($fields) > 0)
     <search>
-        <form action="{{ route('admin.clients') }}" method="get" class="flex flex-wrap gap-2.5 items-center mt-1.5">
+        <form action="{{ route('admin.qrs') }}" method="get" class="flex flex-wrap gap-2.5 items-center mt-1.5">
             @foreach($fields as $key => $value)
-                @if($key === 'client')
+                @if($value['type'] === 'select')
                     <div class="flex-1">
-                        @php
-                            $client_data = $value['data']->map(fn($option) => json_decode(json_encode(['id' => $option->id,
-                                'value' => $option->legal_name])));
-                        @endphp
                         <x-forms.floating-select
                                 name="{{ $key }}"
                                 id="{{ $key }}"
-                                label="{{ __('clients.' . $key) }}"
+                                label="{{ __('qrs.' . $key) }}"
                                 error="{{ $errors->has($key) ? $errors->first($key) : null }}"
                                 value="{{ old($key, request()->get($key)) }}"
                                 :required="false"
-                                :options="$client_data"
+                                :options="$value['data']"
                         />
                     </div>
-                @else
+                @elseif($value['type'] === 'suggestion')
                     <div class="flex-1">
-                        @php
-                            $formated_data = $value['data']->map(fn($option) => json_decode(json_encode(['id' => $option['id'],
-                                'value' => $option['value']])));
-                        @endphp
-                        <x-forms.floating-select
+                        <x-forms.floating-input-suggestions
+                                type="text"
                                 name="{{ $key }}"
                                 id="{{ $key }}"
-                                label="{{ __('clients.' . $key) }}"
+                                label="{{ __('qrs.' . $key) }}"
                                 error="{{ $errors->has($key) ? $errors->first($key) : null }}"
                                 value="{{ old($key, request()->get($key)) }}"
+                                placeholder="{{ __('qrs.' . $key) }}"
+                                list_id="products_name"
                                 :required="false"
-                                :options="$formated_data"
+                                :list="$value['data']"
                         />
                     </div>
                 @endif
@@ -46,7 +41,7 @@
                 </x-forms.submit-button>
             </div>
             <div>
-                <a class="btn btn-error btn-outline" href="{{ route('admin.clients') }}">
+                <a class="btn btn-error btn-outline" href="{{ route('admin.qrs') }}">
                     {{ __('general.reset') }}
                 </a>
             </div>
