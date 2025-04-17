@@ -52,6 +52,7 @@
                         </div>
                     </td>
                 </tr>
+                
             @empty
                 <tr>
                     <td colspan="8" class="text-center text-2xl bg-content-200 py-2.5">No hay archivos para mostrar</td>

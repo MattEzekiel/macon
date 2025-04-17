@@ -65,6 +65,7 @@
                                                 required="{{ true }}"
                                         />
                                     </form>
+                                    
                                     <div class="flex flex-wrap lg:justify-end items-center mt-2.5 gap-2.5">
                                         <form method="dialog">
                                             <button class="btn">Cerrar</button>

@@ -93,6 +93,7 @@ class FilesController extends Controller
                 mkdir(public_path($base_path), 0777, true);
             }
 
+            
             $files = $request->allFiles();
 
             $this->saveFiles($files['files'], $base_path, $product->id);
