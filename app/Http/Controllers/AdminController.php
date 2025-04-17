@@ -121,7 +121,7 @@ class AdminController extends Controller
 
         $admin = Admin::where('email', $request->email)->first();
 
-        if (!$admin) {
+        if (! $admin) {
             return back()->with('error', 'El correo no existe')->withInput();
         }
 
@@ -190,7 +190,7 @@ class AdminController extends Controller
                 ['email', $request->email],
             ])->first();
 
-            if (!$passwordReset || $passwordReset->created_at->addMinutes(60)->isPast()) {
+            if (! $passwordReset || $passwordReset->created_at->addMinutes(60)->isPast()) {
                 return back()->with('error', 'El token es inválido o ha expirado')->withInput();
             }
 
@@ -205,6 +205,7 @@ class AdminController extends Controller
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
+
             return back()->with('error', 'Ha ocurrido un error')->withInput();
         }
     }
