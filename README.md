@@ -6,4 +6,5 @@
 <ul>
 <li>Laravel</li>
 <li>Daisy UI</li>
+<li>Laravel blade icons</li>
 </ul>
