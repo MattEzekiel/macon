@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\FileSizeFormatter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\FileSizeFormatter;
 
 class Files extends Model
 {
-    use SoftDeletes, FileSizeFormatter;
+    use FileSizeFormatter, SoftDeletes;
 
     protected $table = 'files';
 
