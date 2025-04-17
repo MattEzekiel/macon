@@ -59,6 +59,13 @@
                     Contacto
                 </a>
             </li>
+            <li class="mb-2.5">
+                <a href="{{ route('admin.logout') }}"
+                   class="[&>svg]:w-4">
+                    <x-tabler-logout />
+                    Cerrar sesión
+                </a>
+            </li>
         </ul>
     </nav>
 </div>

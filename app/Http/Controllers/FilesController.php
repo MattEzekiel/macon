@@ -232,7 +232,7 @@ class FilesController extends Controller
         }
     }
 
-    public function incrementVisits($id): void
+    public function IncrementVisits($id): void
     {
         $file = Files::findOrFail($id);
         $file->increment('visits_count');

@@ -14,10 +14,12 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/search/{payload}', [QRController::class, 'DisplayData'])->name('public_qr');
+Route::get('/files/{id}/increment-visits', [FilesController::class, 'IncrementVisits'])->name('files.increment-visits');
 
 Route::prefix('admin')->group(function () {
     Route::get('login', [AdminController::class, 'loginForm'])->name('login');
     Route::post('login', [AdminController::class, 'login'])->name('admin.login');
+    Route::get('logout', [AdminController::class, 'logout'])->name('admin.logout');
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/', function () {
@@ -78,5 +80,3 @@ Route::prefix('admin')->group(function () {
         Route::get('contactos', [ContactController::class, 'index'])->name('admin.contactos');
     });
 });
-
-Route::get('/files/{id}/increment-visits', [FilesController::class, 'incrementVisits'])->name('files.increment-visits');

@@ -77,4 +77,11 @@ class AdminController extends Controller
 
         return back()->with('error', 'Las credenciales son incorrectas')->withInput();
     }
+
+    public function logout(): RedirectResponse
+    {
+        auth('admin')->logout();
+
+        return redirect()->route('admin.login');
+    }
 }
