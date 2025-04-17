@@ -1,6 +1,6 @@
 @php use Illuminate\Support\Facades\Crypt; @endphp
 @extends('layouts.admin')
-
+@section('title', 'QRs')
 @section('admin')
     @if(session('success'))
         @component('components.alert', ['variant' => 'success'])

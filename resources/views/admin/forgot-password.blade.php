@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-@section('title', __('general.login'))
+@section('title', __('general.forgot_password'))
 @section('auth')
     <x-main-container class="grid place-items-center h-screen">
         <form action="{{ route('admin.login') }}" method="post"

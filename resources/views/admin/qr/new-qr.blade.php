@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title', __('general.new_qr'))
 @section('admin')
     @if(session('error'))
         @component('components.alert', ['variant' => 'error'])
