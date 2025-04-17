@@ -17,9 +17,13 @@ Route::get('/search/{payload}', [QRController::class, 'DisplayData'])->name('pub
 Route::get('/files/{id}/increment-visits', [FilesController::class, 'IncrementVisits'])->name('files.increment-visits');
 
 Route::prefix('admin')->group(function () {
-    Route::get('login', [AdminController::class, 'loginForm'])->name('login');
-    Route::post('login', [AdminController::class, 'login'])->name('admin.login');
+    Route::get('login', [AdminController::class, 'loginForm'])->name('admin.login.form');
     Route::get('logout', [AdminController::class, 'logout'])->name('admin.logout');
+    Route::get('forgot-password', [AdminController::class, 'forgotPassword'])->name('admin.forgot-password.form');
+    Route::get('restore-password/{token}', [AdminController::class, 'restorePasswordForm'])->name('admin.restore.password.token');
+    Route::post('login', [AdminController::class, 'login'])->name('admin.login');
+    Route::post('restore-password', [AdminController::class, 'restorePassword'])->name('admin.restore.password');
+    Route::post('reset-password', [AdminController::class, 'resetPassword'])->name('admin.reset.password');
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/', function () {

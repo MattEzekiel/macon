@@ -2,15 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResetPasswordMail;
+use App\Models\Admin;
 use App\Models\Clients;
 use App\Models\Files;
+use App\Models\PasswordResetToken;
 use App\Models\Products;
 use App\Traits\FileSizeFormatter;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -83,5 +92,120 @@ class AdminController extends Controller
         auth('admin')->logout();
 
         return redirect()->route('admin.login');
+    }
+
+    public function forgotPassword(): View|Application|Factory
+    {
+        return view('admin.forgot-password');
+    }
+
+    public function restorePassword(Request $request): RedirectResponse
+    {
+        $validator = Validator::make(
+            $request->email,
+            [
+                'email' => 'required|email',
+            ],
+            [
+                'email.required' => 'El correo es requerido',
+                'email.email' => 'El correo es inválido',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return back()
+                ->with('error', 'El correo es requerido')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $admin = Admin::where('email', $request->email)->first();
+
+        if (!$admin) {
+            return back()->with('error', 'El correo no existe')->withInput();
+        }
+
+        $token = Str::random(60);
+
+        try {
+            PasswordResetToken::updateOrInsert(
+                [
+                    'email' => $admin->email,
+                ],
+                [
+                    'email' => $admin->email,
+                    'token' => $token,
+                    'created_at' => now(),
+                ]
+            );
+
+            Mail::to($admin->email)->send(new ResetPasswordMail($token, $admin->name, 'admin.restore.password.token'));
+
+            return back()->with('success', 'Se ha enviado un correo para restablecer la contraseña');
+        } catch (Exception $e) {
+            if (env('APP_ENV') === 'local') {
+                Log::error($e->getMessage());
+            }
+
+            return back()->with('error', 'Ha ocurrido un error al enviar el correo');
+        }
+    }
+
+    public function restorePasswordForm(string $token): View|Application|Factory
+    {
+        return view('admin.reset-password', compact('token'));
+    }
+
+    public function resetPassword(Request $request): RedirectResponse
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'token' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|min:8|same:password_confirmed',
+                'password_confirmed' => 'required',
+            ],
+            [
+                'token.required' => 'El token es requerido',
+                'email.required' => 'El correo es requerido',
+                'email.email' => 'El correo es inválido',
+                'password.required' => 'La contraseña es requerida',
+                'password.min' => 'La contraseña debe tener al menos 8 caracteres',
+                'password.same' => 'La contraseña y la confirmación de la contraseña no coinciden',
+                'password_confirmed.required' => 'La confirmación de la contraseña es requerida',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return back()
+                ->with('error', 'Error al completar los datos')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try {
+            $passwordReset = PasswordResetToken::where([
+                ['token', $request->token],
+                ['email', $request->email],
+            ])->first();
+
+            if (!$passwordReset || $passwordReset->created_at->addMinutes(60)->isPast()) {
+                return back()->with('error', 'El token es inválido o ha expirado')->withInput();
+            }
+
+            $admin = Admin::where('email', $request->email)->first();
+            $admin->password = Hash::make($request->password);
+            $admin->save();
+
+            PasswordResetToken::where('email', $request->email)->delete();
+
+            return redirect()->route('admin.login');
+        } catch (Exception $exception) {
+            if (env('APP_ENV') === 'local') {
+                Log::error($exception->getMessage());
+            }
+            return back()->with('error', 'Ha ocurrido un error')->withInput();
+        }
     }
 }
