@@ -18,7 +18,7 @@
     <x-table-default>
         <thead class="bg-accent-content">
             <tr>
-                <th>ID</th>
+                <th>#</th>
                 <th>Nombre del archivo</th>
                 <th>Nombre original</th>
                 <th>Producto</th>
@@ -42,11 +42,11 @@
                         <div class="flex items-center gap-2">
                             <a href="{{ asset($file->file_url) }}" 
                                target="_blank"
-                               class="btn btn-primary btn-sm">
+                               class="btn btn-xs btn-primary btn-soft">
                                 Ver archivo
                             </a>
                             <a href="{{ route('admin.edit.files', ['id' => $file->product_id]) }}"
-                               class="btn btn-warning btn-sm">
+                               class="btn btn-xs btn-warning btn-soft">
                                 Editar
                             </a>
                         </div>
@@ -54,7 +54,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="8" class="text-center">No hay archivos para mostrar</td>
+                    <td colspan="8" class="text-center text-2xl bg-content-200 py-2.5">No hay archivos para mostrar</td>
                 </tr>
             @endforelse
         </tbody>
