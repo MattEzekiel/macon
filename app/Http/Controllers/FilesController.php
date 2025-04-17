@@ -236,15 +236,16 @@ class FilesController extends Controller
         try {
             $file = Files::findOrFail($id);
             $file->delete();
-            
+
             return redirect()->back()->with('success', 'Archivo eliminado correctamente');
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error('Error al eliminar archivo', [
                     'file_id' => $id,
-                    'error' => $exception->getMessage()
+                    'error' => $exception->getMessage(),
                 ]);
             }
+
             return back()->with('error', 'No se pudo eliminar el archivo');
         }
     }
