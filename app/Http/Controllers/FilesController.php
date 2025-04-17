@@ -231,50 +231,20 @@ class FilesController extends Controller
         }
     }
 
-    public function FileDelete(int $id): RedirectResponse|\Illuminate\Http\JsonResponse
+    public function FileDelete(int $id): RedirectResponse
     {
         try {
-            Log::info('Iniciando eliminación de archivo', ['file_id' => $id]);
-
             $file = Files::findOrFail($id);
-            Log::info('Archivo encontrado', [
-                'file_id' => $id,
-                'file_name' => $file->file_name,
-                'original_name' => $file->original_file_name,
-            ]);
-
-            $deleted = $file->delete();
-            Log::info('Resultado de eliminación', [
-                'file_id' => $id,
-                'deleted' => $deleted,
-            ]);
-
-            if (! $deleted) {
-                throw new Exception('No se pudo eliminar el archivo');
-            }
-
-            if (request()->ajax()) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Archivo eliminado correctamente',
-                ]);
-            }
-
+            $file->delete();
+            
             return redirect()->back()->with('success', 'Archivo eliminado correctamente');
         } catch (Exception $exception) {
-            Log::error('Error al eliminar archivo', [
-                'file_id' => $id,
-                'error' => $exception->getMessage(),
-                'trace' => $exception->getTraceAsString(),
-            ]);
-
-            if (request()->ajax()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'No se pudo eliminar el archivo',
-                ], 500);
+            if (env('APP_ENV') === 'local') {
+                Log::error('Error al eliminar archivo', [
+                    'file_id' => $id,
+                    'error' => $exception->getMessage()
+                ]);
             }
-
             return back()->with('error', 'No se pudo eliminar el archivo');
         }
     }
