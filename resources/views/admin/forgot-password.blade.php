@@ -1,10 +1,10 @@
 @extends('layouts.auth')
-@section('title', __('general.login'))
+@section('title', __('general.forgot_password'))
 @section('auth')
     <x-main-container class="grid place-items-center h-screen">
         <div class="md:w-1/4 mx-auto border border-white rounded shadow p-10">
-            <form action="{{ route('admin.login') }}" method="post" class="space-y-5">
-                <x-heading1>Ingrese sus credenciales</x-heading1>
+            <form action="{{ route('admin.restore.password') }}" method="post" class="space-y-5">
+                <x-heading1>Le enviaremos un email para recuperar su contraseña</x-heading1>
                 @if(session('error'))
                     @component('components.alert', ['variant' => 'error'])
                         {{ __(session('error')) }}
@@ -23,22 +23,13 @@
                         placeholder="Ingrese su mail"
                         required={{ true }}
                 />
-                <x-forms.floating-input
-                        type="password"
-                        name="password"
-                        id="password"
-                        label="Contraseña"
-                        placeholder="Ingrese su contraseña"
-                        required={{ true }}
-                />
                 <div class="lg:grid lg:place-items-end mb-3 lg:mb-5">
                     <x-forms.submit-button>
-                        Ingresar
+                        Recuperar
                     </x-forms.submit-button>
                 </div>
             </form>
-            <p class="text-sm text-center">¿Olvidó su contraseña? <a href="{{ route('admin.forgot-password.form') }}"
-                                                                     class="text-accent">Recuperar</a></p>
+            <p>¿Ya tiene una cuenta? <a href="{{ route('admin.login') }}" class="text-accent">Inicie sesión</a></p>
         </div>
     </x-main-container>
 @endsection

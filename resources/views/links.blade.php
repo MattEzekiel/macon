@@ -2,7 +2,7 @@
 @section('general')
     <main class="flex-1 bg-gradient-to-b from-base-200 to-base-300 p-6">
         <div class="max-w-2xl mx-auto">
-            @if($product)
+            @if(isset($product))
                 <div class="text-center mb-8">
                     <h1 class="text-4xl font-bold mb-2 text-base-content">{{ $product->name }}</h1>
                     <p class="text-xl text-base-content/80">{{ $product->client->legal_name }}</p>

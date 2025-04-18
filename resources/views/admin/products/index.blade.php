@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title', __('general.products'))
 @section('admin')
     @if(session('success'))
         @component('components.alert', ['variant' => 'success'])

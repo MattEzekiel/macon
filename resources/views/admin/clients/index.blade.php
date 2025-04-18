@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title', __('general.clients'))
 @section('admin')
     @if(session('success'))
         @component('components.alert', ['variant' => 'success'])

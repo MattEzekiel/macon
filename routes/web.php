@@ -14,10 +14,16 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/search/{payload}', [QRController::class, 'DisplayData'])->name('public_qr');
+Route::get('/files/{id}/increment-visits', [FilesController::class, 'IncrementVisits'])->name('files.increment-visits');
 
 Route::prefix('admin')->group(function () {
-    Route::get('login', [AdminController::class, 'loginForm'])->name('login');
+    Route::get('login', [AdminController::class, 'loginForm'])->name('admin.login.form');
+    Route::get('logout', [AdminController::class, 'logout'])->name('admin.logout');
+    Route::get('forgot-password', [AdminController::class, 'forgotPassword'])->name('admin.forgot-password.form');
+    Route::get('restore-password/{token}', [AdminController::class, 'restorePasswordForm'])->name('admin.restore.password.token');
     Route::post('login', [AdminController::class, 'login'])->name('admin.login');
+    Route::post('restore-password', [AdminController::class, 'restorePassword'])->name('admin.restore.password');
+    Route::post('reset-password', [AdminController::class, 'resetPassword'])->name('admin.reset.password');
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/', function () {
@@ -48,6 +54,7 @@ Route::prefix('admin')->group(function () {
         });
 
         Route::prefix('files')->group(function () {
+            Route::get('/', [FilesController::class, 'index'])->name('admin.files');
             Route::get('new-file/{id}', [FilesController::class, 'newFiles'])->name('admin.new.files');
             Route::get('edit-file/{id}', [FilesController::class, 'editFiles'])->name('admin.edit.files');
             Route::get('name-file/{id}', [FilesController::class, 'nameFiles'])->name('admin.name.files');
@@ -78,5 +85,3 @@ Route::prefix('admin')->group(function () {
         Route::get('contactos', [ContactController::class, 'index'])->name('admin.contactos');
     });
 });
-
-Route::get('/files/{id}/increment-visits', [FilesController::class, 'incrementVisits'])->name('files.increment-visits');
