@@ -31,7 +31,7 @@ class Files extends Model
 
         if (isset($request['deleted']) && $request['deleted'] == '1') {
             $filesQuery->onlyTrashed();
-        } elseif (!isset($request['deleted']) || $request['deleted'] == '2') {
+        } elseif (! isset($request['deleted']) || $request['deleted'] == '2') {
             $filesQuery->withTrashed();
         }
 
@@ -50,11 +50,11 @@ class Files extends Model
             ],
             'file_name' => [
                 'type' => 'suggestion',
-                'data' => $files->map(fn($file) => json_decode(json_encode(['id' => $file->id, 'value' => $file->file_name]))),
+                'data' => $files->map(fn ($file) => json_decode(json_encode(['id' => $file->id, 'value' => $file->file_name]))),
             ],
             'original_file_name' => [
                 'type' => 'suggestion',
-                'data' => $files->map(fn($file) => json_decode(json_encode(['id' => $file->id, 'value' => $file->original_file_name]))),
+                'data' => $files->map(fn ($file) => json_decode(json_encode(['id' => $file->id, 'value' => $file->original_file_name]))),
             ],
             'deleted' => [
                 'type' => 'select',
