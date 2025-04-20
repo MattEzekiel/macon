@@ -15,4 +15,6 @@ return [
     'password_min' => 'The password must be at least 8 characters',
     'deleted_successfully' => 'User deleted successfully',
     'deleted_error' => 'There was an error while deleting the user',
+    'new_user', 'New user',
+    'edit_user', 'Edit user',
 ];

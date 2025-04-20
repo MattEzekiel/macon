@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title', __('users.edit_user')  . ': ' . $user->name)
 @section('admin')
     @if(session('error'))
         @component('components.alert', ['variant' => 'error'])
