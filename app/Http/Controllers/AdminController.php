@@ -51,12 +51,18 @@ class AdminController extends Controller
             ->take(5)
             ->get();
 
+        $topUsersPerClients = Clients::withCount('users')
+            ->orderByDesc('users_count')
+            ->take(5)
+            ->get();
+
         return view('admin.dashboard', compact(
             'formattedFileSize',
             'totalFiles',
             'topClients',
             'topProducts',
-            'topQRs'
+            'topQRs',
+            'topUsersPerClients',
         ));
     }
 

@@ -38,17 +38,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function getFormData(): array
-    {
-        return [
-            'name' => 'text',
-            'email' => 'email',
-            'client' => 'select',
-            'password' => 'password',
-            'confirm_password' => 'password',
-        ];
-    }
-
     public static function searcher(array $request = []): array
     {
         $userQuery = User::select(['id', 'name', 'email']);
@@ -85,9 +74,20 @@ class User extends Authenticatable
         ];
     }
 
+    public function getFormData(): array
+    {
+        return [
+            'name' => 'text',
+            'email' => 'email',
+            'client' => 'select',
+            'password' => 'password',
+            'confirm_password' => 'password',
+        ];
+    }
+
     public function client(): BelongsTo
     {
-        return $this->belongsTo(Clients::class);
+        return $this->belongsTo(Clients::class, 'client_id', 'id');
     }
 
     /**

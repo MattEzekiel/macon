@@ -100,5 +100,26 @@
                 @endforelse
             </div>
         </div>
+
+        <!-- Top clientes con más usuarios -->
+        <div class="bg-gray-800 rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-200 mb-4">Top Clientes con más usuarios</h2>
+            <div class="space-y-4">
+                @forelse($topUsersPerClients as $client_user)
+                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-lg font-medium text-gray-200">{{ $client_user->legal_name }}</span>
+                        </div>
+                        <span class="px-3 py-1 bg-amber-900 text-amber-200 rounded-full text-sm font-medium">
+                                {{ $client_user->users_count }} usuario/s
+                            </span>
+                    </div>
+                @empty
+                    <div class="text-center p-4 bg-gray-700 rounded-lg">
+                        <p class="text-gray-400">No hay usuarios asignados a clientes</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
     </div>
 @endsection
