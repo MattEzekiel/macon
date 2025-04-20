@@ -12,4 +12,4 @@ return [
     'view_file' => 'View file',
     'edit' => 'Edit',
     'no_files' => 'No files to display',
-]; 
+];

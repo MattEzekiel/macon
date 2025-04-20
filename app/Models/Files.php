@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\FileSizeFormatter;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\FileSizeFormatter;
-use Illuminate\Database\Eloquent\Collection;
 
 class Files extends Model
 {
-    use SoftDeletes, FileSizeFormatter;
+    use FileSizeFormatter, SoftDeletes;
 
     protected $table = 'files';
 
@@ -23,11 +23,6 @@ class Files extends Model
         'file_name',
         'file_size',
     ];
-
-    public function product(): BelongsTo
-    {
-        return $this->belongsTo(Products::class, 'product_id');
-    }
 
     public static function searcher(array $request = []): array
     {
@@ -70,5 +65,10 @@ class Files extends Model
                 ]),
             ],
         ];
+    }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Products::class, 'product_id');
     }
 }
