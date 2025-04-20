@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title', 'Usuarios')
 @section('admin')
     @if(session('success'))
         @component('components.alert', ['variant' => 'success'])
@@ -11,6 +12,7 @@
     <x-button-link href="{{ route('admin.new.user') }}">
         Crear nuevo usuario
     </x-button-link>
+    @include('admin.users.forms.searcher')
     <x-table-default>
         <thead>
         <tr>

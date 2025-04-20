@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title', __('users.new_user'))
 @section('admin')
     @if(session('error'))
         @component('components.alert', ['variant' => 'error'])

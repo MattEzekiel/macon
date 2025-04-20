@@ -15,4 +15,6 @@ return [
     'password_min' => 'La contraseña debe tener al menos 8 caracteres',
     'deleted_successfully' => 'Usuario eliminado correctamente',
     'deleted_error' => 'Hubo un error al eliminar el usuario',
+    'new_user', 'Nuevo usuario',
+    'edit_user', 'Editar usuario',
 ];

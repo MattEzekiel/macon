@@ -20,6 +20,22 @@ class UserController extends Controller
         $users = User::select('id', 'email', 'name', 'client_id')
             ->with('client');
 
+        $users->when(request()->client, function ($query, $id) {
+            $query->where('client_id', $id);
+        });
+
+        $users->when(request()->name, function ($query, $name) {
+            $query->where('name', 'like', '%'.$name.'%');
+        });
+
+        $users->when(request()->deleted, function ($query, $deletion) {
+            if ($deletion == '1') {
+                $query->onlyTrashed();
+            } elseif ($deletion == '2') {
+                $query->withTrashed();
+            }
+        });
+
         $users = $users->orderBy('created_at', 'desc')
             ->paginate(10)
             ->withQueryString();
@@ -99,16 +115,14 @@ class UserController extends Controller
                 'name' => 'required',
                 'client' => 'required',
                 'email' => 'required|email',
-                'password' => 'required|min:8',
-                'confirm_password' => 'required|same:password',
+                'password' => 'min:8',
+                'confirm_password' => 'same:password',
             ],
             [
                 'name.required' => __('users.name').' es requerido',
                 'client.required' => __('users.client').' es requerido',
                 'email.required' => __('users.email').' es requerido',
-                'password.required' => __('users.password').' es requerido',
                 'password.min' => __('users.password_min').' es requerido',
-                'confirm_password.required' => __('users.confirm_password').' es requerido',
                 'confirm_password.same' => __('users.confirm_password').' y '.__('users.password').' no coincide',
             ]
         );
