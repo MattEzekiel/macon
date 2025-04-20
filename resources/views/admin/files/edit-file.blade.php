@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title', 'Editar archivos: ' . $product->name)
 @section('admin')
     @if(session('error'))
         @component('components.alert', ['variant' => 'error'])
@@ -20,7 +20,7 @@
         @endcomponent
     </div>
     <div class="container mx-auto px-4 mt-4 text-center">
-        <a href="{{ route('admin.name.files', ['id' => $product->id]) }}" 
+        <a href="{{ route('admin.name.files', ['id' => $product->id]) }}"
            class="btn btn-primary">
             Renombrar archivos
         </a>
@@ -29,10 +29,12 @@
         <div class="mt-5 flex flex-wrap items-center justify-center gap-10">
             @forelse($product->files as $file)
                 <div class="w-80 border rounded shadow border-gray-700 p-4 transition-all duration-300 hover:shadow-xl group">
-                    <object class="aspect-square w-full mb-3.5 max-w-[250px] mx-auto" data="{{ asset($file->file_url) }}"></object>
+                    <object class="aspect-square w-full mb-3.5 max-w-[250px] mx-auto"
+                            data="{{ asset($file->file_url) }}"></object>
                     <div class="space-y-2">
                         <div class="flex items-center space-x-2">
-                            <x-icons.file-icon class="h-6 w-6 text-gray-50 group-hover:text-gray-300 transition-all duration-300" />
+                            <x-icons.file-icon
+                                    class="h-6 w-6 text-gray-50 group-hover:text-gray-300 transition-all duration-300" />
                             <span class="text-lg font-medium text-gray-50 transition-all duration-300 group-hover:text-gray-300">
                                 {{ $file->file_name ?: $file->original_file_name }}
                             </span>
@@ -53,7 +55,9 @@
                                           action="{{ route('admin.file.delete', ['id' => $file->id]) }}"
                                           method="post"
                                           class="w-full grid grid-cols-1 gap-2.5 delete-button">
-                                        <p class="mb-5 mt-3">Escriba: <span class="text-error">{{ $file->file_name ?: $file->original_file_name }}</span> para eliminarlo</p>
+                                        <p class="mb-5 mt-3">Escriba: <span
+                                                    class="text-error">{{ $file->file_name ?: $file->original_file_name }}</span>
+                                            para eliminarlo</p>
                                         @method('DELETE')
                                         @csrf
                                         <x-forms.floating-input
@@ -91,36 +95,36 @@
 @endsection
 
 @push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const forms = document.querySelectorAll('.delete-button');
-        const buttons_delete = document.querySelectorAll('.btn-delete-button');
-        buttons_delete.forEach(button => {
-            button.addEventListener('click', () => {
-                const modal = document.getElementById(button.getAttribute('data-id'));
-                if (modal) {
-                    modal.showModal();
-                }
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('.delete-button');
+            const buttons_delete = document.querySelectorAll('.btn-delete-button');
+            buttons_delete.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modal = document.getElementById(button.getAttribute('data-id'));
+                    if (modal) {
+                        modal.showModal();
+                    }
+                });
+            });
+
+            forms.forEach(form => {
+                const input = form.querySelector('input[type="text"]');
+                const file_name = form.querySelector('.text-error').textContent;
+                const button = form.parentElement.querySelector('button[type="submit"]');
+
+                input.addEventListener('input', e => {
+                    const value = e.target.value;
+                    if (value === file_name) {
+                        button.removeAttribute('disabled');
+                        button.classList.remove('btn-soft');
+                    } else {
+                        button.setAttribute('disabled', 'disabled');
+                        button.classList.add('btn-soft');
+                    }
+                });
             });
         });
-
-        forms.forEach(form => {
-            const input = form.querySelector('input[type="text"]');
-            const file_name = form.querySelector('.text-error').textContent;
-            const button = form.parentElement.querySelector('button[type="submit"]');
-
-            input.addEventListener('input', e => {
-                const value = e.target.value;
-                if (value === file_name) {
-                    button.removeAttribute('disabled');
-                    button.classList.remove('btn-soft');
-                } else {
-                    button.setAttribute('disabled', 'disabled');
-                    button.classList.add('btn-soft');
-                }
-            });
-        });
-    });
-</script>
+    </script>
 @endpush
 

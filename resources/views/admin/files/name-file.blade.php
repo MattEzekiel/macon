@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title', 'Nombrar archivos')
 @section('admin')
     @if(session('error'))
         @component('components.alert', ['variant' => 'error'])
