@@ -1,6 +1,6 @@
 @props([
     'class' => 'h-8 w-8',
-    'color' => 'text-indigo-200'
+    'color' => ''
 ])
 
 <svg xmlns="http://www.w3.org/2000/svg" class="{{ $class }} {{ $color }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">

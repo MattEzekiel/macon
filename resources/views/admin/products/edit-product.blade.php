@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title', __('general.edit_product')  . ': ' . $product->name)
 @section('admin')
     @if(session('error'))
         @component('components.alert', ['variant' => 'error'])
