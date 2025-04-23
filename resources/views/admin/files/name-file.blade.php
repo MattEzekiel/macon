@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Nombrar archivos')
+@section('title', __('files.name_files'))
 @section('admin')
     @if(session('error'))
         @component('components.alert', ['variant' => 'error'])
@@ -11,7 +11,7 @@
         @endcomponent
     @endif
     <x-heading1>
-        Nombrar archivos
+        {{ __('files.rename_files') }}
     </x-heading1>
     <div id="form" class="mt-3.5">
         @include('admin.files.forms.name-file')

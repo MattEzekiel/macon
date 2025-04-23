@@ -59,9 +59,9 @@ class Files extends Model
             'deleted' => [
                 'type' => 'select',
                 'data' => Collection::make([
-                    ['id' => '0', 'value' => 'No'],
-                    ['id' => '1', 'value' => 'Si'],
-                    ['id' => '2', 'value' => 'Todos'],
+                    ['id' => '0', 'value' => __('general.select_no')],
+                    ['id' => '1', 'value' => __('general.select_yes')],
+                    ['id' => '2', 'value' => __('general.select_all')],
                 ]),
             ],
         ];

@@ -14,7 +14,7 @@
                     error="{{ $errors->has($input) ? $errors->first($input) : null }}"
                     value="{{ old($input, isset($product) ? $product->client_id : '') }}"
                     required="{{ true }}"
-                    placeholder="Seleccione un cliente"
+                    placeholder="{{ __('products.select_client') }}"
                     :options="$clients->map(fn($client) => json_decode(json_encode(['id' => $client->id, 'value' => $client->legal_name])))"
             />
         @elseif($value === 'textarea')
@@ -49,11 +49,11 @@
     @endif
     <div class="col-span-2 flex lg:justify-end items-center gap-5">
         <x-forms.submit-button btn_color="btn-success" class="{{ isset($product) ? 'btn-outline' : '' }}">
-            {{ isset($product) ? 'Actualizar y terminar' : 'Crear nuevo producto' }}
+            {{ isset($product) ? __('products.update_and_finish') : __('products.create_new_product') }}
         </x-forms.submit-button>
         @if(isset($product))
             <x-forms.submit-button btn_color="btn-success" value="update_and_continue">
-                Actualizar y continuar
+                {{ __('products.update_and_continue') }}
             </x-forms.submit-button>
         @endif
     </div>

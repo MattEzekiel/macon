@@ -1,6 +1,6 @@
 @php use Illuminate\Support\Facades\Crypt; @endphp
 @extends('layouts.admin')
-@section('title', 'QRs')
+@section('title', __('general.qrs'))
 @section('admin')
     @if(session('success'))
         @component('components.alert', ['variant' => 'success'])
@@ -8,7 +8,7 @@
         @endcomponent
     @endif
     <x-heading1>
-        QR's
+        {{ __('general.qrs') }}
     </x-heading1>
     @include('admin.qr.forms.searcher')
     <x-table-default>
@@ -29,13 +29,13 @@
                 <td>{{ $qr->product->name }}</td>
                 <td>{{ $qr->product->files->count() }}</td>
                 <td>
-                    <div class="tooltip" data-tip="zoom">
+                    <div class="tooltip" data-tip="{{ __('qrs.zoom') }}">
                         <button class="relative cursor-pointer group" onclick="my_modal_{{ $qr->id }}.showModal()">
                         <span class="absolute inset-0 flex items-center justify-center w-100 h-100 max-w-full max-h-full p-5 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out bg-black/50">
                             <x-zondicon-search />
                         </span>
                             <img src="{{ asset(Crypt::decrypt($qr->url_qrcode)) }}"
-                                 alt="Código QR de {{ $qr->product->name }}">
+                                 alt="{{ __('qrs.qr_code_for', ['name' => $qr->product->name]) }}">
                         </button>
                     </div>
                     <dialog id="my_modal_{{ $qr->id }}" class="modal">
@@ -44,30 +44,30 @@
                                 <div class="bg-white p-8 rounded-[2rem] shadow-lg"
                                      style="border-radius: 2rem; border: 2px solid #e5e7eb;">
                                     <img class="w-100 mx-auto" src="{{ asset(Crypt::decrypt($qr->url_qrcode)) }}"
-                                         alt="Código QR de {{ $qr->product->name }}">
+                                         alt="{{ __('qrs.qr_code_for', ['name' => $qr->product->name]) }}">
                                     <div class="flex justify-center items-center gap-5 mt-5">
                                         <h2 class="text-6xl montserrat" style="color: #000000 !important;">AR</h2>
                                         <div class="ticks">
-                                            <img src="{{ asset('assets/ok.svg') }}" alt="tick svg">
-                                            <img src="{{ asset('assets/ok.svg') }}" alt="tick svg">
+                                            <img src="{{ asset('assets/ok.svg') }}" alt="{{ __('qrs.tick_icon') }}">
+                                            <img src="{{ asset('assets/ok.svg') }}" alt="{{ __('qrs.tick_icon') }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <button onclick="downloadQrPdf({{ $qr->id }}, '{{ addslashes($qr->product->name) }}')"
                                     type="button" class="btn btn-primary mx-auto w-fit block mt-10">
-                                Descargar imprimible
+                                {{ __('qrs.download_printable') }}
                             </button>
                         </div>
                         <form method="dialog" class="modal-backdrop">
-                            <button>close</button>
+                            <button>{{ __('general.close') }}</button>
                         </form>
                     </dialog>
                 </td>
             </tr>
         @empty
             <tr>
-                <td class="text-center text-2xl bg-content-200 py-2.5" colspan="100%">No hay QR's generados</td>
+                <td class="text-center text-2xl bg-content-200 py-2.5" colspan="100%">{{ __('qrs.no_qrs') }}</td>
             </tr>
         @endforelse
         </tbody>
@@ -120,12 +120,12 @@
                     arElement.style.color = originalColor;
                 } catch (error) {
                     console.error('Error al generar el PDF:', error);
-                    alert('Hubo un problema al generar el PDF. Por favor, inténtelo de nuevo.');
+                    alert('{{ __("qrs.pdf_generation_error") }}');
                 }
             }).catch(error => {
                 console.error('Error en html2canvas:', error);
                 arElement.style.color = originalColor;
-                alert('No se pudo generar la imagen. Por favor, inténtelo de nuevo.');
+                alert('{{ __("qrs.image_generation_error") }}');
             });
         };
     </script>

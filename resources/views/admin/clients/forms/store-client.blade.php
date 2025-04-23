@@ -20,7 +20,7 @@
     @endforelse
     <div class="col-span-2 flex lg:justify-end items-center">
         <x-forms.submit-button btn_color="btn-success">
-            {{ isset($client) ? 'Actualizar datos del cliente' : 'Crear nuevo cliente' }}
+            {{ isset($client) ? __('general.update_client') : __('general.create_client') }}
         </x-forms.submit-button>
     </div>
 </form>

@@ -15,6 +15,15 @@ return [
     'password_min' => 'The password must be at least 8 characters',
     'deleted_successfully' => 'User deleted successfully',
     'deleted_error' => 'There was an error while deleting the user',
-    'new_user', 'New user',
-    'edit_user', 'Edit user',
+    'new_user' => 'New user',
+    'edit_user' => 'Edit user',
+    'create_new_user' => 'Create new user',
+    'update_user' => 'Update user',
+    'confirm_delete' => 'Do you want to delete the user?',
+    'type_name_to_delete' => 'Type: <span class="text-error">:name</span> to delete',
+    'delete_user' => 'Delete User',
+    'no_users' => 'No users',
+    'user_created' => 'User created successfully',
+    'user_updated' => 'User updated successfully',
+    'user_deleted' => 'User deleted successfully'
 ];

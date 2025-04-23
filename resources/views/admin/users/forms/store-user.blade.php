@@ -15,7 +15,7 @@
                     error="{{ $errors->has($input) ? $errors->first($input) : null }}"
                     value="{{ old($input, isset($user) ? $user->client_id : '') }}"
                     required="{{ true }}"
-                    placeholder="Seleccione un cliente"
+                    placeholder="{{ __('clients.select_client') }}"
                     :options="$clients->map(fn($client) => json_decode(json_encode(['id' => $client->id, 'value' => $client->legal_name])))"
             />
         @else
@@ -34,7 +34,7 @@
     @endforelse
     <div class="col-span-2 flex lg:justify-end items-center">
         <x-forms.submit-button btn_color="btn-success">
-            {{ isset($user) ? 'Actualizar datos del usuario' : 'Crear nuevo usuario' }}
+            {{ isset($user) ? __('users.update_user') : __('users.create_new_user') }}
         </x-forms.submit-button>
     </div>
 </form>

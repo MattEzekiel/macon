@@ -1,9 +1,13 @@
 @extends('layouts.admin')
-
+@section('title', __('general.dashboard'))
 @section('admin')
-    <x-heading1>
-        Dashboard
-    </x-heading1>
+    <div class="flex justify-between items-center mb-6">
+        <x-heading1>
+            {{ __('general.dashboard') }}
+        </x-heading1>
+        
+        <x-language-selector />
+    </div>
 
     <!-- Resumen General -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -11,7 +15,7 @@
         <div class="bg-gray-800 rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <h2 class="text-xl font-semibold text-gray-200">Total de Archivos</h2>
+                    <h2 class="text-xl font-semibold text-gray-200">{{ __('dashboard.total_files') }}</h2>
                     <p class="text-3xl font-bold text-indigo-400 mt-2">{{ number_format($totalFiles) }}</p>
                 </div>
                 <div class="bg-indigo-700 p-3 rounded-full">
@@ -24,7 +28,7 @@
         <div class="bg-gray-800 rounded-xl shadow-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <h2 class="text-xl font-semibold text-gray-200">Peso Total de Archivos</h2>
+                    <h2 class="text-xl font-semibold text-gray-200">{{ __('dashboard.total_file_size') }}</h2>
                     <p class="text-3xl font-bold text-emerald-400 mt-2">
                         {{ $formattedFileSize }}
                     </p>
@@ -40,7 +44,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Top Clientes -->
         <div class="bg-gray-800 rounded-xl shadow-lg p-6">
-            <h2 class="text-xl font-semibold text-gray-200 mb-4">Top Clientes con más Archivos</h2>
+            <h2 class="text-xl font-semibold text-gray-200 mb-4">{{ __('dashboard.top_clients_files') }}</h2>
             <div class="space-y-4">
                 @forelse($topClients as $client)
                     <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
@@ -48,12 +52,12 @@
                             <span class="text-lg font-medium text-gray-200">{{ $client->legal_name }}</span>
                         </div>
                         <span class="px-3 py-1 bg-blue-900 text-blue-200 rounded-full text-sm font-medium">
-                                {{ $client->files_count }} archivos
-                            </span>
+                            {{ $client->files_count }} {{ __('dashboard.files') }}
+                        </span>
                     </div>
                 @empty
                     <div class="text-center p-4 bg-gray-700 rounded-lg">
-                        <p class="text-gray-400">No hay clientes con archivos</p>
+                        <p class="text-gray-400">{{ __('dashboard.no_clients_files') }}</p>
                     </div>
                 @endforelse
             </div>
@@ -61,7 +65,7 @@
 
         <!-- Top Productos -->
         <div class="bg-gray-800 rounded-xl shadow-lg p-6">
-            <h2 class="text-xl font-semibold text-gray-200 mb-4">Top Productos más Visitados</h2>
+            <h2 class="text-xl font-semibold text-gray-200 mb-4">{{ __('dashboard.top_visited_products') }}</h2>
             <div class="space-y-4">
                 @forelse($topProducts as $product)
                     <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
@@ -69,12 +73,12 @@
                             <span class="text-lg font-medium text-gray-200">{{ $product->name }}</span>
                         </div>
                         <span class="px-3 py-1 bg-purple-900 text-purple-200 rounded-full text-sm font-medium">
-                                {{ $product->visit_count }} visitas
-                            </span>
+                            {{ $product->visit_count }} {{ __('dashboard.visits') }}
+                        </span>
                     </div>
                 @empty
                     <div class="text-center p-4 bg-gray-700 rounded-lg">
-                        <p class="text-gray-400">No hay productos visitados</p>
+                        <p class="text-gray-400">{{ __('dashboard.no_visited_products') }}</p>
                     </div>
                 @endforelse
             </div>
@@ -82,7 +86,7 @@
 
         <!-- Top Archivos -->
         <div class="bg-gray-800 rounded-xl shadow-lg p-6">
-            <h2 class="text-xl font-semibold text-gray-200 mb-4">Top Links más Visitados</h2>
+            <h2 class="text-xl font-semibold text-gray-200 mb-4">{{ __('dashboard.top_visited_links') }}</h2>
             <div class="space-y-4">
                 @forelse($topQRs as $qr)
                     <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
@@ -90,12 +94,12 @@
                             <span class="text-lg font-medium text-gray-200">{{ $qr->file_name }}</span>
                         </div>
                         <span class="px-3 py-1 bg-amber-900 text-amber-200 rounded-full text-sm font-medium">
-                                {{ $qr->visits_count }} visitas
-                            </span>
+                            {{ $qr->visits_count }} {{ __('dashboard.visits') }}
+                        </span>
                     </div>
                 @empty
                     <div class="text-center p-4 bg-gray-700 rounded-lg">
-                        <p class="text-gray-400">No hay archivos visitados</p>
+                        <p class="text-gray-400">{{ __('dashboard.no_visited_files') }}</p>
                     </div>
                 @endforelse
             </div>
@@ -103,7 +107,7 @@
 
         <!-- Top clientes con más usuarios -->
         <div class="bg-gray-800 rounded-xl shadow-lg p-6">
-            <h2 class="text-xl font-semibold text-gray-200 mb-4">Top Clientes con más usuarios</h2>
+            <h2 class="text-xl font-semibold text-gray-200 mb-4">{{ __('dashboard.top_clients_users') }}</h2>
             <div class="space-y-4">
                 @forelse($topUsersPerClients as $client_user)
                     <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
@@ -111,12 +115,12 @@
                             <span class="text-lg font-medium text-gray-200">{{ $client_user->legal_name }}</span>
                         </div>
                         <span class="px-3 py-1 bg-amber-900 text-amber-200 rounded-full text-sm font-medium">
-                                {{ $client_user->users_count }} usuario/s
-                            </span>
+                            {{ $client_user->users_count }} {{ __('dashboard.users') }}
+                        </span>
                     </div>
                 @empty
                     <div class="text-center p-4 bg-gray-700 rounded-lg">
-                        <p class="text-gray-400">No hay usuarios asignados a clientes</p>
+                        <p class="text-gray-400">{{ __('dashboard.no_users_assigned') }}</p>
                     </div>
                 @endforelse
             </div>

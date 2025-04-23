@@ -7,7 +7,7 @@
     'required' => false,
     'disabled' => false,
     'options' => [],
-    'placeholder' => 'Seleccione una opción'
+    'placeholder' => __('general.select_option')
 ])
 <div class="w-full">
     <label

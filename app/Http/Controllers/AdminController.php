@@ -77,9 +77,9 @@ class AdminController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ], [
-            'email.required' => 'El correo es requerido',
-            'email.email' => 'El correo es inválido',
-            'password.required' => 'La contraseña es requerida',
+            'email.required' => __('auth.email_required'),
+            'email.email' => __('auth.email_invalid'),
+            'password.required' => __('auth.password_required'),
         ]);
 
         $credentials = $request->only('email', 'password');
@@ -90,7 +90,7 @@ class AdminController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
-        return back()->with('error', 'Las credenciales son incorrectas')->withInput();
+        return back()->with('error', __('auth.invalid_credentials'))->withInput();
     }
 
     public function logout(): RedirectResponse
@@ -113,14 +113,14 @@ class AdminController extends Controller
                 'email' => 'required|email',
             ],
             [
-                'email.required' => 'El correo es requerido',
-                'email.email' => 'El correo es inválido',
+                'email.required' => __('auth.email_required'),
+                'email.email' => __('auth.email_invalid'),
             ]
         );
 
         if ($validator->fails()) {
             return back()
-                ->with('error', 'El correo es requerido')
+                ->with('error', __('auth.email_required'))
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -128,7 +128,7 @@ class AdminController extends Controller
         $admin = Admin::where('email', $request->email)->first();
 
         if (! $admin) {
-            return back()->with('error', 'El correo no existe')->withInput();
+            return back()->with('error', __('auth.email_invalid'))->withInput();
         }
 
         $token = Str::random(60);
@@ -147,13 +147,13 @@ class AdminController extends Controller
 
             Mail::to($admin->email)->send(new ResetPasswordMail($token, $admin->name, 'admin.restore.password.token'));
 
-            return back()->with('success', 'Se ha enviado un correo para restablecer la contraseña');
+            return back()->with('success', __('auth.password_reset_sent'));
         } catch (Exception $e) {
             if (env('APP_ENV') === 'local') {
                 Log::error($e->getMessage());
             }
 
-            return back()->with('error', 'Ha ocurrido un error al enviar el correo');
+            return back()->with('error', __('auth.email_send_error'));
         }
     }
 
@@ -173,19 +173,19 @@ class AdminController extends Controller
                 'password_confirmed' => 'required',
             ],
             [
-                'token.required' => 'El token es requerido',
-                'email.required' => 'El correo es requerido',
-                'email.email' => 'El correo es inválido',
-                'password.required' => 'La contraseña es requerida',
-                'password.min' => 'La contraseña debe tener al menos 8 caracteres',
-                'password.same' => 'La contraseña y la confirmación de la contraseña no coinciden',
-                'password_confirmed.required' => 'La confirmación de la contraseña es requerida',
+                'token.required' => __('auth.token_invalid'),
+                'email.required' => __('auth.email_required'),
+                'email.email' => __('auth.email_invalid'),
+                'password.required' => __('auth.password_required'),
+                'password.min' => __('auth.password_min'),
+                'password.same' => __('auth.password_mismatch'),
+                'password_confirmed.required' => __('auth.confirm_password_required'),
             ]
         );
 
         if ($validator->fails()) {
             return back()
-                ->with('error', 'Error al completar los datos')
+                ->with('error', __('auth.form_error'))
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -197,7 +197,7 @@ class AdminController extends Controller
             ])->first();
 
             if (! $passwordReset || $passwordReset->created_at->addMinutes(60)->isPast()) {
-                return back()->with('error', 'El token es inválido o ha expirado')->withInput();
+                return back()->with('error', __('auth.token_invalid'))->withInput();
             }
 
             $admin = Admin::where('email', $request->email)->first();
@@ -212,7 +212,19 @@ class AdminController extends Controller
                 Log::error($exception->getMessage());
             }
 
-            return back()->with('error', 'Ha ocurrido un error')->withInput();
+            return back()->with('error', __('auth.error_occurred'))->withInput();
         }
+    }
+
+    public function changeLanguage(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'language' => 'required|in:en,es'
+        ]);
+
+        session(['locale' => $request->language]);
+        app()->setLocale($request->language);
+
+        return back();
     }
 }

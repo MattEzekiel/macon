@@ -7,7 +7,7 @@
         @endcomponent
     @endif
     <x-heading1>
-        Editar cliente: <b>#{{ $client->id }}</b> - {{ $client->legal_name }}
+        {{ __('general.edit_client') }}: <b>#{{ $client->id }}</b> - {{ $client->legal_name }}
     </x-heading1>
     <div class="mt-3.5">
         @include('admin.clients.forms.store-client', ['client' => $client])
