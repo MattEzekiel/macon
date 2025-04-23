@@ -19,5 +19,5 @@ return [
     'search_placeholder' => 'Buscar QRs...',
     'visits' => 'Visitas',
     'generate_qr' => 'Generar QR',
-    'insert_file_name' => 'Ingrese el nombre visible para este archivo'
+    'insert_file_name' => 'Ingrese el nombre visible para este archivo',
 ];

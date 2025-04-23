@@ -30,5 +30,5 @@ return [
     'password_min' => 'Password must be at least 8 characters',
     'password_mismatch' => 'Password and password confirmation do not match',
     'confirm_password_required' => 'Password confirmation is required',
-    'access_denied' => 'Access denied. Only administrators can access.'
-]; 
+    'access_denied' => 'Access denied. Only administrators can access.',
+];

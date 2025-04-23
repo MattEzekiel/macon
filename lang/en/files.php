@@ -37,5 +37,5 @@ return [
     'rename_success' => 'Files renamed successfully',
     'delete_success' => 'File deleted successfully',
     'delete_error' => 'Could not delete the file',
-    'max_size' => 'Max 10MB'
+    'max_size' => 'Max 10MB',
 ];

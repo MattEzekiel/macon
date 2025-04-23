@@ -41,5 +41,5 @@ return [
     'edit_files' => 'Modify files',
     'create_new_product' => 'Create new product',
     'update_and_finish' => 'Update and finish',
-    'update_and_continue' => 'Update and continue'
+    'update_and_continue' => 'Update and continue',
 ];

@@ -13,5 +13,5 @@ return [
     'no_visited_files' => 'No files visited',
     'top_clients_users' => 'Top Clients with Most Users',
     'users' => 'user(s)',
-    'no_users_assigned' => 'No users assigned to clients'
+    'no_users_assigned' => 'No users assigned to clients',
 ];

@@ -19,5 +19,5 @@ return [
     'search_placeholder' => 'Search QRs...',
     'visits' => 'Visits',
     'generate_qr' => 'Generate QR',
-    'insert_file_name' => 'Insert file visible name'
+    'insert_file_name' => 'Insert file visible name',
 ];

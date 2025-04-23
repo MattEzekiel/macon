@@ -25,5 +25,5 @@ return [
     'no_users' => 'No hay usuarios',
     'user_created' => 'Usuario creado correctamente',
     'user_updated' => 'Usuario actualizado correctamente',
-    'user_deleted' => 'Usuario eliminado correctamente'
+    'user_deleted' => 'Usuario eliminado correctamente',
 ];

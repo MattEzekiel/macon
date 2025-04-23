@@ -219,7 +219,7 @@ class AdminController extends Controller
     public function changeLanguage(Request $request): RedirectResponse
     {
         $request->validate([
-            'language' => 'required|in:en,es'
+            'language' => 'required|in:en,es',
         ]);
 
         session(['locale' => $request->language]);

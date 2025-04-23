@@ -41,5 +41,5 @@ return [
     'edit_files' => 'Modificar archivos',
     'create_new_product' => 'Crear nuevo producto',
     'update_and_finish' => 'Actualizar y terminar',
-    'update_and_continue' => 'Actualizar y continuar'
+    'update_and_continue' => 'Actualizar y continuar',
 ];

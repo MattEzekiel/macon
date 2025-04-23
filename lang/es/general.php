@@ -52,5 +52,5 @@ return [
     'select' => 'Seleccionar',
     'password' => 'Contraseña',
     'spanish' => 'Español',
-    'english' => 'Inglés'
+    'english' => 'Inglés',
 ];

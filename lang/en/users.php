@@ -25,5 +25,5 @@ return [
     'no_users' => 'No users',
     'user_created' => 'User created successfully',
     'user_updated' => 'User updated successfully',
-    'user_deleted' => 'User deleted successfully'
+    'user_deleted' => 'User deleted successfully',
 ];

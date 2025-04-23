@@ -30,5 +30,5 @@ return [
     'password_min' => 'La contraseña debe tener al menos 8 caracteres',
     'password_mismatch' => 'La contraseña y la confirmación de la contraseña no coinciden',
     'confirm_password_required' => 'La confirmación de la contraseña es requerida',
-    'access_denied' => 'Acceso denegado. Solo administradores pueden acceder.'
-]; 
+    'access_denied' => 'Acceso denegado. Solo administradores pueden acceder.',
+];

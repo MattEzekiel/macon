@@ -29,7 +29,8 @@
                     </x-forms.submit-button>
                 </div>
             </form>
-            <p>{{ __('auth.already_have_account') }} <a href="{{ route('admin.login') }}" class="text-accent">{{ __('auth.login_here') }}</a></p>
+            <p>{{ __('auth.already_have_account') }} <a href="{{ route('admin.login') }}"
+                                                        class="text-accent">{{ __('auth.login_here') }}</a></p>
         </div>
     </x-main-container>
 @endsection
