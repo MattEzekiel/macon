@@ -50,5 +50,7 @@ return [
     'text' => 'Text',
     'email' => 'Email',
     'select' => 'Select',
-    'password' => 'Password'
+    'password' => 'Password',
+    'spanish' => 'Spanish',
+    'english' => 'English'
 ];

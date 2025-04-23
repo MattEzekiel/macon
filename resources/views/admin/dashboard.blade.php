@@ -5,8 +5,6 @@
         <x-heading1>
             {{ __('general.dashboard') }}
         </x-heading1>
-        
-        <x-language-selector />
     </div>
 
     <!-- Resumen General -->
