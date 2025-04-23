@@ -7,7 +7,7 @@
         @endcomponent
     @endif
     <x-heading1>
-        Nuevo usuario
+        {{ __('users.new_user') }}
     </x-heading1>
     <div class="mt-3.5">
         @include('admin.users.forms.store-user')

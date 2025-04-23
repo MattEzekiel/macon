@@ -4,7 +4,7 @@
     <x-main-container class="grid place-items-center h-screen">
         <div class="md:w-1/4 mx-auto border border-white rounded shadow p-10">
             <form action="{{ route('admin.restore.password') }}" method="post" class="space-y-5">
-                <x-heading1>Le enviaremos un email para recuperar su contraseña</x-heading1>
+                <x-heading1>{{ __('auth.forgot_password_message') }}</x-heading1>
                 @if(session('error'))
                     @component('components.alert', ['variant' => 'error'])
                         {{ __(session('error')) }}
@@ -19,17 +19,18 @@
                         type="email"
                         name="email"
                         id="email"
-                        label="Email"
-                        placeholder="Ingrese su mail"
+                        label="{{ __('auth.email') }}"
+                        placeholder="{{ __('auth.enter_email') }}"
                         required={{ true }}
                 />
                 <div class="lg:grid lg:place-items-end mb-3 lg:mb-5">
                     <x-forms.submit-button>
-                        Recuperar
+                        {{ __('auth.recover_password') }}
                     </x-forms.submit-button>
                 </div>
             </form>
-            <p>¿Ya tiene una cuenta? <a href="{{ route('admin.login') }}" class="text-accent">Inicie sesión</a></p>
+            <p>{{ __('auth.already_have_account') }} <a href="{{ route('admin.login') }}"
+                                                        class="text-accent">{{ __('auth.login_here') }}</a></p>
         </div>
     </x-main-container>
 @endsection

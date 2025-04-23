@@ -5,7 +5,7 @@
 ])
 <div class="w-full">
     <fieldset class="fieldset">
-        <legend class="fieldset-legend">Subir {{ $multiple ? 'archivos' : 'archivo' }}</legend>
+        <legend class="fieldset-legend">{{ __('general.upload') }} {{ $multiple ? __('general.files') : __('general.file') }}</legend>
         <input
                 type="file"
                 name="{{ $multiple ? 'files[]' : 'files' }}"

@@ -4,7 +4,7 @@
     <x-main-container class="grid place-items-center h-screen">
         <div class="md:w-1/4 mx-auto border border-white rounded shadow p-10">
             <form action="{{ route('admin.login') }}" method="post" class="space-y-5">
-                <x-heading1>Ingrese sus credenciales</x-heading1>
+                <x-heading1>{{ __('auth.login_credentials') }}</x-heading1>
                 @if(session('error'))
                     @component('components.alert', ['variant' => 'error'])
                         {{ __(session('error')) }}
@@ -19,26 +19,26 @@
                         type="email"
                         name="email"
                         id="email"
-                        label="Email"
-                        placeholder="Ingrese su mail"
+                        label="{{ __('auth.email') }}"
+                        placeholder="{{ __('auth.enter_email') }}"
                         required={{ true }}
                 />
                 <x-forms.floating-input
                         type="password"
                         name="password"
                         id="password"
-                        label="Contraseña"
-                        placeholder="Ingrese su contraseña"
+                        label="{{ __('auth.password') }}"
+                        placeholder="{{ __('auth.enter_password') }}"
                         required={{ true }}
                 />
                 <div class="lg:grid lg:place-items-end mb-3 lg:mb-5">
                     <x-forms.submit-button>
-                        Ingresar
+                        {{ __('auth.login') }}
                     </x-forms.submit-button>
                 </div>
             </form>
-            <p class="text-sm text-center">¿Olvidó su contraseña? <a href="{{ route('admin.forgot-password.form') }}"
-                                                                     class="text-accent">Recuperar</a></p>
+            <p class="text-sm text-center">{{ __('auth.forgot_password') }} <a href="{{ route('admin.forgot-password.form') }}"
+                                                                     class="text-accent">{{ __('auth.recover') }}</a></p>
         </div>
     </x-main-container>
 @endsection

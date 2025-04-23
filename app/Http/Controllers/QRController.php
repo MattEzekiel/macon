@@ -63,18 +63,18 @@ class QRController extends Controller
                     'original_names.*' => 'required',
                 ],
                 [
-                    'product.required' => 'El producto es requerido',
-                    'client.required' => 'El cliente es requerido',
-                    'product.exists' => 'El producto no existe',
-                    'client.exists' => 'El cliente no existe',
-                    'file_names.*.required' => 'Los archivos son requeridos',
-                    'original_names.*.required' => 'Los nombres originales son requeridos',
+                    'product.required' => __('files.product_required'),
+                    'client.required' => __('clients.client').' '.__('general.required'),
+                    'product.exists' => __('files.product_not_exists'),
+                    'client.exists' => __('clients.client').' '.__('general.invalid'),
+                    'file_names.*.required' => __('files.files').' '.__('general.required'),
+                    'original_names.*.required' => __('files.original_file_name').' '.__('general.required'),
                 ]
             );
 
             if ($validator->fails()) {
                 return back()
-                    ->with('error', 'Falló la generación del QR')
+                    ->with('error', __('qrs.qr_creation_error'))
                     ->withErrors($validator)
                     ->withInput();
             }
@@ -122,13 +122,13 @@ class QRController extends Controller
                 'url_qrcode' => Crypt::encrypt($local_path),
             ]);
 
-            return redirect()->route('admin.qrs')->with('success', 'QR creado correctamente');
+            return redirect()->route('admin.qrs')->with('success', __('qrs.qr_created'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
 
-            return back()->with('error', 'Falló la generación del QR');
+            return back()->with('error', __('qrs.qr_creation_error'));
         }
     }
 

@@ -98,17 +98,17 @@ class FilesController extends Controller
                     'files.*' => 'required|mimes:pdf|max:10240',
                 ],
                 [
-                    'product.required' => 'El producto es requerido',
-                    'product.exists' => 'El producto no existe',
-                    'files.*.required' => 'Los archivos son requeridos',
-                    'files.*.mimes' => 'Los archivos deben ser en formato PDF',
-                    'files.*.max' => 'Cada archivo no debe superar los 10 MB',
+                    'product.required' => __('files.product_required'),
+                    'product.exists' => __('files.product_not_exists'),
+                    'files.*.required' => __('files.files_required'),
+                    'files.*.mimes' => __('files.files_pdf_only'),
+                    'files.*.max' => __('files.file_size_limit'),
                 ]
             );
 
             if ($validator->fails()) {
                 return back()
-                    ->with('error', 'Hubo un error al subir el archivo')
+                    ->with('error', __('files.upload_error'))
                     ->withErrors($validator);
             }
 
@@ -129,13 +129,13 @@ class FilesController extends Controller
 
             return redirect()
                 ->route('admin.new.qr', ['id' => $product->id])
-                ->with('success', 'Los archivos se han subido correctamente');
+                ->with('success', __('files.upload_success'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
 
-            return back()->with('error', 'Hubo un error al subir el archivo');
+            return back()->with('error', __('files.upload_error'));
         }
     }
 
@@ -172,16 +172,16 @@ class FilesController extends Controller
                     'files.*' => 'nullable|mimes:pdf|max:10240',
                 ],
                 [
-                    'product.required' => 'El producto es requerido',
-                    'product.exists' => 'El producto no existe',
-                    'files.*.mimes' => 'Los archivos deben ser en formato PDF',
-                    'files.*.max' => 'Cada archivo no debe superar los 10 MB',
+                    'product.required' => __('files.product_required'),
+                    'product.exists' => __('files.product_not_exists'),
+                    'files.*.mimes' => __('files.files_pdf_only'),
+                    'files.*.max' => __('files.file_size_limit'),
                 ]
             );
 
             if ($validator->fails()) {
                 return back()
-                    ->with('error', 'Hubo un error al subir el archivo')
+                    ->with('error', __('files.upload_error'))
                     ->withErrors($validator);
             }
 
@@ -204,13 +204,13 @@ class FilesController extends Controller
 
             return redirect()
                 ->route('admin.name.files', ['id' => $product->id])
-                ->with('success', 'Los archivos se han actualizado correctamente');
+                ->with('success', __('files.upload_success'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
 
-            return back()->with('error', 'Hubo un error al subir el archivo');
+            return back()->with('error', __('files.upload_error'));
         }
     }
 
@@ -225,19 +225,19 @@ class FilesController extends Controller
                     'files_ids.*' => 'required|exists:files,id',
                 ],
                 [
-                    'product.required' => 'El producto es requerido',
-                    'client.required' => 'El cliente es requerido',
-                    'product.exists' => 'El producto no existe',
-                    'client.exists' => 'El cliente no existe',
-                    'file_names.*.required' => 'Los nombres de archivo son requeridos',
-                    'files_ids.*.required' => 'Los IDs de archivo son requeridos',
-                    'files_ids.*.exists' => 'Uno o más archivos no existen',
+                    'product.required' => __('files.product_required'),
+                    'client.required' => __('clients.client').' '.__('general.required'),
+                    'product.exists' => __('files.product_not_exists'),
+                    'client.exists' => __('clients.client').' '.__('general.invalid'),
+                    'file_names.*.required' => __('files.file_name').' '.__('general.required'),
+                    'files_ids.*.required' => __('files.files').' '.__('general.required'),
+                    'files_ids.*.exists' => __('files.files').' '.__('general.invalid'),
                 ]
             );
 
             if ($validator->fails()) {
                 return back()
-                    ->with('error', 'Error al renombrar los archivos')
+                    ->with('error', __('files.rename_error'))
                     ->withErrors($validator)
                     ->withInput();
             }
@@ -248,13 +248,13 @@ class FilesController extends Controller
                 $file->save();
             }
 
-            return redirect()->route('admin.products')->with('success', 'Archivos renombrados correctamente');
+            return redirect()->route('admin.products')->with('success', __('files.rename_success'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
 
-            return back()->with('error', 'Error al renombrar los archivos');
+            return back()->with('error', __('files.rename_error'));
         }
     }
 
@@ -264,7 +264,7 @@ class FilesController extends Controller
             $file = Files::findOrFail($id);
             $file->delete();
 
-            return redirect()->back()->with('success', 'Archivo eliminado correctamente');
+            return redirect()->back()->with('success', __('files.delete_success'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error('Error al eliminar archivo', [
@@ -273,7 +273,7 @@ class FilesController extends Controller
                 ]);
             }
 
-            return back()->with('error', 'No se pudo eliminar el archivo');
+            return back()->with('error', __('files.delete_error'));
         }
     }
 

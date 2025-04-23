@@ -2,6 +2,6 @@
 @section('title', __('general.contact'))
 @section('admin')
     <x-heading1>
-        Contacto
+        {{ __('general.contact') }}
     </x-heading1>
 @endsection

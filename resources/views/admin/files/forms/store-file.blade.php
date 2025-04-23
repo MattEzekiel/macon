@@ -10,7 +10,7 @@
     <input type="hidden" name="product" id="product" value="{{ $product->id }}">
     <div class="w-fit ms-auto">
         <x-forms.submit-button btn_color="btn-success">
-            Subir archivos
+            {{ __('products.upload_files') }}
         </x-forms.submit-button>
     </div>
 </form>

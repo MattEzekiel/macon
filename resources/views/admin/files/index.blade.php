@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Archivos')
+@section('title', __('general.files'))
 @section('admin')
     @if(session('error'))
         @component('components.alert', ['variant' => 'error'])
@@ -12,7 +12,7 @@
     @endif
 
     <x-heading1>
-        Archivos
+        {{ __('general.files') }}
     </x-heading1>
 
     @include('admin.files.forms.searcher')
@@ -21,13 +21,13 @@
         <thead class="bg-accent-content">
         <tr>
             <th>#</th>
-            <th>Nombre del archivo</th>
-            <th>Nombre original</th>
-            <th>Producto</th>
-            <th>Cliente</th>
-            <th>Tamaño</th>
-            <th>Fecha de creación</th>
-            <th>Acciones</th>
+            <th>{{ __('files.file_name') }}</th>
+            <th>{{ __('files.original_file_name') }}</th>
+            <th>{{ __('files.product') }}</th>
+            <th>{{ __('files.client') }}</th>
+            <th>{{ __('files.file_size') }}</th>
+            <th>{{ __('files.created_at') }}</th>
+            <th>{{ __('files.actions') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -45,11 +45,11 @@
                         <a href="{{ asset($file->file_url) }}"
                            target="_blank"
                            class="btn btn-xs btn-primary btn-soft">
-                            Ver archivo
+                            {{ __('files.view_file') }}
                         </a>
                         <a href="{{ route('admin.edit.files', ['id' => $file->product_id]) }}"
                            class="btn btn-xs btn-warning btn-soft">
-                            Editar
+                            {{ __('general.edit') }}
                         </a>
                     </div>
                 </td>
@@ -57,7 +57,7 @@
 
         @empty
             <tr>
-                <td colspan="8" class="text-center text-2xl bg-content-200 py-2.5">No hay archivos para mostrar</td>
+                <td colspan="8" class="text-center text-2xl bg-content-200 py-2.5">{{ __('files.no_files') }}</td>
             </tr>
         @endforelse
         </tbody>

@@ -12,5 +12,6 @@
 </head>
 <body>
 @yield('auth')
+@stack('scripts')
 </body>
 </html>

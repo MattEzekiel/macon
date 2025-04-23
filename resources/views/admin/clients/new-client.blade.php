@@ -7,7 +7,7 @@
         @endcomponent
     @endif
     <x-heading1>
-        Nuevo cliente
+        {{ __('general.new_client') }}
     </x-heading1>
     <div class="mt-3.5">
         @include('admin.clients.forms.store-client')

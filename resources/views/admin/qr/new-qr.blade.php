@@ -11,9 +11,9 @@
         @endcomponent
     @endif
     <x-heading1>
-        Generar QR {{ isset($product) ? "para: {$product->name}" : '' }}
+        {{ __('qrs.generate_qr') }} {{ isset($product) ? __('general.for') . ": {$product->name}" : '' }}
     </x-heading1>
-    <x-stepper :steps="['Crear producto', 'Subir archivos', 'Generar QR']" :current="2" />
+    <x-stepper :steps="[__('products.create_product'), __('products.upload_files'), __('products.generate_qr')]" :current="2" />
     <div class="mt-3.5">
         @include('admin.qr.forms.store-qr')
     </div>

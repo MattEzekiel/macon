@@ -11,8 +11,8 @@
                         type="text"
                         name="file_names[]"
                         id="{{ $file->id }}_file"
-                        label="{{ $file->file_name ?? $file->original_file_name ?? 'Archivo' }}"
-                        placeholder="Ingrese el nombre visible para este archivo"
+                        label="{{ $file->file_name ?? $file->original_file_name ?? __('general.file') }}"
+                        placeholder="{{ __('qrs.insert_file_name') }}"
                         error="{{ $errors->has('file_names') ? $errors->first('file_names') : null }}"
                         value="{{ old('file_names.'.$loop->index, $file->file_name ?? '') }}"
                         required={{ true }}
@@ -28,7 +28,7 @@
     </div>
     <div class="w-fit mx-auto mt-10">
         <x-forms.submit-button btn_color="btn-success">
-            Generar QR
+            {{ __('qrs.generate_qr') }}
         </x-forms.submit-button>
     </div>
 </form>

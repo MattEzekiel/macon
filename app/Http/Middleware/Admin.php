@@ -19,6 +19,13 @@ class Admin
             abort(403, 'Acceso denegado. Solo administradores pueden acceder.');
         }
 
+        if (session()->has('locale')) {
+            app()->setLocale(session('locale'));
+        } else {
+            app()->setLocale('es');
+            session(['locale' => 'es']);
+        }
+
         return $next($request);
     }
 }

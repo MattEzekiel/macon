@@ -30,6 +30,7 @@ Route::prefix('admin')->group(function () {
             redirect()->route('dashboard');
         });
         Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::post('change-language', [AdminController::class, 'changeLanguage'])->name('admin.change.language');
 
         Route::prefix('clients')->group(function () {
             Route::get('/', [ClientsController::class, 'index'])->name('admin.clients');
