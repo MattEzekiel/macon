@@ -76,7 +76,6 @@
                     <a href="{{ route('admin.logout') }}"
                        class="btn btn-ghost btn-sm [&>svg]:w-4">
                        <x-tabler-logout />
-                       Cerrar sesión
                         {{ __('general.logout') }}
                     </a>
                 </div>
