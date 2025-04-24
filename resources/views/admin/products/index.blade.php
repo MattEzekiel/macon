@@ -121,15 +121,6 @@
             const forms = document.querySelectorAll('.delete-button');
             const buttons_delete = document.querySelectorAll('.btn-delete-button');
             
-            const urlParams = new URLSearchParams(window.location.search);
-            const productName = urlParams.get('name');
-            if (productName) {
-                const nameInput = document.querySelector('input[name="name"]');
-                if (nameInput) {
-                    nameInput.value = productName;
-                }
-            }
-
             buttons_delete.forEach(button => {
                 button.addEventListener('click', () => {
                     const modal = document.getElementById(button.getAttribute('data-id'));
