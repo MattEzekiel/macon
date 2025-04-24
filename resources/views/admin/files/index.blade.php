@@ -36,8 +36,16 @@
                 <td>{{ $file->id }}</td>
                 <td>{{ $file->file_name ?: $file->original_file_name }}</td>
                 <td>{{ $file->original_file_name }}</td>
-                <td>{{ $file->product->name }}</td>
-                <td>{{ $file->product->client->legal_name }}</td>
+                <td>
+                    <a href="{{ route('admin.products', ['client' => $file->product->client_id, 'name' => $file->product->name]) }}" class="text-primary hover:underline">
+                        {{ $file->product->name }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ route('admin.clients', ['client' => $file->product->client_id]) }}" class="text-primary hover:underline">
+                        {{ $file->product->client->legal_name }}
+                    </a>
+                </td>
                 <td>{{ $file->formatFileSize($file->file_size) }}</td>
                 <td>{{ $file->created_at->format('d/m/Y') }}</td>
                 <td>
