@@ -21,7 +21,6 @@ return [
     'file' => 'Archivo',
     'files' => 'Archivos',
     'dashboard' => 'Panel',
-    'files' => 'Archivos',
     'qrs' => 'QR\'s',
     'users' => 'Usuarios',
     'logout' => 'Cerrar sesión',

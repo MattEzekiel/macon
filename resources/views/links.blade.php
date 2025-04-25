@@ -1,4 +1,5 @@
 @extends('layouts.general')
+@section('title', isset($product) ? $product->name : __('general.files'))
 @section('general')
     <main class="flex-1 bg-gradient-to-b from-base-200 to-base-300 p-6">
         <div class="max-w-2xl mx-auto">
@@ -12,7 +13,8 @@
             @if(count($files) > 0)
                 <div class="flex flex-col items-center space-y-6">
                     @foreach($files as $file)
-                        <a ping="{{ route('files.increment-visits', $file->id) }}" href="{{ asset($file->file_url) }}"
+                        <a ping="{{ route('files.increment-visits', ['id' => $file->id]) }}"
+                           href="{{ asset($file->file_url) }}"
                            target="_blank"
                            class="w-3/4 p-4 bg-gray-200 shadow-lg rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-gray-50 group">
                             <div class="flex items-center justify-between">
