@@ -21,7 +21,6 @@ return [
     'file' => 'File',
     'files' => 'Files',
     'dashboard' => 'Dashboard',
-    'files' => 'Files',
     'qrs' => 'QR\'s',
     'users' => 'Users',
     'logout' => 'Logout',
