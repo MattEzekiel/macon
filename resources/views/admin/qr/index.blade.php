@@ -26,8 +26,16 @@
             <tr>
                 <td>{{ $qr->id }}</td>
                 <td>{{ $qr->client->legal_name }}</td>
-                <td>{{ $qr->product->name }}</td>
-                <td>{{ $qr->product->files->count() }}</td>
+                <td>
+                    <a href="{{ route('admin.products', ['client' => $qr->client_id, 'name' => $qr->product->name]) }}" class="text-primary hover:underline">
+                        {{ $qr->product->name }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ route('admin.files', ['product' => $qr->product_id]) }}" class="text-primary hover:underline">
+                        {{ $qr->product->files->count() }}
+                    </a>
+                </td>
                 <td>
                     <div class="tooltip" data-tip="{{ __('qrs.zoom') }}">
                         <button class="relative cursor-pointer group" onclick="my_modal_{{ $qr->id }}.showModal()">

@@ -37,7 +37,11 @@
                 <td>{{ $product->brand }}</td>
                 <td>{{ $product->model }}</td>
                 <td>{{ $product->origin }}</td>
-                <td>{{ $product->files->count() }}</td>
+                <td>
+                    <a href="{{ route('admin.files', ['product' => $product->id]) }}" class="text-primary hover:underline">
+                        {{ $product->files->count() }}
+                    </a>
+                </td>
                 <td>
                     <x-button-link
                             href="{{ route('admin.edit.product', ['id' => $product->id]) }}"
@@ -116,6 +120,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const forms = document.querySelectorAll('.delete-button');
             const buttons_delete = document.querySelectorAll('.btn-delete-button');
+            
             buttons_delete.forEach(button => {
                 button.addEventListener('click', () => {
                     const modal = document.getElementById(button.getAttribute('data-id'));

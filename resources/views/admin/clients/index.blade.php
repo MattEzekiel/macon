@@ -39,9 +39,21 @@
                 <td>{{ $client->contact_email }}</td>
                 <td>{{ $client->contact_phone }}</td>
                 <td>{{ $client->legal_address }}</td>
-                <td>{{ $client->products()->count() }}</td>
-                <td>{{ $client->files_count }}</td>
-                <td>{{ $client->qrs()->count() }}</td>
+                <td>
+                    <a href="{{ route('admin.products', ['client' => $client->id]) }}" class="text-primary hover:underline">
+                        {{ $client->products()->count() }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ route('admin.files', ['client' => $client->id]) }}" class="text-primary hover:underline">
+                        {{ $client->files_count }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ route('admin.qrs', ['client' => $client->id]) }}" class="text-primary hover:underline">
+                        {{ $client->qrs()->count() }}
+                    </a>
+                </td>
                 <td>
                     <x-button-link
                             href="{{ route('admin.edit.client', ['id' => $client->id]) }}"

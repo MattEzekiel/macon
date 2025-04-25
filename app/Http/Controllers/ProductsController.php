@@ -64,7 +64,10 @@ class ProductsController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.products.index', compact('products'));
+        return view('admin.products.index', [
+            'products' => $products,
+            'searchName' => request()->name
+        ]);
     }
 
     public function newProduct(): View|Application|Factory
