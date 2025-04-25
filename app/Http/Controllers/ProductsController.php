@@ -66,7 +66,7 @@ class ProductsController extends Controller
 
         return view('admin.products.index', [
             'products' => $products,
-            'searchName' => request()->name
+            'searchName' => request()->name,
         ]);
     }
 

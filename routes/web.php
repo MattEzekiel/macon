@@ -14,7 +14,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/search/{payload}', [QRController::class, 'DisplayData'])->name('public_qr');
-Route::get('/files/{id}/increment-visits', [FilesController::class, 'IncrementVisits'])->name('files.increment-visits');
+Route::get('/files/{id}/increment-visits', [FilesController::class, 'incrementVisits'])->name('files.increment-visits');
 
 Route::prefix('admin')->group(function () {
     Route::get('login', [AdminController::class, 'loginForm'])->name('admin.login.form');
