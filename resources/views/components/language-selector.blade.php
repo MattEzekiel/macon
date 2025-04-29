@@ -1,4 +1,4 @@
-<form action="{{ route('admin.change.language') }}" method="POST" class="w-3/4">
+<form action="{{ route('admin.change.language') }}" method="POST" class="w-full">
     @csrf
     <select name="language" onchange="this.form.submit()" class="select select-bordered w-full">
         <option value="es" {{ app()->getLocale() === 'es' ? 'selected' : '' }}>{{ __('general.spanish') }}</option>

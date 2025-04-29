@@ -1,8 +1,8 @@
 <form id="{{ isset($client) ? 'update-client' : 'create-client' }}"
       action="{{ isset($client) ? route('admin.client.update', ['id' => $client->id]) : route('admin.client.store') }}"
       method="post"
-      class="w-full grid lg:grid-cols-2 gap-2.5">
-    <p class="mb-5 mt-3 col-span-2">{{ __('clients.complete_the_fields') }}</p>
+      class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+    <p class="mb-5 mt-3 col-span-1 md:col-span-2">{{ __('clients.complete_the_fields') }}</p>
     @method(isset($client) ? 'PUT' : 'POST')
     @csrf
     @forelse($form_data as $input => $value)
@@ -18,7 +18,7 @@
         />
     @empty
     @endforelse
-    <div class="col-span-2 flex lg:justify-end items-center">
+    <div class="col-span-1 md:col-span-2 flex flex-col md:flex-row md:justify-end items-center">
         <x-forms.submit-button btn_color="btn-success">
             {{ isset($client) ? __('general.update_client') : __('general.create_client') }}
         </x-forms.submit-button>
