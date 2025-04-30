@@ -52,4 +52,5 @@ return [
     'password' => 'Password',
     'spanish' => 'Spanish',
     'english' => 'English',
+    'view' => 'View',
 ];
