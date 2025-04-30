@@ -38,9 +38,12 @@
                 <td>{{ $product->model }}</td>
                 <td>{{ $product->origin }}</td>
                 <td>
-                    <a href="{{ route('admin.files', ['product' => $product->id]) }}" class="text-primary hover:underline">
-                        {{ $product->files->count() }}
-                    </a>
+                    <div class="tooltip" data-tip="{{ __('files.view_files') }}">
+                        <a href="{{ route('admin.files', ['product' => $product->id]) }}" class="badge text-xs badge-primary gap-1 cursor-pointer hover:brightness-90">
+                            {{ $product->files->count() }}
+                            <x-icons.external-link class="h-4 w-4 text-white" />
+                        </a>
+                    </div>
                 </td>
                 <td>
                     <x-button-link

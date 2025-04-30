@@ -13,6 +13,7 @@ return [
     'pdf_generation_error' => 'Hubo un problema al generar el PDF. Por favor, inténtelo de nuevo.',
     'image_generation_error' => 'No se pudo generar la imagen. Por favor, inténtelo de nuevo.',
     'create_qr' => 'Crear QR',
+    'view_qrs' => 'Ver QRs',
     'qr_created' => 'QR creado correctamente',
     'qr_creation_error' => 'Error al crear el QR',
     'select_product' => 'Seleccione un producto',

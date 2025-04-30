@@ -27,14 +27,20 @@
                 <td>{{ $qr->id }}</td>
                 <td>{{ $qr->client->legal_name }}</td>
                 <td>
-                    <a href="{{ route('admin.products', ['client' => $qr->client_id, 'name' => $qr->product->name]) }}" class="text-primary hover:underline">
-                        {{ $qr->product->name }}
-                    </a>
+                    <div class="tooltip" data-tip="{{ __('general.view') }} {{ $qr->product->name }}">
+                        <a href="{{ route('admin.products', ['client' => $qr->client_id, 'name' => $qr->product->name]) }}" class="flex items-center gap-1 text-base-content font-bold underline hover:text-base-content/80">
+                            {{ $qr->product->name }}
+                            <x-icons.external-link class="h-4 w-4" />
+                        </a>
+                    </div>
                 </td>
                 <td>
-                    <a href="{{ route('admin.files', ['product' => $qr->product_id]) }}" class="text-primary hover:underline">
-                        {{ $qr->product->files->count() }}
-                    </a>
+                    <div class="tooltip" data-tip="{{ __('files.view_files') }}">
+                        <a href="{{ route('admin.files', ['product' => $qr->product_id]) }}" class="badge text-xs badge-primary gap-1 cursor-pointer hover:brightness-90">
+                            {{ $qr->product->files->count() }}
+                            <x-icons.external-link class="h-4 w-4 text-white" />
+                        </a>
+                    </div>
                 </td>
                 <td>
                     <div class="tooltip" data-tip="{{ __('qrs.zoom') }}">
