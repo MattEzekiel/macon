@@ -37,22 +37,22 @@
                 <td>{{ $file->file_name ?: $file->original_file_name }}</td>
                 <td>{{ $file->original_file_name }}</td>
                 <td>
-                    <div class="tooltip" data-tip="{{ __('general.view') }} {{ $file->product->name }}">
+                    <span class="tooltip" data-tip="{{ __('general.view') }} {{ $file->product->name }}">
                         <a href="{{ route('admin.products', ['client' => $file->product->client_id, 'name' => $file->product->name]) }}"
                            class="flex items-center gap-1 text-base-content font-bold hover:underline hover:text-base-content/80 transition-all duration-300">
                             {{ $file->product->name }}
                             <x-icons.external-link class="h-4 w-4" />
                         </a>
-                    </div>
+                    </span>
                 </td>
                 <td>
-                    <div class="tooltip" data-tip="{{ __('general.view') }} {{ $file->product->client->legal_name }}">
+                    <span class="tooltip" data-tip="{{ __('general.view') }} {{ $file->product->client->legal_name }}">
                         <a href="{{ route('admin.clients', ['client' => $file->product->client_id]) }}"
                            class="flex items-center gap-1 text-base-content font-bold hover:underline hover:text-base-content/80 transition-all duration-300">
                             {{ $file->product->client->legal_name }}
                             <x-icons.external-link class="h-4 w-4" />
                         </a>
-                    </div>
+                    </span>
                 </td>
                 <td>{{ $file->formatFileSize($file->file_size) }}</td>
                 <td>{{ $file->created_at->format('d/m/Y') }}</td>
