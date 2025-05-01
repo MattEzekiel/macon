@@ -10,6 +10,7 @@ return [
     'created_at' => 'Creation date',
     'actions' => 'Actions',
     'view_file' => 'View file',
+    'view_files' => 'View files',
     'edit' => 'Edit',
     'delete' => 'Delete',
     'no_files' => 'No files to show',

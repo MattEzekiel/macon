@@ -38,9 +38,13 @@
                 <td>{{ $product->model }}</td>
                 <td>{{ $product->origin }}</td>
                 <td>
-                    <a href="{{ route('admin.files', ['product' => $product->id]) }}" class="text-primary hover:underline">
-                        {{ $product->files->count() }}
-                    </a>
+                    <span class="tooltip" data-tip="{{ __('files.view_files') }}">
+                        <a href="{{ route('admin.files', ['product' => $product->id]) }}"
+                           class="badge text-xs badge-primary gap-1 cursor-pointer hover:brightness-90">
+                            {{ $product->files->count() }}
+                            <x-icons.external-link class="h-4 w-4 text-white" />
+                        </a>
+                    </span>
                 </td>
                 <td>
                 <div class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
@@ -109,7 +113,8 @@
             </tr>
         @empty
             <tr>
-                <td class="text-center text-2xl bg-content-200 py-2.5" colspan="100%">{{ __('products.no_products') }}</td>
+                <td class="text-center text-2xl bg-content-200 py-2.5"
+                    colspan="100%">{{ __('products.no_products') }}</td>
             </tr>
         @endforelse
         </tbody>
@@ -122,7 +127,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const forms = document.querySelectorAll('.delete-button');
             const buttons_delete = document.querySelectorAll('.btn-delete-button');
-            
+
             buttons_delete.forEach(button => {
                 button.addEventListener('click', () => {
                     const modal = document.getElementById(button.getAttribute('data-id'));

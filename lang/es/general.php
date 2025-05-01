@@ -53,4 +53,5 @@ return [
     'spanish' => 'Español',
     'english' => 'Inglés',
     'filters' => 'Filtros'
+    'view' => 'Ver',
 ];

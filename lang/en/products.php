@@ -29,6 +29,7 @@ return [
     'product_restored' => 'Product restored successfully',
     'select_client' => 'Select a client',
     'create_product' => 'Create product',
+    'view_products' => 'View Products',
     'new_product' => 'New product',
     'upload_files' => 'Upload files',
     'generate_qr' => 'Generate QR',

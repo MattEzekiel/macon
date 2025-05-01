@@ -27,17 +27,25 @@
                 <td>{{ $qr->id }}</td>
                 <td>{{ $qr->client->legal_name }}</td>
                 <td>
-                    <a href="{{ route('admin.products', ['client' => $qr->client_id, 'name' => $qr->product->name]) }}" class="text-primary hover:underline">
-                        {{ $qr->product->name }}
-                    </a>
+                    <span class="tooltip" data-tip="{{ __('general.view') }} {{ $qr->product->name }}">
+                        <a href="{{ route('admin.products', ['client' => $qr->client_id, 'name' => $qr->product->name]) }}"
+                           class="flex items-center gap-1 text-base-content font-bold hover:underline hover:text-base-content/80 transition-all duration-300">
+                            {{ $qr->product->name }}
+                            <x-icons.external-link class="h-4 w-4" />
+                        </a>
+                    </span>
                 </td>
                 <td>
-                    <a href="{{ route('admin.files', ['product' => $qr->product_id]) }}" class="text-primary hover:underline">
-                        {{ $qr->product->files->count() }}
-                    </a>
+                    <span class="tooltip" data-tip="{{ __('files.view_files') }}">
+                        <a href="{{ route('admin.files', ['product' => $qr->product_id]) }}"
+                           class="badge text-xs badge-primary gap-1 cursor-pointer hover:brightness-90">
+                            {{ $qr->product->files->count() }}
+                            <x-icons.external-link class="h-4 w-4 text-white" />
+                        </a>
+                    </span>
                 </td>
                 <td>
-                    <div class="tooltip" data-tip="{{ __('qrs.zoom') }}">
+                    <span class="tooltip" data-tip="{{ __('qrs.zoom') }}">
                         <button class="relative cursor-pointer group" onclick="my_modal_{{ $qr->id }}.showModal()">
                         <span class="absolute inset-0 flex items-center justify-center w-100 h-100 max-w-full max-h-full p-5 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out bg-black/50">
                             <x-zondicon-search />
@@ -45,7 +53,7 @@
                             <img src="{{ asset(Crypt::decrypt($qr->url_qrcode)) }}"
                                  alt="{{ __('qrs.qr_code_for', ['name' => $qr->product->name]) }}">
                         </button>
-                    </div>
+                    </span>
                     <dialog id="my_modal_{{ $qr->id }}" class="modal">
                         <div class="modal-box">
                             <div class="printer">

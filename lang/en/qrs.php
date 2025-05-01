@@ -13,6 +13,7 @@ return [
     'pdf_generation_error' => 'There was a problem generating the PDF. Please try again.',
     'image_generation_error' => 'Could not generate the image. Please try again.',
     'create_qr' => 'Create QR',
+    'view_qrs' => 'View QRs',
     'qr_created' => 'QR created successfully',
     'qr_creation_error' => 'Error creating QR',
     'select_product' => 'Select a product',
