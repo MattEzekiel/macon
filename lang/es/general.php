@@ -52,4 +52,5 @@ return [
     'password' => 'Contraseña',
     'spanish' => 'Español',
     'english' => 'Inglés',
+    'filters' => 'Filtros'
 ];

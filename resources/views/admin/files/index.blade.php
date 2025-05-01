@@ -49,14 +49,14 @@
                 <td>{{ $file->formatFileSize($file->file_size) }}</td>
                 <td>{{ $file->created_at->format('d/m/Y') }}</td>
                 <td>
-                    <div class="flex items-center gap-2">
+                    <div class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
                         <a href="{{ asset($file->file_url) }}"
                            target="_blank"
-                           class="btn btn-xs btn-primary btn-soft">
+                           class="btn btn-xs btn-primary btn-soft max-sm:w-full max-sm:h-full">
                             {{ __('files.view_file') }}
                         </a>
                         <a href="{{ route('admin.edit.files', ['id' => $file->product_id]) }}"
-                           class="btn btn-xs btn-warning btn-soft">
+                           class="btn btn-xs btn-warning btn-soft max-sm:w-full">
                             {{ __('general.edit') }}
                         </a>
                     </div>

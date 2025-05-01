@@ -33,13 +33,14 @@
                 {{--                <td>{{ $user->role }}</td>--}}
                 <td>{{$user->client->legal_name ?? __('users.no_client')}}</td>
                 <td>
+                 <div class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
                     <x-button-link
                             href="{{ route('admin.edit.user', ['id' => $user->id]) }}"
-                            class="btn-xs btn-warning btn-soft"
+                            class="btn-xs btn-warning btn-soft max-sm:w-full"
                     >
                         {{ __('general.edit') }}
                     </x-button-link>
-                    <button class="btn btn-xs btn-error btn-soft btn-delete-button"
+                    <button class="btn btn-xs btn-error btn-soft btn-delete-button max-sm:w-full"
                             data-id="{{'modal-' . $user->id }}">
                         {{ __('general.delete') }}
                     </button>
@@ -79,6 +80,7 @@
                             </div>
                         </div>
                     </dialog>
+                    </div>
                 </td>
             </tr>
         @empty

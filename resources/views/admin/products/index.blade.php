@@ -43,14 +43,15 @@
                     </a>
                 </td>
                 <td>
+                <div class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
                     <x-button-link
                             href="{{ route('admin.edit.product', ['id' => $product->id]) }}"
-                            class="btn-xs btn-warning btn-soft"
+                            class="btn-xs btn-warning btn-soft max-sm:w-full"
                     >
                         {{ __('general.edit') }}
                     </x-button-link>
                     @if($product->deleted_at === null)
-                        <button class="btn btn-xs btn-error btn-soft btn-delete-button"
+                        <button class="btn btn-xs btn-error btn-soft btn-delete-button max-sm:w-full"
                                 data-id="{{'modal-' . $product->id }}">
                             {{ __('general.delete') }}
                         </button>
@@ -103,6 +104,7 @@
                             </button>
                         </form>
                     @endif
+                </div>
                 </td>
             </tr>
         @empty
