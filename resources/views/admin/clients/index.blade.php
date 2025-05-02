@@ -133,7 +133,8 @@
             </tr>
         @empty
             <tr>
-                <td class="text-center text-2xl bg-content-200 py-2.5" colspan="100%">{{ __('clients.no_clients') }}</td>
+                <td class="text-center text-2xl bg-content-200 py-2.5"
+                    colspan="100%">{{ __('clients.no_clients') }}</td>
             </tr>
         @endforelse
         </tbody>

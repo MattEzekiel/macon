@@ -113,7 +113,8 @@
             </tr>
         @empty
             <tr>
-                <td class="text-center text-2xl bg-content-200 py-2.5" colspan="100%">{{ __('products.no_products') }}</td>
+                <td class="text-center text-2xl bg-content-200 py-2.5"
+                    colspan="100%">{{ __('products.no_products') }}</td>
             </tr>
         @endforelse
         </tbody>
@@ -126,7 +127,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const forms = document.querySelectorAll('.delete-button');
             const buttons_delete = document.querySelectorAll('.btn-delete-button');
-            
+
             buttons_delete.forEach(button => {
                 button.addEventListener('click', () => {
                     const modal = document.getElementById(button.getAttribute('data-id'));
