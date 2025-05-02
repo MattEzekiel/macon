@@ -58,7 +58,7 @@
                 <td>{{ $file->created_at->format('d/m/Y') }}</td>
                 <td>
                     <div class="flex items-center gap-2">
-                        <a href="{{ asset($file->file_url) }}"
+                        <a href="{{ route('files.get', ['id' => $file->id]) }}"
                            target="_blank"
                            class="btn btn-xs btn-primary btn-soft">
                             {{ __('files.view_file') }}

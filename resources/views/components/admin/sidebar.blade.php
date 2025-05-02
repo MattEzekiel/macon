@@ -19,7 +19,7 @@
         <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4 flex flex-col">
             <li class="leading-8 text-2xl text-neutral-content text-center pb-2.5 mb-2.5 border-b-2 uppercase">{{ env('APP_NAME') }}</li>
             <li>
-                <ul class="flex-grow">
+                <ul class="flex-grow m-0 p-0">
                     <li class="mb-2.5">
                         <a href="{{ route('admin.dashboard') }}"
                            class="[&>svg]:w-4 {{ request()->routeIs('admin.dashboard') ? 'bg-base-content text-neutral' : '' }}">

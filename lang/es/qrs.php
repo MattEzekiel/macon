@@ -21,4 +21,5 @@ return [
     'visits' => 'Visitas',
     'generate_qr' => 'Generar QR',
     'insert_file_name' => 'Ingrese el nombre visible para este archivo',
+    'view_page_preview' => 'Ver página de archivos',
 ];

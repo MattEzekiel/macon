@@ -28,8 +28,15 @@
         <div class="mt-5 flex flex-wrap items-center justify-center gap-10">
             @forelse($product->files as $file)
                 <div class="w-80 border rounded shadow border-gray-700 p-4 transition-all duration-300 hover:shadow-xl group">
-                    <object class="aspect-square w-full mb-3.5 max-w-[250px] mx-auto"
-                            data="{{ asset($file->file_url) }}"></object>
+                    <div class="relative">
+                        <div class="skeleton h-80 w-full file-loader" aria-label="loading..."></div>
+                        <object
+                                class="aspect-square w-full mb-3.5 max-w-[250px] mx-auto"
+                                data="{{ route('files.get', ['id' => $file->id]) }}"
+                                onload="hideLoader(this)"
+                                id="file-object-{{$file->id}}"
+                        ></object>
+                    </div>
                     <div class="space-y-2">
                         <div class="flex items-center space-x-2">
                             <x-icons.file-icon
@@ -57,7 +64,8 @@
                                         <p class="mb-5 mt-3">{!! __('files.type_to_delete', ['name' => $file->file_name ?: $file->original_file_name]) !!}</p>
                                         @method('DELETE')
                                         @csrf
-                                        <input type="hidden" class="file-name-to-delete" value="{{ $file->file_name ?: $file->original_file_name }}">
+                                        <input type="hidden" class="file-name-to-delete"
+                                               value="{{ $file->file_name ?: $file->original_file_name }}">
                                         <x-forms.floating-input
                                                 type="text"
                                                 name="{{ $file->id }}_name"
@@ -97,7 +105,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const forms = document.querySelectorAll('.delete-button');
             const buttons_delete = document.querySelectorAll('.btn-delete-button');
-            
+
             buttons_delete.forEach(button => {
                 button.addEventListener('click', () => {
                     const modal = document.getElementById(button.getAttribute('data-id'));
@@ -125,5 +133,12 @@
             });
         });
     </script>
+    <script>
+        function hideLoader(objectElement) {
+            const loaderElement = objectElement.parentElement.querySelector('.skeleton');
+            if (loaderElement) {
+                loaderElement.remove();
+            }
+        }
+    </script>
 @endpush
-
