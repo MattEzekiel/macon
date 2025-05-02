@@ -12,6 +12,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -119,10 +120,6 @@ class FilesController extends Controller
 
             $base_path = strtolower("files/{$client_name}/{$product_name}");
 
-            if (! file_exists(public_path($base_path))) {
-                mkdir(public_path($base_path), 0777, true);
-            }
-
             $files = $request->allFiles();
 
             $this->saveFiles($files['files'], $base_path, $product->id);
@@ -139,23 +136,25 @@ class FilesController extends Controller
         }
     }
 
-    protected function saveFiles($files, string $base_path, int $product_id)
+    protected function saveFiles($files, string $base_path, int $product_id): void
     {
+        $disk = config('filesystems.default');
+
         foreach ($files as $file) {
             $original_name = strtolower($file->getClientOriginalName());
             $file_name = uniqid().'_'.Str::random(10);
             $file_size = $file->getSize();
+            $file_path = strtolower("{$base_path}/{$file_name}");
 
-            $move_result = $file->move($base_path, $file_name);
-            $file_exists = file_exists("{$base_path}/{$file_name}");
+            $uploaded = Storage::disk($disk)->put($file_path, file_get_contents($file));
 
-            if (! $move_result || ! $file_exists) {
+            if (! $uploaded) {
                 continue;
             }
 
             Files::create([
                 'product_id' => $product_id,
-                'file_url' => strtolower("{$base_path}/{$file_name}"),
+                'file_url' => $file_path,
                 'original_file_name' => $original_name,
                 'file_size' => $file_size,
             ]);
@@ -193,10 +192,6 @@ class FilesController extends Controller
                 $product_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', $product->name));
 
                 $base_path = strtolower("files/{$client_name}/{$product_name}");
-
-                if (! file_exists(public_path($base_path))) {
-                    mkdir(public_path($base_path), 0777, true);
-                }
 
                 $files = $request->allFiles();
                 $this->saveFiles($files['files'], $base_path, $product->id);
@@ -277,9 +272,41 @@ class FilesController extends Controller
         }
     }
 
+    public function getFileContent(int $id)
+    {
+        try {
+            $file = Files::findOrFail($id);
+
+            $disk = config('filesystems.default');
+
+            if (! Storage::disk($disk)->exists($file->file_url)) {
+                abort(404);
+            }
+
+            $this->incrementVisits($id);
+
+            return Storage::disk($disk)->response($file->file_url, $file->file_name ?: $file->original_file_name);
+        } catch (Exception $exception) {
+            if (env('APP_ENV') === 'local') {
+                Log::error($exception->getMessage());
+            }
+
+            abort(404);
+        }
+    }
+
     public function incrementVisits($id): void
     {
         $file = Files::findOrFail($id);
         $file->increment('visits_count');
+    }
+
+    protected function getFileUrl($disk, $file_path)
+    {
+        if ($disk === 'public') {
+            return asset('/storage/'.$file_path);
+        }
+
+        return Storage::disk($disk)->url($file_path);
     }
 }
