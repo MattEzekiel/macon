@@ -33,26 +33,34 @@
         <tbody>
         @forelse($files as $file)
             <tr>
-                <td>{{ $file->id }}</td>
-                <td>{{ $file->file_name ?: $file->original_file_name }}</td>
-                <td>{{ $file->original_file_name }}</td>
-                <td>
-                    <a href="{{ route('admin.products', ['client' => $file->product->client_id, 'name' => $file->product->name]) }}" class="text-primary hover:underline">
-                        {{ $file->product->name }}
-                    </a>
+                <td data-label="#"><span>{{ $file->id }}</span></td>
+                <td data-label="{{ __('files.file_name') }}"><span>{{ $file->file_name ?: $file->original_file_name }}</span></td>
+                <td data-label="{{ __('files.original_file_name') }}"><span>{{ $file->original_file_name }}</span></td>
+                <td data-label="{{ __('files.product') }}">
+                    <span class="tooltip" data-tip="{{ __('general.view') }} {{ $file->product->name }}">
+                        <a href="{{ route('admin.products', ['client' => $file->product->client_id, 'name' => $file->product->name]) }}"
+                           class="flex items-center gap-1 text-base-content font-bold hover:underline hover:text-base-content/80 transition-all duration-300">
+                            {{ $file->product->name }}
+                            <x-icons.external-link class="h-4 w-4" />
+                        </a>
+                    </span>
                 </td>
-                <td>
-                    <a href="{{ route('admin.clients', ['client' => $file->product->client_id]) }}" class="text-primary hover:underline">
-                        {{ $file->product->client->legal_name }}
-                    </a>
+                <td data-label="{{ __('files.client') }}">
+                    <span class="tooltip" data-tip="{{ __('general.view') }} {{ $file->product->client->legal_name }}">
+                        <a href="{{ route('admin.clients', ['client' => $file->product->client_id]) }}"
+                           class="flex items-center gap-1 text-base-content font-bold hover:underline hover:text-base-content/80 transition-all duration-300">
+                            {{ $file->product->client->legal_name }}
+                            <x-icons.external-link class="h-4 w-4" />
+                        </a>
+                    </span>
                 </td>
-                <td>{{ $file->formatFileSize($file->file_size) }}</td>
-                <td>{{ $file->created_at->format('d/m/Y') }}</td>
-                <td>
+                <td data-label="{{ __('files.file_size') }}"><span>{{ $file->formatFileSize($file->file_size) }}</span></td>
+                <td data-label="{{ __('files.created_at') }}"><span>{{ $file->created_at->format('d/m/Y') }}</span></td>
+                <td data-label="{{ __('files.actions') }}">
                     <div class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
                         <a href="{{ asset($file->file_url) }}"
                            target="_blank"
-                           class="btn btn-xs btn-primary btn-soft max-sm:w-full max-sm:h-full">
+                           class="btn btn-xs btn-primary btn-soft max-sm:w-full">
                             {{ __('files.view_file') }}
                         </a>
                         <a href="{{ route('admin.edit.files', ['id' => $file->product_id]) }}"

@@ -30,19 +30,23 @@
         <tbody>
         @forelse($products as $product)
             <tr>
-                <td>{{ $product->id }}</td>
-                <td>{{ $product->client->legal_name }}</td>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->description }}</td>
-                <td>{{ $product->brand }}</td>
-                <td>{{ $product->model }}</td>
-                <td>{{ $product->origin }}</td>
-                <td>
-                    <a href="{{ route('admin.files', ['product' => $product->id]) }}" class="text-primary hover:underline">
-                        {{ $product->files->count() }}
-                    </a>
+                <td data-label="#"><span>{{ $product->id }}</span></td>
+                <td data-label="{{ __('products.client') }}"><span>{{ $product->client->legal_name }}</span></td>
+                <td data-label="{{ __('products.name') }}"><span>{{ $product->name }}</span></td>
+                <td data-label="{{ __('products.description') }}"><span>{{ $product->description }}</span></td>
+                <td data-label="{{ __('products.brand') }}"><span>{{ $product->brand }}</span></td>
+                <td data-label="{{ __('products.model') }}"><span>{{ $product->model }}</span></td>
+                <td data-label="{{ __('products.origin') }}"><span>{{ $product->origin }}</span></td>
+                <td data-label="{{ __('products.files') }}">
+                    <span class="tooltip" data-tip="{{ __('files.view_files') }}">
+                        <a href="{{ route('admin.files', ['product' => $product->id]) }}"
+                           class="badge text-xs badge-primary gap-1 cursor-pointer hover:brightness-90">
+                            {{ $product->files->count() }}
+                            <x-icons.external-link class="h-4 w-4 text-white" />
+                        </a>
+                    </span>
                 </td>
-                <td>
+                <td data-label="{{ __('general.actions') }}">
                 <div class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
                     <x-button-link
                             href="{{ route('admin.edit.product', ['id' => $product->id]) }}"

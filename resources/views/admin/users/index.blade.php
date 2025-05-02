@@ -27,12 +27,12 @@
         <tbody>
         @forelse($users as $user)
             <tr>
-                <td>{{ $user->id }}</td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
+                <td data-label="#"><span>{{ $user->id }}</span></td>
+                <td data-label="{{ __('users.name') }}"><span>{{ $user->name }}</span></td>
+                <td data-label="{{ __('users.email') }}"><span>{{ $user->email }}</span></td>
                 {{--                <td>{{ $user->role }}</td>--}}
-                <td>{{$user->client->legal_name ?? __('users.no_client')}}</td>
-                <td>
+                <td data-label="{{ __('users.client') }}"><span>{{$user->client->legal_name ?? __('users.no_client')}}</span></td>
+                <td data-label="{{ __('general.actions') }}">
                  <div class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
                     <x-button-link
                             href="{{ route('admin.edit.user', ['id' => $user->id]) }}"

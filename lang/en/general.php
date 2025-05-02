@@ -52,5 +52,6 @@ return [
     'password' => 'Password',
     'spanish' => 'Spanish',
     'english' => 'English',
-    'filters' => 'Filters'
+    'filters' => 'Filters',
+    'view' => 'View',
 ];

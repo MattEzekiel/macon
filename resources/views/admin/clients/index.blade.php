@@ -32,29 +32,41 @@
         <tbody>
         @forelse($clients as $client)
             <tr>
-                <td>{{ $client->id }}</td>
-                <td>{{ $client->legal_name }}</td>
-                <td>{{ $client->tax_id }}</td>
-                <td>{{ $client->contact_name }}</td>
-                <td>{{ $client->contact_email }}</td>
-                <td>{{ $client->contact_phone }}</td>
-                <td>{{ $client->legal_address }}</td>
-                <td>
-                    <a href="{{ route('admin.products', ['client' => $client->id]) }}" class="text-primary hover:underline">
-                        {{ $client->products()->count() }}
-                    </a>
+                <td data-label="#"><span>{{ $client->id }}</span></td>
+                <td data-label="{{ __('clients.legal_name') }}"><span>{{ $client->legal_name }}</span></td>
+                <td data-label="{{ __('clients.tax_id') }}"><span>{{ $client->tax_id }}</span></td>
+                <td data-label="{{ __('clients.contact_name') }}"><span>{{ $client->contact_name }}</span></td>
+                <td data-label="{{ __('clients.contact_email') }}"><span>{{ $client->contact_email }}</span></td>
+                <td data-label="{{ __('clients.contact_phone') }}"><span>{{ $client->contact_phone }}</span></td>
+                <td data-label="{{ __('clients.legal_address') }}"><span>{{ $client->legal_address }}</span></td>
+                <td data-label="{{ __('clients.products') }}">
+                    <span class="tooltip" data-tip="{{ __('products.view_products') }}">
+                        <a href="{{ route('admin.products', ['client' => $client->id]) }}"
+                           class="badge text-xs badge-primary gap-1 cursor-pointer hover:brightness-90">
+                            {{ $client->products()->count() }}
+                            <x-icons.external-link class="h-4 w-4 text-white" />
+                        </a>
+                    </span>
                 </td>
-                <td>
-                    <a href="{{ route('admin.files', ['client' => $client->id]) }}" class="text-primary hover:underline">
-                        {{ $client->files_count }}
-                    </a>
+                <td data-label="{{ __('clients.files') }}">
+                    <span class="tooltip" data-tip="{{ __('files.view_files') }}">
+                        <a href="{{ route('admin.files', ['client' => $client->id]) }}"
+                           class="badge text-xs badge-primary gap-1 cursor-pointer hover:brightness-90">
+                            {{ $client->files_count }}
+                            <x-icons.external-link class="h-4 w-4 text-white" />
+                        </a>
+                    </span>
                 </td>
-                <td>
-                    <a href="{{ route('admin.qrs', ['client' => $client->id]) }}" class="text-primary hover:underline">
-                        {{ $client->qrs()->count() }}
-                    </a>
+                <td data-label="{{ __('clients.qrs') }}">
+                    <span class="tooltip" data-tip="{{ __('qrs.view_qrs') }}">
+                        <a href="{{ route('admin.qrs', ['client' => $client->id]) }}"
+                           class="badge text-xs badge-primary gap-1 cursor-pointer hover:brightness-90">
+                            {{ $client->qrs()->count() }}
+                            <x-icons.external-link class="h-4 w-4 text-white" />
+                        </a>
+                    </span>
                 </td>
-                <td>
+                <td data-label="{{ __('general.actions') }}">
                  <div class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
                     <x-button-link
                             href="{{ route('admin.edit.client', ['id' => $client->id]) }}"
