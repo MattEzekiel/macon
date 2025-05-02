@@ -82,7 +82,7 @@
                         {{ __('general.logout') }}
                     </a>
                 </div>
-            </div>
+            </li>
         </ul>
     </nav>
 </div>
