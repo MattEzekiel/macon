@@ -111,15 +111,18 @@ class QRController extends Controller
                 mkdir($directory, 0777, true);
             }
 
+            $link = Crypt::encrypt(json_encode($payload));
+
             QrCode::size(200)
                 ->margin(0)
                 ->format('svg')
-                ->generate(route('public_qr', ['payload' => Crypt::encrypt(json_encode($payload))]), $qr_path);
+                ->generate(route('public_qr', ['payload' => $link]), $qr_path);
 
             QRs::create([
                 'product_id' => $request->product,
                 'client_id' => $request->client,
                 'url_qrcode' => Crypt::encrypt($local_path),
+                'link' => $link,
             ]);
 
             return redirect()->route('admin.qrs')->with('success', __('qrs.qr_created'));

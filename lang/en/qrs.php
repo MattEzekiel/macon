@@ -21,4 +21,5 @@ return [
     'visits' => 'Visits',
     'generate_qr' => 'Generate QR',
     'insert_file_name' => 'Insert file visible name',
+    'view_page_preview' => 'View Page Preview',
 ];

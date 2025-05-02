@@ -19,6 +19,7 @@
     "eduard9969/blade-polaris-icons": "^2.8",
     "laravel/framework": "^12.0",
     "laravel/tinker": "^2.10.1",
+    "league/flysystem-aws-s3-v3": "^3.0",
     "owenvoke/blade-fontawesome": "^2.9",
     "secondnetwork/blade-tabler-icons": "^3.31",
     "simplesoftwareio/simple-qrcode": "^2.0"

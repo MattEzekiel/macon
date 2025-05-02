@@ -20,6 +20,7 @@ class QRs extends Model
         'product_id',
         'client_id',
         'url_qrcode',
+        'link',
         'visits_count',
     ];
 
@@ -27,6 +28,7 @@ class QRs extends Model
         'product_id' => 'integer',
         'client_id' => 'integer',
         'url_qrcode' => 'string',
+        'link' => 'string',
         'visits_count' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
