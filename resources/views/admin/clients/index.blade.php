@@ -9,7 +9,7 @@
     <x-heading1>
         {{ __('general.clients') }}
     </x-heading1>
-    <x-button-link href="{{ route('admin.new.client') }}">
+    <x-button-link href="{{ route('admin.new.client') }}" class="btn-success">
         {{ __('general.new_client') }}
     </x-button-link>
     @include('admin.clients.forms.searcher')

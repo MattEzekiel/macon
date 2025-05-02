@@ -9,7 +9,7 @@
     <x-heading1>
         {{ __('general.users') }}
     </x-heading1>
-    <x-button-link href="{{ route('admin.new.user') }}">
+    <x-button-link href="{{ route('admin.new.user') }}" class="btn-success">
         {{ __('users.create_new_user') }}
     </x-button-link>
     @include('admin.users.forms.searcher')
