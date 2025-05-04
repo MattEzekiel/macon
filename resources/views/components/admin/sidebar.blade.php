@@ -1,4 +1,3 @@
-@php use Illuminate\Routing\Route; @endphp
 <div class="drawer lg:drawer-open">
     <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex flex-col items-center justify-start px-0 sm:px-5 py-2.5">
