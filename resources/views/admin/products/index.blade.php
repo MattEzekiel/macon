@@ -9,7 +9,7 @@
     <x-heading1>
         {{ __('general.products') }}
     </x-heading1>
-    <x-button-link href="{{ route('admin.new.product') }}">
+    <x-button-link href="{{ route('admin.new.product') }}" class="btn-success">
         {{ __('general.new_product') }}
     </x-button-link>
     @include('admin.products.forms.searcher')

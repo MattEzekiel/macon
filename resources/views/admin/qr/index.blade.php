@@ -70,10 +70,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <button onclick="downloadQrPdf({{ $qr->id }}, '{{ addslashes($qr->product->name) }}')"
-                                    type="button" class="btn btn-primary mx-auto w-fit block mt-10">
-                                {{ __('qrs.download_printable') }}
-                            </button>
+                            <div class="mt-10 grid place-items-center grid-cols-1 gap-y-2.5">
+                                <button onclick="downloadQrPdf({{ $qr->id }}, '{{ addslashes($qr->product->name) }}')"
+                                        type="button" class="btn btn-primary w-fit ">
+                                    {{ __('qrs.download_printable') }}
+                                </button>
+                                <a href="{{ route('public_qr', ['payload' => $qr->link]) }}"
+                                   class="btn btn-secondary" target="_blank">{{ __('qrs.view_page_preview') }}</a>
+                            </div>
                         </div>
                         <form method="dialog" class="modal-backdrop">
                             <button>{{ __('general.close') }}</button>

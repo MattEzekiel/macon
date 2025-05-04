@@ -14,7 +14,7 @@
                 <div class="flex flex-col items-center space-y-6">
                     @foreach($files as $file)
                         <a ping="{{ route('files.increment-visits', ['id' => $file->id]) }}"
-                           href="{{ asset($file->file_url) }}"
+                           href="{{ route('files.get', ['id' => $file->id]) }}"
                            target="_blank"
                            class="w-3/4 p-4 bg-gray-200 shadow-lg rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-gray-50 group">
                             <div class="flex items-center justify-between">

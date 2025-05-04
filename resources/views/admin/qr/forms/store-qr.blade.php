@@ -32,3 +32,13 @@
         </x-forms.submit-button>
     </div>
 </form>
+@push('scripts')
+    <script>
+        function hideLoader(objectElement) {
+            const loaderElement = objectElement.parentElement.querySelector('.skeleton');
+            if (loaderElement) {
+                loaderElement.remove();
+            }
+        }
+    </script>
+@endpush
