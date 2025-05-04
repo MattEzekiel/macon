@@ -30,14 +30,14 @@
         <tbody>
         @forelse($products as $product)
             <tr>
-                <td>{{ $product->id }}</td>
-                <td>{{ $product->client->legal_name }}</td>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->description }}</td>
-                <td>{{ $product->brand }}</td>
-                <td>{{ $product->model }}</td>
-                <td>{{ $product->origin }}</td>
-                <td>
+                <td data-label="#">{{ $product->id }}</td>
+                <td data-label="{{ __('products.client') }}">{{ $product->client->legal_name }}</td>
+                <td data-label="{{ __('products.name') }}">{{ $product->name }}</td>
+                <td data-label="{{ __('products.description') }}">{{ $product->description }}</td>
+                <td data-label="{{ __('products.brand') }}">{{ $product->brand }}</td>
+                <td data-label="{{ __('products.model') }}">{{ $product->model }}</td>
+                <td data-label="{{ __('products.origin') }}">{{ $product->origin }}</td>
+                <td data-label="{{ __('products.files') }}">
                     <span class="tooltip" data-tip="{{ __('files.view_files') }}">
                         <a href="{{ route('admin.files', ['product' => $product->id]) }}"
                            class="badge text-xs badge-primary gap-1 cursor-pointer hover:brightness-90">
@@ -46,15 +46,16 @@
                         </a>
                     </span>
                 </td>
-                <td>
+                <td data-label="{{ __('general.actions') }}">
+                <span class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
                     <x-button-link
                             href="{{ route('admin.edit.product', ['id' => $product->id]) }}"
-                            class="btn-xs btn-warning btn-soft"
+                            class="btn-xs btn-warning btn-soft max-sm:w-full"
                     >
                         {{ __('general.edit') }}
                     </x-button-link>
                     @if($product->deleted_at === null)
-                        <button class="btn btn-xs btn-error btn-soft btn-delete-button"
+                        <button class="btn btn-xs btn-error btn-soft btn-delete-button max-sm:w-full"
                                 data-id="{{'modal-' . $product->id }}">
                             {{ __('general.delete') }}
                         </button>
@@ -107,6 +108,7 @@
                             </button>
                         </form>
                     @endif
+                </span>
                 </td>
             </tr>
         @empty

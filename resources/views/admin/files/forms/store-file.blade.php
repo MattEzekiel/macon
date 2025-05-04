@@ -1,4 +1,4 @@
-<form id="upload-files" class="lg:w-1/2 mx-auto"
+<form id="upload-files" class="w-full md:w-1/2 mx-auto"
       action="{{ isset($product->file_edition) ? route('admin.file.update') : route('admin.file.store') }}"
       method="post" enctype="multipart/form-data">
     @csrf
@@ -8,7 +8,7 @@
             :error="$errors->has('files') ? $errors->first('files') : null"
     />
     <input type="hidden" name="product" id="product" value="{{ $product->id }}">
-    <div class="w-fit ms-auto">
+    <div class="w-full md:w-fit ms-auto mt-4">
         <x-forms.submit-button btn_color="btn-success">
             {{ __('products.upload_files') }}
         </x-forms.submit-button>
@@ -42,7 +42,7 @@
 
                 reader.onload = function(e) {
                     const fileContainer = document.createElement('div');
-                    fileContainer.className = 'w-80 border rounded shadow border-gray-700 p-4 transition-all duration-300 hover:shadow-xl group';
+                    fileContainer.className = 'w-full md:w-80 border rounded shadow border-gray-700 p-4 transition-all duration-300 hover:shadow-xl group';
                     fileContainer.id = `container-${fileId}`;
 
                     const pdf = document.createElement('object');

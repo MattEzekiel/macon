@@ -19,12 +19,12 @@
                            class="w-3/4 p-4 bg-gray-200 shadow-lg rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-gray-50 group">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
-                                    <x-icons.file-icon class="h-6 w-6 text-gray-500 group-hover:text-gray-600" />
+                                    <x-icons.file-icon class="h-6 w-6 text-gray-500 group-hover:text-gray-600" />     
                                     <span class="text-lg font-medium text-gray-700 group-hover:text-gray-800">
                                         {{ $file->file_name ?: 'Archivo PDF' }}
                                     </span>
                                 </div>
-                                <x-icons.external-link class="h-5 w-5 text-gray-400 group-hover:text-gray-600" />
+                                    <x-icons.external-link class="h-5 w-5 text-gray-400 group-hover:text-gray-600"/>
                             </div>
                         </a>
                     @endforeach

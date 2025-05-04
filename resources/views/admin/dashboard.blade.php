@@ -1,11 +1,9 @@
 @extends('layouts.admin')
 @section('title', __('general.dashboard'))
 @section('admin')
-    <div class="flex justify-between items-center mb-6">
-        <x-heading1>
-            {{ __('general.dashboard') }}
-        </x-heading1>
-    </div>
+    <x-heading1>
+        {{ __('general.dashboard') }}
+    </x-heading1>
 
     <!-- Resumen General -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -45,7 +43,7 @@
             <h2 class="text-xl font-semibold text-gray-200 mb-4">{{ __('dashboard.top_clients_files') }}</h2>
             <div class="space-y-4">
                 @forelse($topClients as $client)
-                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg flex-col sm:flex-row">
                         <div class="flex items-center space-x-3">
                             <span class="text-lg font-medium text-gray-200">{{ $client->legal_name }}</span>
                         </div>
@@ -66,7 +64,7 @@
             <h2 class="text-xl font-semibold text-gray-200 mb-4">{{ __('dashboard.top_visited_products') }}</h2>
             <div class="space-y-4">
                 @forelse($topProducts as $product)
-                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg flex-col sm:flex-row">
                         <div class="flex items-center space-x-3">
                             <span class="text-lg font-medium text-gray-200">{{ $product->name }}</span>
                         </div>
@@ -87,7 +85,7 @@
             <h2 class="text-xl font-semibold text-gray-200 mb-4">{{ __('dashboard.top_visited_links') }}</h2>
             <div class="space-y-4">
                 @forelse($topQRs as $qr)
-                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg flex-col sm:flex-row">
                         <div class="flex items-center space-x-3">
                             <span class="text-lg font-medium text-gray-200">{{ $qr->file_name }}</span>
                         </div>
@@ -108,7 +106,7 @@
             <h2 class="text-xl font-semibold text-gray-200 mb-4">{{ __('dashboard.top_clients_users') }}</h2>
             <div class="space-y-4">
                 @forelse($topUsersPerClients as $client_user)
-                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg flex-col sm:flex-row">
                         <div class="flex items-center space-x-3">
                             <span class="text-lg font-medium text-gray-200">{{ $client_user->legal_name }}</span>
                         </div>

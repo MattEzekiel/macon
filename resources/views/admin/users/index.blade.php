@@ -27,58 +27,60 @@
         <tbody>
         @forelse($users as $user)
             <tr>
-                <td>{{ $user->id }}</td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
+                <td data-label="#">{{ $user->id }}</td>
+                <td data-label="{{ __('users.name') }}">{{ $user->name }}</td>
+                <td data-label="{{ __('users.email') }}">{{ $user->email }}</td>
                 {{--                <td>{{ $user->role }}</td>--}}
-                <td>{{$user->client->legal_name ?? __('users.no_client')}}</td>
-                <td>
-                    <x-button-link
-                            href="{{ route('admin.edit.user', ['id' => $user->id]) }}"
-                            class="btn-xs btn-warning btn-soft"
-                    >
-                        {{ __('general.edit') }}
-                    </x-button-link>
-                    <button class="btn btn-xs btn-error btn-soft btn-delete-button"
-                            data-id="{{'modal-' . $user->id }}">
-                        {{ __('general.delete') }}
-                    </button>
-                    <dialog id="{{'modal-' . $user->id }}" class="modal">
-                        <div class="modal-box">
-                            <h3 class="text-lg font-bold">{{ __('users.confirm_delete') }}</h3>
-                            <small class="py-2 text-xs">{{ __('general.press_esc') }}</small>
-                            <div class="modal-action mt-2.5">
-                                <div class="w-full">
-                                    <form id="{{ 'delete-user-' . $user->id }}"
-                                          action="{{ route('admin.user.delete', ['id' => $user->id]) }}"
-                                          method="post"
-                                          class="w-full grid grid-cols-1 gap-2.5 delete-button">
-                                        <p class="mb-5 mt-3">{!! __('users.type_name_to_delete', ['name' => $user->name]) !!}</p>
-                                        @method('DELETE')
-                                        @csrf
-                                        <x-forms.floating-input
-                                                type="text"
-                                                name="{{ $user->id }}_name"
-                                                id="{{ $user->id }}_name"
-                                                label="{{ __('users.name') }}"
-                                                placeholder="{{ __('users.name') }}"
-                                                required="{{ true }}"
-                                        />
-                                    </form>
-                                    <div class="flex flex-wrap lg:justify-end items-center mt-2.5 gap-2.5">
-                                        <form method="dialog">
-                                            <button class="btn">{{ __('general.close') }}</button>
+                <td data-label="{{ __('users.client') }}">{{$user->client->legal_name ?? __('users.no_client')}}</td>
+                <td data-label="{{ __('general.actions') }}">
+                    <div class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
+                        <x-button-link
+                                href="{{ route('admin.edit.user', ['id' => $user->id]) }}"
+                                class="btn-xs btn-warning btn-soft max-sm:w-full"
+                        >
+                            {{ __('general.edit') }}
+                        </x-button-link>
+                        <button class="btn btn-xs btn-error btn-soft btn-delete-button max-sm:w-full"
+                                data-id="{{'modal-' . $user->id }}">
+                            {{ __('general.delete') }}
+                        </button>
+                        <dialog id="{{'modal-' . $user->id }}" class="modal">
+                            <div class="modal-box">
+                                <h3 class="text-lg font-bold">{{ __('users.confirm_delete') }}</h3>
+                                <small class="py-2 text-xs">{{ __('general.press_esc') }}</small>
+                                <div class="modal-action mt-2.5">
+                                    <div class="w-full">
+                                        <form id="{{ 'delete-user-' . $user->id }}"
+                                              action="{{ route('admin.user.delete', ['id' => $user->id]) }}"
+                                              method="post"
+                                              class="w-full grid grid-cols-1 gap-2.5 delete-button">
+                                            <p class="mb-5 mt-3">{!! __('users.type_name_to_delete', ['name' => $user->name]) !!}</p>
+                                            @method('DELETE')
+                                            @csrf
+                                            <x-forms.floating-input
+                                                    type="text"
+                                                    name="{{ $user->id }}_name"
+                                                    id="{{ $user->id }}_name"
+                                                    label="{{ __('users.name') }}"
+                                                    placeholder="{{ __('users.name') }}"
+                                                    required="{{ true }}"
+                                            />
                                         </form>
-                                        <button type="submit"
-                                                form="{{'delete-user-' . $user->id }}"
-                                                disabled
-                                                class="btn btn-soft btn-error">{{ __('users.delete_user') }}
-                                        </button>
+                                        <div class="flex flex-wrap lg:justify-end items-center mt-2.5 gap-2.5">
+                                            <form method="dialog">
+                                                <button class="btn">{{ __('general.close') }}</button>
+                                            </form>
+                                            <button type="submit"
+                                                    form="{{'delete-user-' . $user->id }}"
+                                                    disabled
+                                                    class="btn btn-soft btn-error">{{ __('users.delete_user') }}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </dialog>
+                        </dialog>
+                    </div>
                 </td>
             </tr>
         @empty

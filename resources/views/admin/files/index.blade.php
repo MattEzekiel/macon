@@ -33,10 +33,10 @@
         <tbody>
         @forelse($files as $file)
             <tr>
-                <td>{{ $file->id }}</td>
-                <td>{{ $file->file_name ?: $file->original_file_name }}</td>
-                <td>{{ $file->original_file_name }}</td>
-                <td>
+                <td data-label="#">{{ $file->id }}</td>
+                <td data-label="{{ __('files.file_name') }}">{{ $file->file_name ?: $file->original_file_name }}</td>
+                <td data-label="{{ __('files.original_file_name') }}">{{ $file->original_file_name }}</td>
+                <td data-label="{{ __('files.product') }}">
                     <span class="tooltip" data-tip="{{ __('general.view') }} {{ $file->product->name }}">
                         <a href="{{ route('admin.products', ['client' => $file->product->client_id, 'name' => $file->product->name]) }}"
                            class="flex items-center gap-1 text-base-content font-bold hover:underline hover:text-base-content/80 transition-all duration-300">
@@ -45,7 +45,7 @@
                         </a>
                     </span>
                 </td>
-                <td>
+                <td data-label="{{ __('files.client') }}">
                     <span class="tooltip" data-tip="{{ __('general.view') }} {{ $file->product->client->legal_name }}">
                         <a href="{{ route('admin.clients', ['client' => $file->product->client_id]) }}"
                            class="flex items-center gap-1 text-base-content font-bold hover:underline hover:text-base-content/80 transition-all duration-300">
@@ -54,17 +54,17 @@
                         </a>
                     </span>
                 </td>
-                <td>{{ $file->formatFileSize($file->file_size) }}</td>
-                <td>{{ $file->created_at->format('d/m/Y') }}</td>
-                <td>
-                    <div class="flex items-center gap-2">
-                        <a href="{{ route('files.get', ['id' => $file->id]) }}"
+                <td data-label="{{ __('files.file_size') }}">{{ $file->formatFileSize($file->file_size) }}</td>
+                <td data-label="{{ __('files.created_at') }}">{{ $file->created_at->format('d/m/Y') }}</td>
+                <td data-label="{{ __('files.actions') }}">
+                    <div class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
+                        <a href="{{ asset($file->file_url) }}"
                            target="_blank"
-                           class="btn btn-xs btn-primary btn-soft">
+                           class="btn btn-xs btn-primary btn-soft max-sm:w-full">
                             {{ __('files.view_file') }}
                         </a>
                         <a href="{{ route('admin.edit.files', ['id' => $file->product_id]) }}"
-                           class="btn btn-xs btn-warning btn-soft">
+                           class="btn btn-xs btn-warning btn-soft max-sm:w-full">
                             {{ __('general.edit') }}
                         </a>
                     </div>
@@ -73,7 +73,7 @@
 
         @empty
             <tr>
-                <td colspan="8" class="text-center text-2xl bg-content-200 py-2.5">{{ __('files.no_files') }}</td>
+                <td colspan="100%" class="text-center text-2xl bg-content-200 py-2.5">{{ __('files.no_files') }}</td>
             </tr>
         @endforelse
         </tbody>
