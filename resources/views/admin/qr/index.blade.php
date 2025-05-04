@@ -24,9 +24,9 @@
         <tbody>
         @forelse($qrs as $qr)
             <tr>
-                <td>{{ $qr->id }}</td>
-                <td>{{ $qr->client->legal_name }}</td>
-                <td>
+                <td data-label="#">{{ $qr->id }}</td>
+                <td data-label="{{ __('qrs.client') }}">{{ $qr->client->legal_name }}</td>
+                <td data-label="{{ __('qrs.product') }}">
                     <span class="tooltip" data-tip="{{ __('general.view') }} {{ $qr->product->name }}">
                         <a href="{{ route('admin.products', ['client' => $qr->client_id, 'name' => $qr->product->name]) }}"
                            class="flex items-center gap-1 text-base-content font-bold hover:underline hover:text-base-content/80 transition-all duration-300">
@@ -35,7 +35,7 @@
                         </a>
                     </span>
                 </td>
-                <td>
+                <td data-label="{{ __('qrs.files') }}">
                     <span class="tooltip" data-tip="{{ __('files.view_files') }}">
                         <a href="{{ route('admin.files', ['product' => $qr->product_id]) }}"
                            class="badge text-xs badge-primary gap-1 cursor-pointer hover:brightness-90">
@@ -44,7 +44,7 @@
                         </a>
                     </span>
                 </td>
-                <td>
+                <td data-label="{{ __('qrs.qr') }}">
                     <span class="tooltip" data-tip="{{ __('qrs.zoom') }}">
                         <button class="relative cursor-pointer group" onclick="my_modal_{{ $qr->id }}.showModal()">
                         <span class="absolute inset-0 flex items-center justify-center w-100 h-100 max-w-full max-h-full p-5 opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out bg-black/50">

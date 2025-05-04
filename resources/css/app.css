@@ -70,3 +70,83 @@
         bottom: -5px;
     }
 }
+
+.menu {
+    & :where(li ul) {
+        &::before {
+            background-color: transparent !important;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    table.table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 1rem;
+
+        thead {
+            display: none;
+        }
+
+        tbody {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            tr {
+                display: block;
+                background: var(--color-neutral);
+                border-radius: 0.75rem;
+                margin-bottom: 1rem;
+                box-shadow: 0 1px 3px 0 var(--color-base-100);
+                padding: 0.5rem 1rem;
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            td {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.5rem 0;
+                border: none;
+                font-size: 0.85rem;
+                color: var(--color-base-content);
+
+                a:not(.btn) {
+                    max-width: 160px;
+                    word-break: break-word;
+                    white-space: normal;
+                    text-align: right;
+                }
+            }
+
+            td::before {
+                content: attr(data-label) ": ";
+                font-weight: bold;
+                display: inline-block;
+                color: var(--color-neutral-content);
+                margin-right: 1rem;
+                text-align: left;
+            }
+
+            td:first-child {
+                padding-top: 2rem;
+            }
+
+            td:first-child::before {
+                content: attr(data-label) " ";
+            }
+
+            td:last-child {
+                border-top: 1px solid;
+                border-top-color: var(--color-base-200);
+                margin-top: 0.5rem;
+                padding-top: 1rem;
+            }
+        }
+    }
+}

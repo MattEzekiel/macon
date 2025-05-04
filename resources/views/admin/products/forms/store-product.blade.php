@@ -1,8 +1,8 @@
 <form id="{{ isset($product) ? 'update-product' : 'create-product' }}"
       action="{{ isset($product) ? route('admin.product.update', ['id' => $product->id]) : route('admin.product.store') }}"
       method="post"
-      class="w-full grid lg:grid-cols-2 gap-2.5">
-    <p class="mb-5 mt-3 col-span-2">{{ __('products.complete_the_fields') }}</p>
+      class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+    <p class="mb-5 mt-3 col-span-1 md:col-span-2">{{ __('products.complete_the_fields') }}</p>
     @method(isset($product) ? 'PUT' : 'POST')
     @csrf
     @forelse($form_data as $input => $value)
@@ -18,7 +18,7 @@
                     :options="$clients->map(fn($client) => json_decode(json_encode(['id' => $client->id, 'value' => $client->legal_name])))"
             />
         @elseif($value === 'textarea')
-            <div class="col-span-2 min-h-[80px]">
+            <div class="col-span-1 md:col-span-2 min-h-[80px]">
                 <x-forms.floating-textarea
                         type="{{ $value }}"
                         name="{{ $input }}"
@@ -47,7 +47,7 @@
     @if(isset($product))
         <input type="hidden" name="submit_action" id="submit_action" value="">
     @endif
-    <div class="col-span-2 flex lg:justify-end items-center gap-5">
+    <div class="col-span-1 md:col-span-2 flex flex-col md:flex-row md:justify-end items-center gap-5">
         <x-forms.submit-button btn_color="btn-success" class="{{ isset($product) ? 'btn-outline' : '' }}">
             {{ isset($product) ? __('products.update_and_finish') : __('products.create_new_product') }}
         </x-forms.submit-button>
