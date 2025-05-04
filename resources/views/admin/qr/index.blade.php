@@ -24,8 +24,8 @@
         <tbody>
         @forelse($qrs as $qr)
             <tr>
-                <td data-label="#"><span>{{ $qr->id }}</span></td>
-                <td data-label="{{ __('qrs.client') }}"><span>{{ $qr->client->legal_name }}</span></td>
+                <td data-label="#">{{ $qr->id }}</td>
+                <td data-label="{{ __('qrs.client') }}">{{ $qr->client->legal_name }}</td>
                 <td data-label="{{ __('qrs.product') }}">
                     <span class="tooltip" data-tip="{{ __('general.view') }} {{ $qr->product->name }}">
                         <a href="{{ route('admin.products', ['client' => $qr->client_id, 'name' => $qr->product->name]) }}"

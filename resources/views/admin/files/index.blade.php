@@ -33,9 +33,9 @@
         <tbody>
         @forelse($files as $file)
             <tr>
-                <td data-label="#"><span>{{ $file->id }}</span></td>
-                <td data-label="{{ __('files.file_name') }}"><span>{{ $file->file_name ?: $file->original_file_name }}</span></td>
-                <td data-label="{{ __('files.original_file_name') }}"><span>{{ $file->original_file_name }}</span></td>
+                <td data-label="#">{{ $file->id }}</td>
+                <td data-label="{{ __('files.file_name') }}">{{ $file->file_name ?: $file->original_file_name }}</td>
+                <td data-label="{{ __('files.original_file_name') }}">{{ $file->original_file_name }}</td>
                 <td data-label="{{ __('files.product') }}">
                     <span class="tooltip" data-tip="{{ __('general.view') }} {{ $file->product->name }}">
                         <a href="{{ route('admin.products', ['client' => $file->product->client_id, 'name' => $file->product->name]) }}"
@@ -54,8 +54,8 @@
                         </a>
                     </span>
                 </td>
-                <td data-label="{{ __('files.file_size') }}"><span>{{ $file->formatFileSize($file->file_size) }}</span></td>
-                <td data-label="{{ __('files.created_at') }}"><span>{{ $file->created_at->format('d/m/Y') }}</span></td>
+                <td data-label="{{ __('files.file_size') }}">{{ $file->formatFileSize($file->file_size) }}</td>
+                <td data-label="{{ __('files.created_at') }}">{{ $file->created_at->format('d/m/Y') }}</td>
                 <td data-label="{{ __('files.actions') }}">
                     <div class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
                         <a href="{{ asset($file->file_url) }}"
@@ -73,7 +73,7 @@
 
         @empty
             <tr>
-                <td colspan="8" class="text-center text-2xl bg-content-200 py-2.5">{{ __('files.no_files') }}</td>
+                <td colspan="100%" class="text-center text-2xl bg-content-200 py-2.5">{{ __('files.no_files') }}</td>
             </tr>
         @endforelse
         </tbody>

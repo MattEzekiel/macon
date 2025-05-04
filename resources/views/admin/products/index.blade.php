@@ -30,13 +30,13 @@
         <tbody>
         @forelse($products as $product)
             <tr>
-                <td data-label="#"><span>{{ $product->id }}</span></td>
-                <td data-label="{{ __('products.client') }}"><span>{{ $product->client->legal_name }}</span></td>
-                <td data-label="{{ __('products.name') }}"><span>{{ $product->name }}</span></td>
-                <td data-label="{{ __('products.description') }}"><span>{{ $product->description }}</span></td>
-                <td data-label="{{ __('products.brand') }}"><span>{{ $product->brand }}</span></td>
-                <td data-label="{{ __('products.model') }}"><span>{{ $product->model }}</span></td>
-                <td data-label="{{ __('products.origin') }}"><span>{{ $product->origin }}</span></td>
+                <td data-label="#">{{ $product->id }}</td>
+                <td data-label="{{ __('products.client') }}">{{ $product->client->legal_name }}</td>
+                <td data-label="{{ __('products.name') }}">{{ $product->name }}</td>
+                <td data-label="{{ __('products.description') }}">{{ $product->description }}</td>
+                <td data-label="{{ __('products.brand') }}">{{ $product->brand }}</td>
+                <td data-label="{{ __('products.model') }}">{{ $product->model }}</td>
+                <td data-label="{{ __('products.origin') }}">{{ $product->origin }}</td>
                 <td data-label="{{ __('products.files') }}">
                     <span class="tooltip" data-tip="{{ __('files.view_files') }}">
                         <a href="{{ route('admin.files', ['product' => $product->id]) }}"
@@ -47,7 +47,7 @@
                     </span>
                 </td>
                 <td data-label="{{ __('general.actions') }}">
-                <div class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
+                <span class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
                     <x-button-link
                             href="{{ route('admin.edit.product', ['id' => $product->id]) }}"
                             class="btn-xs btn-warning btn-soft max-sm:w-full"
@@ -108,7 +108,7 @@
                             </button>
                         </form>
                     @endif
-                </div>
+                </span>
                 </td>
             </tr>
         @empty

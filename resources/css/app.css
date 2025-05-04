@@ -70,3 +70,25 @@
         bottom: -5px;
     }
 }
+
+@media screen and (max-width: 640px) {
+    table.table {
+        th {
+            display: none;
+        }
+
+        td:first-child {
+            padding-top: 2rem;
+        }
+
+        td:first-child::before {
+            content: attr(data-label) " ";
+        }
+
+        td::before {
+            content: attr(data-label) ": ";
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+    }
+}
