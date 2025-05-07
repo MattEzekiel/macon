@@ -28,7 +28,7 @@
                                             id="{{ $key }}"
                                             label="{{ $key === 'client' ? __('files.client') : __('files.product') }}"
                                             error="{{ $errors->has($key) ? $errors->first($key) : null }}"
-                                            value="{{ old($key, request()->get($key)) }}"
+                                            value="{{ request()->get($key) }}"
                                             :required="false"
                                             :options="$data"
                                     />
@@ -41,7 +41,7 @@
                                             id="{{ $key }}"
                                             label="{{ $key === 'file_name' ? __('files.file_name') : __('files.original_file_name') }}"
                                             error="{{ $errors->has($key) ? $errors->first($key) : null }}"
-                                            value="{{ old($key, request()->get($key)) }}"
+                                            value="{{ request()->get($key) }}"
                                             placeholder="{{ $key === 'file_name' ? __('files.file_name') : __('files.original_file_name') }}"
                                             list_id="files_{{ $key }}"
                                             :required="false"
@@ -61,7 +61,7 @@
                                             id="{{ $key }}"
                                             label="{{ __('files.deleted') }}"
                                             error="{{ $errors->has($key) ? $errors->first($key) : null }}"
-                                            value="{{ old($key, request()->get($key)) }}"
+                                            value="{{ request()->get($key) }}"
                                             :required="false"
                                             :options="$formated_data"
                                     />
@@ -97,7 +97,7 @@
                                 id="{{ $key }}"
                                 label="{{ $key === 'client' ? __('files.client') : __('files.product') }}"
                                 error="{{ $errors->has($key) ? $errors->first($key) : null }}"
-                                value="{{ old($key, request()->get($key)) }}"
+                                value="{{ request()->get($key) }}"
                                 :required="false"
                                 :options="$data"
                         />
@@ -110,7 +110,7 @@
                                 id="{{ $key }}"
                                 label="{{ $key === 'file_name' ? __('files.file_name') : __('files.original_file_name') }}"
                                 error="{{ $errors->has($key) ? $errors->first($key) : null }}"
-                                value="{{ old($key, request()->get($key)) }}"
+                                value="{{ request()->get($key) }}"
                                 placeholder="{{ $key === 'file_name' ? __('files.file_name') : __('files.original_file_name') }}"
                                 list_id="files_{{ $key }}"
                                 :required="false"
@@ -130,7 +130,7 @@
                                 id="{{ $key }}"
                                 label="{{ __('files.deleted') }}"
                                 error="{{ $errors->has($key) ? $errors->first($key) : null }}"
-                                value="{{ old($key, request()->get($key)) }}"
+                                value="{{ request()->get($key) }}"
                                 :required="false"
                                 :options="$formated_data"
                         />
