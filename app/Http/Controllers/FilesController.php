@@ -272,27 +272,20 @@ class FilesController extends Controller
         }
     }
 
-    public function getFileContent(int $id)
+    public function getFileContent($id)
     {
-        try {
-            $file = Files::findOrFail($id);
-
-            $disk = config('filesystems.default');
-
-            if (! Storage::disk($disk)->exists($file->file_url)) {
-                abort(404);
-            }
-
-            $this->incrementVisits($id);
-
-            return Storage::disk($disk)->response($file->file_url, $file->file_name ?: $file->original_file_name);
-        } catch (Exception $exception) {
-            if (env('APP_ENV') === 'local') {
-                Log::error($exception->getMessage());
-            }
-
-            abort(404);
+        $file = Files::findOrFail($id);
+        $path = storage_path('app/private/' . $file->file_url);
+        if (!file_exists($path)) {
+            abort(404, 'Archivo no encontrado en el servidor');
         }
+        return response()->file($path);
+    }
+
+    public function viewFile($id)
+    {
+        $file = Files::findOrFail($id);
+        return view('admin.files.view', compact('file'));
     }
 
     public function incrementVisits($id): void

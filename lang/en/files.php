@@ -39,4 +39,6 @@ return [
     'delete_success' => 'File deleted successfully',
     'delete_error' => 'Could not delete the file',
     'max_size' => 'Max 10MB',
+    'pdf_file' => 'PDF file',
+    'pdf_error' => 'Could not load the PDF',
 ];
