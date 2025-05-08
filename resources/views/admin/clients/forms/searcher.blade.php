@@ -26,7 +26,7 @@
                                             id="{{ $key }}"
                                             label="{{ __('clients.' . $key) }}"
                                             error="{{ $errors->has($key) ? $errors->first($key) : null }}"
-                                            value="{{ old($key, request()->get($key)) }}"
+                                            value="{{ request()->get($key) }}"
                                             :required="false"
                                             :options="$client_data"
                                     />
@@ -42,7 +42,7 @@
                                             id="{{ $key }}"
                                             label="{{ __('clients.' . $key) }}"
                                             error="{{ $errors->has($key) ? $errors->first($key) : null }}"
-                                            value="{{ old($key, request()->get($key)) }}"
+                                            value="{{ request()->get($key) }}"
                                             :required="false"
                                             :options="$formated_data"
                                     />
@@ -76,7 +76,7 @@
                                 id="{{ $key }}"
                                 label="{{ __('clients.' . $key) }}"
                                 error="{{ $errors->has($key) ? $errors->first($key) : null }}"
-                                value="{{ old($key, request()->get($key)) }}"
+                                value="{{ request()->get($key) }}"
                                 :required="false"
                                 :options="$client_data"
                         />
@@ -92,7 +92,7 @@
                                 id="{{ $key }}"
                                 label="{{ __('clients.' . $key) }}"
                                 error="{{ $errors->has($key) ? $errors->first($key) : null }}"
-                                value="{{ old($key, request()->get($key)) }}"
+                                value="{{ request()->get($key) }}"
                                 :required="false"
                                 :options="$formated_data"
                         />

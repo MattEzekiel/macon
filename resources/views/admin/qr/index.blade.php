@@ -75,8 +75,10 @@
                                         type="button" class="btn btn-primary w-fit ">
                                     {{ __('qrs.download_printable') }}
                                 </button>
-                                <a href="{{ route('public_qr', ['payload' => $qr->link]) }}"
-                                   class="btn btn-secondary" target="_blank">{{ __('qrs.view_page_preview') }}</a>
+                                @if($qr->link)
+                                    <a href="{{ route('public_qr', ['payload' => $qr->link]) }}"
+                                       class="btn btn-secondary" target="_blank">{{ __('qrs.view_page_preview') }}</a>
+                                @endif
                             </div>
                         </div>
                         <form method="dialog" class="modal-backdrop">

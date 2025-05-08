@@ -48,7 +48,7 @@
         <input type="hidden" name="submit_action" id="submit_action" value="">
     @endif
     <div class="col-span-1 md:col-span-2 flex flex-col md:flex-row md:justify-end items-center gap-5">
-        <x-forms.submit-button btn_color="btn-success" class="{{ isset($product) ? 'btn-outline' : '' }}">
+        <x-forms.submit-button class="{{ isset($product) ? 'btn-success btn-outline' : '' }}">
             {{ isset($product) ? __('products.update_and_finish') : __('products.create_new_product') }}
         </x-forms.submit-button>
         @if(isset($product))
