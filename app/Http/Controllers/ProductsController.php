@@ -174,10 +174,9 @@ class ProductsController extends Controller
 
             $product->save();
 
-            if ($request->submit_action) {
+            if ($request->submit_action === 'update_and_continue') {
                 return redirect()->route('admin.edit.files', ['id' => $product->id])->with('success', __('products.updated_successfully'));
             }
-
             return redirect()->route('admin.products')->with('success', __('products.updated_successfully'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
