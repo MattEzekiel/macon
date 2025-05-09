@@ -41,4 +41,6 @@ return [
     'max_size' => 'Max 10MB',
     'pdf_file' => 'PDF file',
     'pdf_error' => 'Could not load the PDF',
+    'file_not_found' => 'File not found on server',
+    'file_retrieval_error' => 'Error retrieving file', 
 ];

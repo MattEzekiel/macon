@@ -54,7 +54,7 @@
         const url = "{{ route('files.get', ['id' => $file->id]) }}";
         const pdfjsLib = window['pdfjsLib'];
         if (pdfjsLib && pdfjsLib.GlobalWorkerOptions) {
-            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            pdfjsLib.GlobalWorkerOptions.workerSrc = '{{ asset('js/pdf.worker.js') }}';
         }
 
         const viewer = document.getElementById('pdf-viewer');

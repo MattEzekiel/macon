@@ -274,12 +274,33 @@ class FilesController extends Controller
 
     public function getFileContent($id)
     {
-        $file = Files::findOrFail($id);
-        $path = storage_path('app/private/' . $file->file_url);
-        if (!file_exists($path)) {
-            abort(404, 'Archivo no encontrado en el servidor');
+        try {
+            $file = Files::findOrFail($id);
+
+            // Usa el sistema de almacenamiento configurado
+            $disk = config('filesystems.default');
+            $path = $disk === 'local'
+                ? storage_path('app/private/' . $file->file_url)
+                : $file->file_url;
+
+            // Validación de la existencia del archivo
+            if (!Storage::disk($disk)->exists($file->file_url) || !file_exists($path)) {
+                abort(404, __('files.file_not_found'));
+            }
+
+            // Incrementar visitas
+            $this->incrementVisits($id);
+
+            // Retorna la respuesta adecuada según el tipo de disco
+            return $disk === 'local'
+                ? response()->file($path)
+                : Storage::disk($disk)->response($file->file_url, $file->file_name ?: $file->original_file_name);
+        } catch (Exception $exception) {
+            // Manejo de errores
+            Log::error($exception->getMessage());
+
+            abort(404, __('files.file_retrieval_error'));
         }
-        return response()->file($path);
     }
 
     public function viewFile($id)

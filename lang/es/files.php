@@ -41,5 +41,7 @@ return [
     'max_size' => 'Max 10MB',
     'pdf_file' => 'Archivo PDF',
     'pdf_error' => 'No se pudo cargar el PDF',
+    'file_not_found' => 'Archivo no encontrado en el servidor',
+    'file_retrieval_error' => 'Error al recuperar el archivo', 
 
 ];
