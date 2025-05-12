@@ -45,14 +45,14 @@
     @empty
     @endforelse
     @if(isset($product))
-        <input type="hidden" name="submit_action" id="submit_action" value="">
+        <input type="hidden" name="submit_action" id="submit_action_hidden" value="">
     @endif
     <div class="col-span-1 md:col-span-2 flex flex-col md:flex-row md:justify-end items-center gap-5">
-        <x-forms.submit-button class="{{ isset($product) ? 'btn-success btn-outline' : '' }}">
+        <x-forms.submit-button name="submit_action" value="update_and_finish" class="{{ isset($product) ? 'btn-success btn-outline' : '' }}" onclick="document.getElementById('submit_action_hidden').value='update_and_finish'">
             {{ isset($product) ? __('products.update_and_finish') : __('products.create_new_product') }}
         </x-forms.submit-button>
         @if(isset($product))
-            <x-forms.submit-button btn_color="btn-success" value="update_and_continue">
+            <x-forms.submit-button name="submit_action" value="update_and_continue" btn_color="btn-success" onclick="document.getElementById('submit_action_hidden').value='update_and_continue'">
                 {{ __('products.update_and_continue') }}
             </x-forms.submit-button>
         @endif
