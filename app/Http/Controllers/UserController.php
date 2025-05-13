@@ -25,7 +25,7 @@ class UserController extends Controller
         });
 
         $users->when(request()->name, function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%'.$name.'%');
         });
 
         $users->when(request()->deleted, function ($query, $deletion) {
@@ -72,13 +72,13 @@ class UserController extends Controller
                 'confirm_password' => 'required|same:password',
             ],
             [
-                'name.required' => __('users.name') . ' es requerido',
-                'client.required' => __('users.client') . ' es requerido',
-                'email.required' => __('users.email') . ' es requerido',
-                'password.required' => __('users.password') . ' es requerido',
-                'password.min' => __('users.password_min') . ' es requerido',
-                'confirm_password.required' => __('users.confirm_password') . ' es requerido',
-                'confirm_password.same' => __('users.confirm_password') . ' y ' . __('users.password') . ' no coincide',
+                'name.required' => __('users.name').' es requerido',
+                'client.required' => __('users.client').' es requerido',
+                'email.required' => __('users.email').' es requerido',
+                'password.required' => __('users.password').' es requerido',
+                'password.min' => __('users.password_min').' es requerido',
+                'confirm_password.required' => __('users.confirm_password').' es requerido',
+                'confirm_password.same' => __('users.confirm_password').' y '.__('users.password').' no coincide',
             ]
         );
 
@@ -119,11 +119,11 @@ class UserController extends Controller
                 'confirm_password' => 'same:password',
             ],
             [
-                'name.required' => __('users.name') . ' es requerido',
-                'client.required' => __('users.client') . ' es requerido',
-                'email.required' => __('users.email') . ' es requerido',
-                'password.min' => __('users.password_min') . ' es requerido',
-                'confirm_password.same' => __('users.confirm_password') . ' y ' . __('users.password') . ' no coincide',
+                'name.required' => __('users.name').' es requerido',
+                'client.required' => __('users.client').' es requerido',
+                'email.required' => __('users.email').' es requerido',
+                'password.min' => __('users.password_min').' es requerido',
+                'confirm_password.same' => __('users.confirm_password').' y '.__('users.password').' no coincide',
             ]
         );
 
