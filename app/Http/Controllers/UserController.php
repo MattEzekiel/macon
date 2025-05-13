@@ -25,7 +25,7 @@ class UserController extends Controller
         });
 
         $users->when(request()->name, function ($query, $name) {
-            $query->where('name', 'like', '%'.$name.'%');
+            $query->where('name', 'like', '%' . $name . '%');
         });
 
         $users->when(request()->deleted, function ($query, $deletion) {
@@ -72,13 +72,13 @@ class UserController extends Controller
                 'confirm_password' => 'required|same:password',
             ],
             [
-                'name.required' => __('users.name').' es requerido',
-                'client.required' => __('users.client').' es requerido',
-                'email.required' => __('users.email').' es requerido',
-                'password.required' => __('users.password').' es requerido',
-                'password.min' => __('users.password_min').' es requerido',
-                'confirm_password.required' => __('users.confirm_password').' es requerido',
-                'confirm_password.same' => __('users.confirm_password').' y '.__('users.password').' no coincide',
+                'name.required' => __('users.name') . ' es requerido',
+                'client.required' => __('users.client') . ' es requerido',
+                'email.required' => __('users.email') . ' es requerido',
+                'password.required' => __('users.password') . ' es requerido',
+                'password.min' => __('users.password_min') . ' es requerido',
+                'confirm_password.required' => __('users.confirm_password') . ' es requerido',
+                'confirm_password.same' => __('users.confirm_password') . ' y ' . __('users.password') . ' no coincide',
             ]
         );
 
@@ -119,11 +119,11 @@ class UserController extends Controller
                 'confirm_password' => 'same:password',
             ],
             [
-                'name.required' => __('users.name').' es requerido',
-                'client.required' => __('users.client').' es requerido',
-                'email.required' => __('users.email').' es requerido',
-                'password.min' => __('users.password_min').' es requerido',
-                'confirm_password.same' => __('users.confirm_password').' y '.__('users.password').' no coincide',
+                'name.required' => __('users.name') . ' es requerido',
+                'client.required' => __('users.client') . ' es requerido',
+                'email.required' => __('users.email') . ' es requerido',
+                'password.min' => __('users.password_min') . ' es requerido',
+                'confirm_password.same' => __('users.confirm_password') . ' y ' . __('users.password') . ' no coincide',
             ]
         );
 
@@ -166,5 +166,49 @@ class UserController extends Controller
 
             return back()->with('error', __('users.deleted_error'));
         }
+    }
+
+    public function loginForm(): View|Application|Factory
+    {
+        return view('client.login');
+    }
+
+    public function login(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ], [
+            'email.required' => __('auth.email_required'),
+            'email.email' => __('auth.email_invalid'),
+            'password.required' => __('auth.password_required'),
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (auth('web')->attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->route('client.dashboard');
+        }
+
+        return back()->with('error', __('auth.invalid_credentials'))->withInput();
+    }
+
+    public function logout(): RedirectResponse
+    {
+        auth('web')->logout();
+
+        return redirect()->route('client.login');
+    }
+
+    public function forgotPassword(): View|Application|Factory
+    {
+        return view('client.forgot-password');
+    }
+
+    public function dashboard(): View|Application|Factory
+    {
+        return view('client.dashboard');
     }
 }
