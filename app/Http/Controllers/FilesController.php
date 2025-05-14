@@ -280,11 +280,11 @@ class FilesController extends Controller
             // Usa el sistema de almacenamiento configurado
             $disk = config('filesystems.default');
             $path = $disk === 'local'
-                ? storage_path('app/private/' . $file->file_url)
+                ? storage_path('app/private/'.$file->file_url)
                 : $file->file_url;
 
             // Validación de la existencia del archivo
-            if (!Storage::disk($disk)->exists($file->file_url) || !file_exists($path)) {
+            if (! Storage::disk($disk)->exists($file->file_url) || ! file_exists($path)) {
                 abort(404, __('files.file_not_found'));
             }
 
@@ -306,6 +306,7 @@ class FilesController extends Controller
     public function viewFile($id)
     {
         $file = Files::findOrFail($id);
+
         return view('admin.files.view', compact('file'));
     }
 
