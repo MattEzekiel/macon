@@ -28,13 +28,15 @@
         });
 
         const url = "{{ route('files.get', ['id' => $file->id]) }}";
-        const pdfjsLib = window.pdfjsLib;
         const viewer = document.getElementById('pdf-viewer');
         viewer.innerHTML = '';
 
-        pdfjsLib.getDocument(url).promise.then(function(pdf) {
-            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-                pdf.getPage(pageNum).then(function(page) {
+        async function loadPDF() {
+            try {
+                const pdf = await window.pdfjsLib.getDocument(url).promise;
+                
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
                     const scale = 1.5;
                     const viewport = page.getViewport({ scale: scale });
                     const canvas = document.createElement('canvas');
@@ -47,12 +49,16 @@
                         canvasContext: context,
                         viewport: viewport
                     };
-                    page.render(renderContext).promise.then(function() {
-                        viewer.appendChild(canvas);
-                    });
-                });
+                    
+                    await page.render(renderContext).promise;
+                    viewer.appendChild(canvas);
+                }
+            } catch (error) {
+                console.error('Error loading PDF:', error);
             }
-        });
+        }
+
+        loadPDF();
     });
 </script>
 @endpush 
