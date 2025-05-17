@@ -167,4 +167,48 @@ class UserController extends Controller
             return back()->with('error', __('users.deleted_error'));
         }
     }
+
+    public function loginForm(): View|Application|Factory
+    {
+        return view('client.login');
+    }
+
+    public function login(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ], [
+            'email.required' => __('auth.email_required'),
+            'email.email' => __('auth.email_invalid'),
+            'password.required' => __('auth.password_required'),
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (auth('web')->attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->route('client.dashboard');
+        }
+
+        return back()->with('error', __('auth.invalid_credentials'))->withInput();
+    }
+
+    public function logout(): RedirectResponse
+    {
+        auth('web')->logout();
+
+        return redirect()->route('client.login');
+    }
+
+    public function forgotPassword(): View|Application|Factory
+    {
+        return view('client.forgot-password');
+    }
+
+    public function dashboard(): View|Application|Factory
+    {
+        return view('client.dashboard');
+    }
 }

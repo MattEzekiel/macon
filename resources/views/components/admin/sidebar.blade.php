@@ -24,71 +24,132 @@
                 </label>
             </li>
             <li class="leading-8 text-xl sm:text-2xl text-neutral-content text-center pb-2.5 mb-2.5 border-b-2">{{ env('APP_NAME') }}</li>
-            <li>
-                <ul class="flex-grow m-0 p-0">
-                    <li class="mb-2.5">
-                        <a href="{{ route('admin.dashboard') }}"
-                           class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.dashboard') ? 'bg-base-content text-neutral' : '' }}">
-                            <x-microns-home />
-                            {{ __('general.dashboard') }}
+            @if(auth('admin')->check())
+                <li>
+                    <ul class="flex-grow m-0 p-0">
+                        <li class="mb-2.5">
+                            <a href="{{ route('admin.dashboard') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.dashboard') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-microns-home />
+                                {{ __('general.dashboard') }}
+                            </a>
+                        </li>
+                        <li class="mb-2.5">
+                            <a href="{{ route('admin.clients') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.clients') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-fas-users />
+                                {{ __('general.clients') }}
+                            </a>
+                        </li>
+                        <li class="mb-2.5">
+                            <a href="{{ route('admin.products') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.products') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-polaris-product-icon />
+                                {{ __('general.products') }}
+                            </a>
+                        </li>
+                        <li class="mb-2.5">
+                            <a href="{{ route('admin.files') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.files') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-icons.file-icon class="w-4 h-4" />
+                                {{ __('general.files') }}
+                            </a>
+                        </li>
+                        <li class="mb-2.5">
+                            <a href="{{ route('admin.qrs') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.qrs') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-vaadin-qrcode />
+                                {{ __('general.qrs') }}
+                            </a>
+                        </li>
+                        <li class="mb-2.5">
+                            <a href="{{ route('admin.users') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.users') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-fas-user />
+                                {{ __('general.users') }}
+                            </a>
+                        </li>
+                        <li class="mb-2.5">
+                            <a href="{{ route('admin.contactos') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.contactos') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-uiw-mail />
+                                {{ __('general.contact') }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="mt-auto border-t-2 pt-2.5">
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <div class="w-full sm:w-1/2 flex justify-center">
+                            <x-language-selector />
+                        </div>
+                        <a href="{{ route('admin.logout') }}"
+                           class="btn btn-ghost btn-sm [&>svg]:w-4 w-full sm:w-auto text-center justify-center sm:text-sm">
+                            <x-tabler-logout />
+                            {{ __('general.logout') }}
                         </a>
-                    </li>
-                    <li class="mb-2.5">
-                        <a href="{{ route('admin.clients') }}"
-                           class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.clients') ? 'bg-base-content text-neutral' : '' }}">
-                            <x-fas-users />
-                            {{ __('general.clients') }}
-                        </a>
-                    </li>
-                    <li class="mb-2.5">
-                        <a href="{{ route('admin.products') }}"
-                           class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.products') ? 'bg-base-content text-neutral' : '' }}">
-                            <x-polaris-product-icon />
-                            {{ __('general.products') }}
-                        </a>
-                    </li>
-                    <li class="mb-2.5">
-                        <a href="{{ route('admin.files') }}"
-                           class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.files') ? 'bg-base-content text-neutral' : '' }}">
-                            <x-icons.file-icon class="w-4 h-4" />
-                            {{ __('general.files') }}
-                        </a>
-                    </li>
-                    <li class="mb-2.5">
-                        <a href="{{ route('admin.qrs') }}"
-                           class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.qrs') ? 'bg-base-content text-neutral' : '' }}">
-                            <x-vaadin-qrcode />
-                            {{ __('general.qrs') }}
-                        </a>
-                    </li>
-                    <li class="mb-2.5">
-                        <a href="{{ route('admin.users') }}"
-                           class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.users') ? 'bg-base-content text-neutral' : '' }}">
-                            <x-fas-user />
-                            {{ __('general.users') }}
-                        </a>
-                    </li>
-                    <li class="mb-2.5">
-                        <a href="{{ route('admin.contactos') }}"
-                           class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('admin.contactos') ? 'bg-base-content text-neutral' : '' }}">
-                            <x-uiw-mail />
-                            {{ __('general.contact') }}
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="mt-auto border-t-2 pt-2.5">
-                <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <div class="w-full sm:w-1/2 flex justify-center">
-                        <x-language-selector />
                     </div>
-                    <a href="{{ route('admin.logout') }}"
-                       class="btn btn-ghost btn-sm [&>svg]:w-4 w-full sm:w-auto text-center justify-center sm:text-sm">
-                        <x-tabler-logout />
-                        {{ __('general.logout') }}
-                    </a>
-                </div>
-            </li>
+                </li>
+            @else
+                <li>
+                    <ul class="flex-grow m-0 p-0">
+                        <li class="mb-2.5">
+                            <a href="{{ route('client.dashboard') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('client.dashboard') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-microns-home />
+                                {{ __('general.dashboard') }}
+                            </a>
+                        </li>
+                        <li class="mb-2.5">
+                            <a href="{{ route('client.products') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('client.products') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-polaris-product-icon />
+                                {{ __('general.products') }}
+                            </a>
+                        </li>
+                        <li class="mb-2.5">
+                            <a href="{{ route('client.files') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('client.files') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-icons.file-icon class="w-4 h-4" />
+                                {{ __('general.files') }}
+                            </a>
+                        </li>
+                        <li class="mb-2.5">
+                            <a href="{{ route('client.qrs') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('client.qrs') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-vaadin-qrcode />
+                                {{ __('general.qrs') }}
+                            </a>
+                        </li>
+                        <li class="mb-2.5">
+                            <a href="{{ route('client.users') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('client.users') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-fas-user />
+                                {{ __('general.users') }}
+                            </a>
+                        </li>
+                        <li class="mb-2.5">
+                            <a href="{{ route('client.contactos') }}"
+                               class="[&>svg]:w-4 max-sm:text-sm {{ request()->routeIs('client.contactos') ? 'bg-base-content text-neutral' : '' }}">
+                                <x-uiw-mail />
+                                {{ __('general.contact') }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="mt-auto border-t-2 pt-2.5">
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <div class="w-full sm:w-1/2 flex justify-center">
+                            <x-language-selector />
+                        </div>
+                        <a href="{{ route('client.logout') }}"
+                           class="btn btn-ghost btn-sm [&>svg]:w-4 w-full sm:w-auto text-center justify-center sm:text-sm">
+                            <x-tabler-logout />
+                            {{ __('general.logout') }}
+                        </a>
+                    </div>
+                </li>
+            @endif
         </ul>
     </nav>
 </div>
