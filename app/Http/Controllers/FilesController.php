@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -274,6 +275,7 @@ class FilesController extends Controller
 
     public function getFileContent($id)
     {
+        //        $id_decrypted = Crypt::decrypt($id);
         try {
             $file = Files::findOrFail($id);
 
@@ -289,7 +291,7 @@ class FilesController extends Controller
             }
 
             // Incrementar visitas
-            $this->incrementVisits($id);
+            //            $this->incrementVisits($id_decrypted);
 
             // Retorna la respuesta adecuada según el tipo de disco
             return $disk === 'local'
@@ -303,20 +305,22 @@ class FilesController extends Controller
         }
     }
 
-    public function viewFile($id)
-    {
-        $file = Files::findOrFail($id);
-
-        return view('admin.files.view', compact('file'));
-    }
-
     public function incrementVisits($id): void
     {
-        $file = Files::findOrFail($id);
+        $id_decrypted = Crypt::decrypt($id);
+        $file = Files::findOrFail($id_decrypted);
         $file->increment('visits_count');
     }
 
-    protected function getFileUrl($disk, $file_path)
+    public function viewFile($id): View|Application|Factory
+    {
+        $id_decrypted = Crypt::decrypt($id);
+        $file = Files::findOrFail($id_decrypted);
+
+        return view('files', compact('file'));
+    }
+
+    public function getFileUrl($disk, $file_path): string
     {
         if ($disk === 'public') {
             return asset('/storage/'.$file_path);

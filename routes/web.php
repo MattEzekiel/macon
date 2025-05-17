@@ -14,7 +14,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/search/{payload}', [QRController::class, 'DisplayData'])->name('public_qr');
-Route::get('files/{id}', [FilesController::class, 'getFileContent'])->name('files.get');
+Route::get('files/{id}/file', [FilesController::class, 'getFileContent'])->name('files.get');
 Route::get('files/{id}/view', [FilesController::class, 'viewFile'])->name('files.view');
 Route::match(['get', 'post'], '/files/{id}/increment-visits', [FilesController::class, 'incrementVisits'])->name('files.increment-visits');
 
