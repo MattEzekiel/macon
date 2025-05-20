@@ -15,11 +15,10 @@
                 <div id="pdf-viewer"
                      class="w-full h-[calc(100vh-200px)] flex flex-col items-center justify-start bg-gray-100 overflow-y-auto p-4">
                     <iframe
-                            src="{{ route('files.get', ['id' => $encryptedId]) }}"
+                            src="{{ route('files.get', ['id' => $encryptedId]) }}#toolbar=0"
                             width="100%"
                             height="100%"
                             style="border: none;"
-                            class="pointer-events-none"
                     >
                     </iframe>
                 </div>

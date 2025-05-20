@@ -275,9 +275,10 @@ class FilesController extends Controller
 
     public function getFileContent($id)
     {
-        //        $id_decrypted = Crypt::decrypt($id);
+        // $id_decrypted = Crypt::decrypt($id);
         try {
-            $file = Files::findOrFail($id);
+            $id_decrypted = Crypt::decrypt($id);
+            $file = Files::findOrFail($id_decrypted);
 
             // Usa el sistema de almacenamiento configurado
             $disk = config('filesystems.default');
