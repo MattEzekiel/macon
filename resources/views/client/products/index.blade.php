@@ -9,15 +9,15 @@
     <x-heading1>
         {{ __('general.products') }}
     </x-heading1>
-    <x-button-link href="{{ route('admin.new.product') }}" class="btn-success">
+    <x-button-link href="{{ route('client.new.product') }}" class="btn-success">
         {{ __('general.new_product') }}
     </x-button-link>
-    @include('admin.products.forms.searcher')
+    @include('client.products.forms.searcher')
     <x-table-default>
         <thead class="bg-accent-content">
         <tr>
             <th>#</th>
-            <th>{{ __('products.client') }}</th>
+            {{-- Columna Cliente eliminada --}}
             <th>{{ __('products.name') }}</th>
             <th>{{ __('products.description') }}</th>
             <th>{{ __('products.brand') }}</th>
@@ -31,7 +31,7 @@
         @forelse($products as $product)
             <tr>
                 <td data-label="#">{{ $product->id }}</td>
-                <td data-label="{{ __('products.client') }}">{{ $product->client->legal_name }}</td>
+                {{-- Columna Cliente eliminada --}}
                 <td data-label="{{ __('products.name') }}">{{ $product->name }}</td>
                 <td data-label="{{ __('products.description') }}">{{ $product->description }}</td>
                 <td data-label="{{ __('products.brand') }}">{{ $product->brand }}</td>
@@ -39,7 +39,7 @@
                 <td data-label="{{ __('products.origin') }}">{{ $product->origin }}</td>
                 <td data-label="{{ __('products.files') }}">
                     <span class="tooltip" data-tip="{{ __('files.view_files') }}">
-                        <a href="{{ route('admin.files', ['product' => $product->id]) }}"
+                        <a href="{{ route('client.files', ['product' => $product->id]) }}"
                            class="badge text-xs badge-primary gap-1 cursor-pointer hover:brightness-90">
                             {{ $product->files->count() }}
                             <x-icons.external-link class="h-4 w-4 text-white" />
@@ -49,7 +49,7 @@
                 <td data-label="{{ __('general.actions') }}">
                 <span class="flex flex-col sm:flex-row sm:gap-x-1 items-center gap-y-2.5">
                     <x-button-link
-                            href="{{ route('admin.edit.product', ['id' => $product->id]) }}"
+                            href="{{ route('client.edit.product', ['id' => $product->id]) }}"
                             class="btn-xs btn-warning btn-soft max-sm:w-full"
                     >
                         {{ __('general.edit') }}
@@ -66,7 +66,7 @@
                                 <div class="modal-action mt-2.5">
                                     <div class="w-full">
                                         <form id="{{ 'delete-product-' . $product->id }}"
-                                              action="{{ route('admin.product.delete', ['id' => $product->id]) }}"
+                                              action="{{ route('client.product.delete', ['id' => $product->id]) }}"
                                               method="post"
                                               class="w-full grid grid-cols-1 gap-2.5 delete-button">
                                             <p class="mb-5 mt-3">{!! __('products.type_name_to_delete', ['name' => $product->name]) !!}</p>
@@ -97,7 +97,7 @@
                         </dialog>
                     @else
                         <form
-                                action="{{ route('admin.product.restore', ['id' => $product->id]) }}"
+                                action="{{ route('client.product.restore', ['id' => $product->id]) }}"
                                 method="post"
                                 class="inline"
                         >
@@ -155,3 +155,5 @@
         });
     </script>
 @endpush
+
+</rewritten_file>

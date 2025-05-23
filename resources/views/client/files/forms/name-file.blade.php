@@ -1,12 +1,12 @@
-<form class="w-full lg:w-1/2 mx-auto" action="{{ route('admin.qr.store') }}" method="post">
+<form action="{{ route('client.file.name') }}" method="post">
     @csrf
-    @method('POST')
+    @method('PUT')
     <input type="hidden" name="product" id="product" value="{{ $product->id }}">
-    <input type="hidden" name="client" id="client" value="{{ $product->client->id }}">
-    <div class="flex flex-col lg:flex-row flex-wrap justify-items-center items-center gap-5 mt-5">
+    <div class="flex flex-wrap justify-items-center items-center gap-5 mt-5">
         @foreach($files as $file)
-            <div class="w-full lg:flex-1 border rounded shadow border-gray-700">
-                <object class="aspect-square w-full mb-3.5" data="{{ route('files.get', ['id' => $file->id]) }}"></object>
+            <div class="flex-1 border rounded shadow border-gray-700 min-w-3xs">
+                <object class="aspect-square w-full mb-3.5 max-h-80"
+                        data="{{ route('files.get', ['id' => $file->id]) }}"></object>
                 <x-forms.floating-input
                         type="text"
                         name="file_names[]"
@@ -23,22 +23,18 @@
                         value="{{ $file->original_file_name }}"
                         id="{{ $file->id }}_name"
                 >
+                <input
+                        type="hidden"
+                        name="files_ids[]"
+                        value="{{ $file->id }}"
+                        id="{{ $file->id }}_id"
+                >
             </div>
         @endforeach
     </div>
-    <div class="w-full lg:w-fit mx-auto mt-10">
+    <div class="w-fit mx-auto mt-10">
         <x-forms.submit-button btn_color="btn-success">
-            {{ __('qrs.generate_qr') }}
+            {{ __('files.update_names') }}
         </x-forms.submit-button>
     </div>
-</form>
-@push('scripts')
-    <script>
-        function hideLoader(objectElement) {
-            const loaderElement = objectElement.parentElement.querySelector('.skeleton');
-            if (loaderElement) {
-                loaderElement.remove();
-            }
-        }
-    </script>
-@endpush
+</form> 

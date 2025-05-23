@@ -98,7 +98,7 @@ Route::prefix('client')->group(function () {
     //    Route::post('restore-password', [AdminController::class, 'restorePassword'])->name('client.restore.password');
     //    Route::post('reset-password', [AdminController::class, 'resetPassword'])->name('client.reset.password');
 
-    Route::middleware('auth')->group(function () {
+    Route::middleware(['auth', 'client'])->group(function () {
         Route::get('/', [UserController::class, 'dashboard'])->name('client.dashboard');
         Route::post('change-language', [UserController::class, 'changeLanguage'])->name('client.change.language');
 

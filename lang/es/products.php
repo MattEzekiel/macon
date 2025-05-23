@@ -18,7 +18,9 @@ return [
     'deleted' => 'Producto eliminado',
     'product_name' => 'Nombre del producto',
     'restored_successfully' => 'Producto restaurado correctamente',
+    'restore_permission_error' => 'No tienes permisos para restaurar este producto',
     'restored_error' => 'No se pudo restaurar el producto',
+    'delete_permission_error' => 'No tienes permisos para eliminar este producto',
     'confirm_delete' => '¿Desea eliminar el producto?',
     'type_name_to_delete' => 'Escriba: <span class="text-error">:name</span> para eliminarlo',
     'delete_product' => 'Eliminar producto',
@@ -43,4 +45,8 @@ return [
     'create_new_product' => 'Crear nuevo producto',
     'update_and_finish' => 'Actualizar y terminar',
     'update_and_continue' => 'Actualizar y continuar',
+    'update_client_forbidden' => 'No tienes permisos para actualizar el cliente',
+    'client_selection_required' => 'La selección de cliente es requerida',
+    'client_not_found_error' => 'Cliente no encontrado',
+    'edit_permission_error' => 'No tienes permisos para editar este producto',
 ];

@@ -28,7 +28,7 @@ class Products extends Model
         'updated_at',
     ];
 
-    public static function searcher(array $request = []): array
+    public static function searcher(array $request = [], bool $isClient = false): array
     {
         $productsQuery = Products::select(['name', 'brand', 'model', 'origin']);
 
@@ -39,13 +39,8 @@ class Products extends Model
         }
 
         $products = $productsQuery->get();
-        $clients = Clients::select(['id', 'legal_name'])->get();
 
-        return [
-            'client' => [
-                'type' => 'select',
-                'data' => $clients,
-            ],
+        $fields = [
             'name' => [
                 'type' => 'suggestion',
                 'data' => $products->map(fn ($product) => json_decode(json_encode(['id' => $product->id, 'value' => $product->name]))),
@@ -71,6 +66,16 @@ class Products extends Model
                 ]),
             ],
         ];
+
+        if (! $isClient) {
+            $clients = Clients::select(['id', 'legal_name'])->get();
+            $fields = ['client' => [
+                'type' => 'select',
+                'data' => $clients,
+            ]] + $fields;
+        }
+
+        return $fields;
     }
 
     protected static function boot(): void
