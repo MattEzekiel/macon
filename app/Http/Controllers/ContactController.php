@@ -51,7 +51,7 @@ class ContactController extends Controller
             Contact::create([
                 'email' => $request->email,
                 'subject' => $request->subject,
-                'message' => $request->message
+                'message' => $request->message,
             ]);
 
             return redirect()
