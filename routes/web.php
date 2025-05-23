@@ -142,6 +142,7 @@ Route::prefix('client')->group(function () {
             Route::delete('delete/{id}', [UserController::class, 'UserDelete'])->name('client.user.delete');
         });
 
-        Route::get('contactos', [ContactController::class, 'index'])->name('client.contactos');
+        Route::get('contactos', [ContactController::class, 'client'])->name('client.contactos');
+        Route::post('contact', [ContactController::class, 'store'])->name('client.contact.store');
     });
 });
