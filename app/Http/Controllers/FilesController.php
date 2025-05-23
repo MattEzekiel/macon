@@ -22,7 +22,8 @@ class FilesController extends Controller
 
     public function index(): View|Application|Factory
     {
-        $files = Files::with(['product.client'])
+        $isClient = str_starts_with(request()->route()->getName(), 'client.');
+        $filesQuery = Files::with(['product.client'])
             ->select([
                 'id',
                 'file_name',
@@ -33,25 +34,31 @@ class FilesController extends Controller
                 'created_at',
             ]);
 
-        $files->when(request()->client, function ($query, $id) {
-            $query->whereHas('product.client', function ($query) use ($id) {
-                $query->where('id', $id);
+        if ($isClient && auth()->check()) {
+            $filesQuery->whereHas('product', function ($query) {
+                $query->where('client_id', auth()->user()->client_id);
             });
-        });
+        } else {
+            $filesQuery->when(request()->client, function ($query, $id) {
+                $query->whereHas('product.client', function ($query) use ($id) {
+                    $query->where('id', $id);
+                });
+            });
+        }
 
-        $files->when(request()->product, function ($query, $id) {
+        $filesQuery->when(request()->product, function ($query, $id) {
             $query->where('product_id', $id);
         });
 
-        $files->when(request()->file_name, function ($query, $name) {
+        $filesQuery->when(request()->file_name, function ($query, $name) {
             $query->where('file_name', 'like', '%'.$name.'%');
         });
 
-        $files->when(request()->original_file_name, function ($query, $name) {
+        $filesQuery->when(request()->original_file_name, function ($query, $name) {
             $query->where('original_file_name', 'like', '%'.$name.'%');
         });
 
-        $files->when(request()->deleted, function ($query, $deletion) {
+        $filesQuery->when(request()->deleted, function ($query, $deletion) {
             if ($deletion == '1') {
                 $query->onlyTrashed();
             } elseif ($deletion == '2') {
@@ -59,38 +66,49 @@ class FilesController extends Controller
             }
         });
 
-        $files = $files->orderBy('created_at', 'desc')
+        $files = $filesQuery->orderBy('created_at', 'desc')
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.files.index', compact('files'));
+        $view = $isClient ? 'client.files.index' : 'admin.files.index';
+
+        return view($view, compact('files'));
     }
 
     public function newFiles(int $id): View|Application|Factory
     {
+        $isClient = str_starts_with(request()->route()->getName(), 'client.');
         $product = Products::findOrFail($id);
+        $view = $isClient ? 'client.files.new-file' : 'admin.files.new-file';
 
-        return view('admin.files.new-file', compact('product'));
+        return view($view, compact('product'));
     }
 
     public function editFiles(int $id): View|Application|Factory
     {
+        $isClient = str_starts_with(request()->route()->getName(), 'client.');
         $product = Products::with('files')->findOrFail($id);
         $product->file_edition = true;
 
-        return view('admin.files.edit-file', compact('product'));
+        $view = $isClient ? 'client.files.edit-file' : 'admin.files.edit-file';
+
+        return view($view, compact('product'));
     }
 
     public function nameFiles(int $id): View|Application|Factory
     {
+        $isClient = str_starts_with(request()->route()->getName(), 'client.');
         $product = Products::with('files')->findOrFail($id);
         $files = $product->files()->get();
 
-        return view('admin.files.name-file', compact('product', 'files'));
+        $view = $isClient ? 'client.files.name-file' : 'admin.files.name-file';
+
+        return view($view, compact('product', 'files'));
     }
 
     public function FileStore(Request $request)
     {
+        $isClient = str_starts_with(request()->route()->getName(), 'client.');
         try {
             $validator = Validator::make(
                 $request->all(),
@@ -124,8 +142,10 @@ class FilesController extends Controller
 
             $this->saveFiles($files['files'], $base_path, $product->id);
 
+            $routeName = $isClient ? 'client.new.qr' : 'admin.new.qr';
+
             return redirect()
-                ->route('admin.new.qr', ['id' => $product->id])
+                ->route($routeName, ['id' => $product->id])
                 ->with('success', __('files.upload_success'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
@@ -163,6 +183,7 @@ class FilesController extends Controller
 
     public function FileUpdate(Request $request)
     {
+        $isClient = str_starts_with(request()->route()->getName(), 'client.');
         try {
             $validator = Validator::make(
                 $request->all(),
@@ -197,8 +218,10 @@ class FilesController extends Controller
                 $this->saveFiles($files['files'], $base_path, $product->id);
             }
 
+            $routeName = $isClient ? 'client.name.files' : 'admin.name.files';
+
             return redirect()
-                ->route('admin.name.files', ['id' => $product->id])
+                ->route($routeName, ['id' => $product->id])
                 ->with('success', __('files.upload_success'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
@@ -211,19 +234,17 @@ class FilesController extends Controller
 
     public function FileRename(Request $request): RedirectResponse
     {
+        $isClient = str_starts_with(request()->route()->getName(), 'client.');
         try {
             $validator = Validator::make($request->all(),
                 [
                     'product' => 'required|exists:products,id',
-                    'client' => 'required|exists:clients,id',
                     'file_names.*' => 'required',
                     'files_ids.*' => 'required|exists:files,id',
                 ],
                 [
                     'product.required' => __('files.product_required'),
-                    'client.required' => __('clients.client').' '.__('general.required'),
                     'product.exists' => __('files.product_not_exists'),
-                    'client.exists' => __('clients.client').' '.__('general.invalid'),
                     'file_names.*.required' => __('files.file_name').' '.__('general.required'),
                     'files_ids.*.required' => __('files.files').' '.__('general.required'),
                     'files_ids.*.exists' => __('files.files').' '.__('general.invalid'),
@@ -243,7 +264,9 @@ class FilesController extends Controller
                 $file->save();
             }
 
-            return redirect()->route('admin.products')->with('success', __('files.rename_success'));
+            $routeName = $isClient ? 'client.products' : 'admin.products';
+
+            return redirect()->route($routeName)->with('success', __('files.rename_success'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());

@@ -20,11 +20,18 @@ class QRController extends Controller
 {
     public function index(Request $request): View|Application|Factory
     {
+        $isClient = str_starts_with(request()->route()->getName(), 'client.');
         $data = QRs::with('product', 'client', 'product.files');
 
-        $data->when($request->client, function ($query, $id) {
-            $query->where('client_id', $id);
-        });
+        if ($isClient && auth()->check()) {
+            $data->whereHas('product', function ($query) {
+                $query->where('client_id', auth()->user()->client_id);
+            });
+        } else {
+            $data->when($request->client, function ($query, $id) {
+                $query->where('client_id', $id);
+            });
+        }
 
         $data->when($request->product, function ($query, $name) {
             $query->whereHas('product', function ($q) use ($name) {
@@ -36,24 +43,36 @@ class QRController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.qr.index', compact('qrs'));
+        $view = $isClient ? 'client.qr.index' : 'admin.qr.index';
+
+        return view($view, compact('qrs'));
     }
 
     public function newQR(?int $id = null): View|Application|Factory
     {
+        $isClient = str_starts_with(request()->route()->getName(), 'client.');
         if ($id) {
             $product = Products::with('client', 'files')->findOrFail($id);
+            if ($isClient && auth()->check() && $product->client_id !== auth()->user()->client_id) {
+                abort(403);
+            }
         } else {
-            $product = Products::select('id', 'name')->with('files')->get();
+            $product = Products::select('id', 'name')->with('files');
+            if ($isClient && auth()->check()) {
+                $product->where('client_id', auth()->user()->client_id);
+            }
+            $product = $product->get();
         }
 
         $files = $product->files()->get();
+        $view = $isClient ? 'client.qr.new-qr' : 'admin.qr.new-qr';
 
-        return view('admin.qr.new-qr', compact('product', 'files'));
+        return view($view, compact('product', 'files'));
     }
 
     public function QRStore(Request $request)
     {
+        $isClient = str_starts_with(request()->route()->getName(), 'client.');
         try {
             $validator = Validator::make($request->all(),
                 [
@@ -94,6 +113,10 @@ class QRController extends Controller
             }
 
             $product = Products::with('client')->findOrFail($request->product);
+            if ($isClient && auth()->check() && $product->client_id !== auth()->user()->client_id) {
+                abort(403);
+            }
+
             $client_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', strtolower($product->client->legal_name)));
             $product_name = trim(preg_replace('/[^A-Za-z0-9\-]/', '_', strtolower($product->name)));
 
@@ -125,7 +148,9 @@ class QRController extends Controller
                 'link' => $link,
             ]);
 
-            return redirect()->route('admin.qrs')->with('success', __('qrs.qr_created'));
+            $routeName = $isClient ? 'client.qrs' : 'admin.qrs';
+
+            return redirect()->route($routeName)->with('success', __('qrs.qr_created'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());

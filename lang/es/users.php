@@ -26,4 +26,5 @@ return [
     'user_created' => 'Usuario creado correctamente',
     'user_updated' => 'Usuario actualizado correctamente',
     'user_deleted' => 'Usuario eliminado correctamente',
+    'edit_permission_error' => 'No tienes permisos para editar este usuario',
 ];

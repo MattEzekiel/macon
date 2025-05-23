@@ -37,27 +37,27 @@ class QRs extends Model
 
     public static function searcher(): array
     {
-        $clients = Clients::select(['id', 'legal_name'])->get();
+        $isClient = request() && str_starts_with(request()->route()?->getName() ?? '', 'client.');
         $products = Products::select(['id', 'name'])->get();
 
-        return [
-            'client' => [
-                'type' => 'select',
-                'data' => $clients->map(fn ($client) => json_decode(json_encode(['id' => $client->id, 'value' => $client->legal_name]))),
-            ],
+        $filters = [
             'product' => [
                 'type' => 'suggestion',
                 'data' => $products->map(fn ($product) => json_decode(json_encode(['id' => $product->id, 'value' => $product->name]))),
             ],
-            /*'deleted' => [
-                'type' => 'select',
-                'data' => Collection::make([
-                    ['id' => '0', 'value' => 'No'],
-                    ['id' => '1', 'value' => 'Si'],
-                    ['id' => '2', 'value' => 'Todos'],
-                ]),
-            ],*/
         ];
+
+        if (! $isClient) {
+            $clients = Clients::select(['id', 'legal_name'])->get();
+            $filters = [
+                'client' => [
+                    'type' => 'select',
+                    'data' => $clients->map(fn ($client) => json_decode(json_encode(['id' => $client->id, 'value' => $client->legal_name]))),
+                ],
+            ] + $filters;
+        }
+
+        return $filters;
     }
 
     public function product(): BelongsTo

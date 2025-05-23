@@ -1,8 +1,8 @@
-<form class="w-full lg:w-1/2 mx-auto" action="{{ route('admin.qr.store') }}" method="post">
+<form class="w-full lg:w-1/2 mx-auto" action="{{ route('client.qr.store') }}" method="post">
     @csrf
     @method('POST')
     <input type="hidden" name="product" id="product" value="{{ $product->id }}">
-    <input type="hidden" name="client" id="client" value="{{ $product->client->id }}">
+    <input type="hidden" name="client" id="client" value="{{ auth()->user()->client_id }}">
     <div class="flex flex-col lg:flex-row flex-wrap justify-items-center items-center gap-5 mt-5">
         @foreach($files as $file)
             <div class="w-full lg:flex-1 border rounded shadow border-gray-700">
