@@ -1,3 +1,4 @@
+@php use Illuminate\Support\Facades\Crypt; @endphp
 @extends('layouts.general')
 @section('title', isset($product) ? $product->name : __('general.files'))
 @section('general')
@@ -13,18 +14,18 @@
             @if(count($files) > 0)
                 <div class="flex flex-col items-center space-y-6">
                     @foreach($files as $file)
-                        <a ping="{{ route('files.increment-visits', ['id' => $file->id]) }}"
-                           href="{{ route('files.view', ['id' => $file->id]) }}"
+                        <a ping="{{ route('files.increment-visits', ['id' => Crypt::encrypt($file->id)]) }}"
+                           href="{{ route('files.view', ['id' => Crypt::encrypt($file->id)]) }}"
                            target="_blank"
                            class="w-3/4 p-4 bg-gray-200 shadow-lg rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-gray-50 group">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
-                                    <x-icons.file-icon class="h-6 w-6 text-gray-500 group-hover:text-gray-600" />     
+                                    <x-icons.file-icon class="h-6 w-6 text-gray-500 group-hover:text-gray-600" />
                                     <span class="text-lg font-medium text-gray-700 group-hover:text-gray-800">
                                         {{ $file->file_name ?: __('files.pdf_file') }}
                                     </span>
                                 </div>
-                                    <x-icons.external-link class="h-5 w-5 text-gray-400 group-hover:text-gray-600"/>
+                                <x-icons.external-link class="h-5 w-5 text-gray-400 group-hover:text-gray-600" />
                             </div>
                         </a>
                     @endforeach
