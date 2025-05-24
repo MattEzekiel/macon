@@ -65,4 +65,6 @@ return [
     'form_error' => 'Form error',
     'success' => 'Success',
     'error' => 'Error',
+    'show' => 'Show',
+    'created_at' => 'Created at',
 ];

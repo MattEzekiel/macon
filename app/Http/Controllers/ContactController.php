@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +16,16 @@ class ContactController extends Controller
 {
     public function index(): View|Application|Factory
     {
-        return view('admin.contacto.index');
+        $contacts = Contact::select('id', 'email', 'subject')->paginate(20);
+
+        return view('admin.contacto.index', compact('contacts'));
+    }
+
+    public function show(int $id): View|Application|Factory
+    {
+        $contact = Contact::findOrFail($id);
+
+        return view('admin.contacto.show', compact('contact'));
     }
 
     public function client(): View|Application|Factory
@@ -23,7 +33,7 @@ class ContactController extends Controller
         return view('client.contacto.index');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validator = Validator::make(
             $request->all(),

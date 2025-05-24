@@ -85,7 +85,8 @@ Route::prefix('admin')->group(function () {
             Route::delete('delete/{id}', [UserController::class, 'UserDelete'])->name('admin.user.delete');
         });
 
-        Route::get('contactos', [ContactController::class, 'index'])->name('admin.contactos');
+        Route::get('contacts', [ContactController::class, 'index'])->name('admin.contactos');
+        Route::get('contact/{id}', [ContactController::class, 'show'])->name('admin.contact.show');
     });
 });
 
@@ -142,7 +143,7 @@ Route::prefix('client')->group(function () {
             Route::delete('delete/{id}', [UserController::class, 'UserDelete'])->name('client.user.delete');
         });
 
-        Route::get('contactos', [ContactController::class, 'client'])->name('client.contactos');
+        Route::get('contacts', [ContactController::class, 'client'])->name('client.contactos');
         Route::post('contact', [ContactController::class, 'store'])->name('client.contact.store');
     });
 });

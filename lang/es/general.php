@@ -65,4 +65,6 @@ return [
     'form_error' => 'Error completando el formulario',
     'success' => 'Éxito',
     'error' => 'Error',
+    'show' => 'Mostrar',
+    'created_at' => 'Creado el',
 ];
