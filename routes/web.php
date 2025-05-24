@@ -76,7 +76,7 @@ Route::prefix('admin')->group(function () {
         });
 
         Route::prefix('users')->group(function () {
-            Route::get('users', [UserController::class, 'index'])->name('admin.users');
+            Route::get('/', [UserController::class, 'index'])->name('admin.users');
             Route::get('new-user', [UserController::class, 'newUser'])->name('admin.new.user');
             Route::get('edit-user/{id}', [UserController::class, 'editUser'])->name('admin.edit.user');
 
@@ -85,6 +85,65 @@ Route::prefix('admin')->group(function () {
             Route::delete('delete/{id}', [UserController::class, 'UserDelete'])->name('admin.user.delete');
         });
 
-        Route::get('contactos', [ContactController::class, 'index'])->name('admin.contactos');
+        Route::get('contacts', [ContactController::class, 'index'])->name('admin.contactos');
+        Route::get('contact/{id}', [ContactController::class, 'show'])->name('admin.contact.show');
+    });
+});
+
+Route::prefix('client')->group(function () {
+    Route::get('login', [UserController::class, 'loginForm'])->name('client.login.form');
+    Route::get('logout', [UserController::class, 'logout'])->name('client.logout');
+    Route::get('forgot-password', [UserController::class, 'forgotPassword'])->name('client.forgot-password.form');
+    //    Route::get('restore-password/{token}', [AdminController::class, 'restorePasswordForm'])->name('client.restore.password.token');
+    Route::post('login', [UserController::class, 'login'])->name('client.login');
+    //    Route::post('restore-password', [AdminController::class, 'restorePassword'])->name('client.restore.password');
+    //    Route::post('reset-password', [AdminController::class, 'resetPassword'])->name('client.reset.password');
+
+    Route::middleware(['auth', 'client'])->group(function () {
+        Route::get('/', [UserController::class, 'dashboard'])->name('client.dashboard');
+        Route::post('change-language', [UserController::class, 'changeLanguage'])->name('client.change.language');
+
+        Route::prefix('products')->group(function () {
+            Route::get('/', [ProductsController::class, 'index'])->name('client.products');
+            Route::get('new-product', [ProductsController::class, 'newProduct'])->name('client.new.product');
+            Route::get('edit-product/{id}', [ProductsController::class, 'editProduct'])->name('client.edit.product');
+
+            Route::post('store', [ProductsController::class, 'ProductStore'])->name('client.product.store');
+            Route::put('update/{id}', [ProductsController::class, 'ProductUpdate'])->name('client.product.update');
+            Route::delete('delete/{id}', [ProductsController::class, 'ProductDelete'])->name('client.product.delete');
+            Route::patch('restore/{id}', [ProductsController::class, 'ProductRestore'])->name('client.product.restore');
+        });
+
+        Route::prefix('files')->group(function () {
+            Route::get('/', [FilesController::class, 'index'])->name('client.files');
+            Route::get('new-file/{id}', [FilesController::class, 'newFiles'])->name('client.new.files');
+            Route::get('edit-file/{id}', [FilesController::class, 'editFiles'])->name('client.edit.files');
+            Route::get('name-file/{id}', [FilesController::class, 'nameFiles'])->name('client.name.files');
+
+            Route::post('store', [FilesController::class, 'FileStore'])->name('client.file.store');
+            Route::put('update', [FilesController::class, 'FileUpdate'])->name('client.file.update');
+            Route::put('rename', [FilesController::class, 'FileRename'])->name('client.file.name');
+            Route::delete('delete/{id}', [FilesController::class, 'FileDelete'])->name('client.file.delete');
+        });
+
+        Route::prefix('qr')->group(function () {
+            Route::get('/', [QRController::class, 'index'])->name('client.qrs');
+            Route::get('new-qr/{id?}', [QRController::class, 'newQR'])->name('client.new.qr');
+
+            Route::post('store', [QRController::class, 'QRStore'])->name('client.qr.store');
+        });
+
+        Route::prefix('users')->group(function () {
+            Route::get('users', [UserController::class, 'index'])->name('client.users');
+            Route::get('new-user', [UserController::class, 'newUser'])->name('client.new.user');
+            Route::get('edit-user/{id}', [UserController::class, 'editUser'])->name('client.edit.user');
+
+            Route::post('store', [UserController::class, 'UserStore'])->name('client.user.store');
+            Route::put('update/{id}', [UserController::class, 'UserUpdate'])->name('client.user.update');
+            Route::delete('delete/{id}', [UserController::class, 'UserDelete'])->name('client.user.delete');
+        });
+
+        Route::get('contacts', [ContactController::class, 'client'])->name('client.contactos');
+        Route::post('contact', [ContactController::class, 'store'])->name('client.contact.store');
     });
 });

@@ -3,7 +3,6 @@
     'id',
     'label',
     'placeholder' => '',
-    'type' => 'text',
     'error' => null,
     'value' => '',
     'required' => false,
@@ -14,7 +13,6 @@
             for="{{ $id }}" class="floating-label">
         <span>{{ $label }}</span>
         <textarea
-                type="{{ $type }}"
                 name="{{ $name }}"
                 id="{{ $id }}"
                 placeholder="{{ $placeholder }}"

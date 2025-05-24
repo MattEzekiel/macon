@@ -141,7 +141,6 @@
                 const input = form.querySelector('input[type="text"]');
                 const client_value = form.querySelector('.text-error').textContent;
                 const button = form.parentElement.querySelector('button[type="submit"]');
-
                 input.addEventListener('input', e => {
                     const value = e.target.value;
                     if (value === client_value) {
