@@ -18,7 +18,9 @@ return [
     'deleted' => 'Product deleted',
     'product_name' => 'Product name',
     'restored_successfully' => 'Product restored successfully',
+    'restore_permission_error' => 'You are not allowed to restore this product',
     'restored_error' => 'There was an error while restoring the product',
+    'delete_permission_error' => 'You are not allowed to delete this product',
     'confirm_delete' => 'Do you want to delete the product?',
     'type_name_to_delete' => 'Type: <span class="text-error">:name</span> to delete',
     'delete_product' => 'Delete product',
@@ -43,4 +45,8 @@ return [
     'create_new_product' => 'Create new product',
     'update_and_finish' => 'Update and finish',
     'update_and_continue' => 'Update and continue',
+    'update_client_forbidden' => 'You are not allowed to update the client',
+    'client_selection_required' => 'Client selection is required',
+    'client_not_found_error' => 'Client not found',
+    'edit_permission_error' => 'You are not allowed to edit this product',
 ];

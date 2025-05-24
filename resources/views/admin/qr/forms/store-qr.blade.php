@@ -6,7 +6,7 @@
     <div class="flex flex-col lg:flex-row flex-wrap justify-items-center items-center gap-5 mt-5">
         @foreach($files as $file)
             <div class="w-full lg:flex-1 border rounded shadow border-gray-700">
-                <object class="aspect-square w-full mb-3.5" data="{{ asset($file->file_url) }}"></object>
+                <object class="aspect-square w-full mb-3.5" data="{{ route('files.get', ['id' => $file->id]) }}"></object>
                 <x-forms.floating-input
                         type="text"
                         name="file_names[]"

@@ -14,4 +14,6 @@ return [
     'top_clients_users' => 'Top Clients with Most Users',
     'users' => 'user(s)',
     'no_users_assigned' => 'No users assigned to clients',
+    'client_users' => 'Client Users',
+    'no_users' => 'No users registered',
 ];
