@@ -16,7 +16,7 @@
                      class="w-full h-[calc(100vh-200px)] flex flex-col items-center justify-start bg-gray-100 overflow-y-auto p-4 relative">
                     <!-- Loader -->
                     <div id="pdf-loader" class="absolute inset-0 flex items-center justify-center bg-base-200 bg-opacity-90 z-10">
-                        <x-loader size="lg" />
+                        <x-skeleton class="h-full w-full" />
                     </div>
                     <iframe
                             id="pdf-iframe"
