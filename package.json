@@ -7,14 +7,14 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.7",
+    "@tailwindcss/vite": "^4.1.8",
     "axios": "^1.9.0",
     "concurrently": "^9.1.2",
-    "daisyui": "^5.0.37",
+    "daisyui": "^5.0.43",
     "husky": "^9.1.7",
     "laravel-vite-plugin": "^1.2.0",
     "prettier": "^3.5.3",
-    "tailwindcss": "^4.1.7",
+    "tailwindcss": "^4.1.8",
     "vite": "^6.3.5"
   },
   "dependencies": {
