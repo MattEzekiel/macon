@@ -14,7 +14,7 @@
 
     <!-- Loader -->
     <span class="btn-loader absolute inset-0 hidden items-center justify-center">
-        <span class="loading loading-spinner loading-md"></span>
+        <x-loader size="md" />
     </span>
 </button>
 

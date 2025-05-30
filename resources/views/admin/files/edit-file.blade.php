@@ -29,7 +29,7 @@
             @forelse($product->files as $file)
                 <div class="w-80 border rounded shadow border-gray-700 p-4 transition-all duration-300 hover:shadow-xl group">
                     <div class="relative">
-                        <div class="skeleton h-80 w-full file-loader" aria-label="loading..."></div>
+                        <x-skeleton class="h-80 w-full file-loader" />
                         <object
                                 class="aspect-square w-full mb-3.5 max-w-[250px] mx-auto"
                                 data="{{ route('files.get', ['id' => $file->id]) }}"
