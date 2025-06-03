@@ -26,7 +26,7 @@
                     label="{{ __('users.'.$input) }}"
                     placeholder="{{ __('users.'.$input) }}"
                     error="{{ $errors->has($input) ? $errors->first($input) : null }}"
-                    value="{{ old($input, isset($user) ? $user->{$input} : '') }}"
+                    value="{{ old($input, isset($user) && !in_array($input, ['password', 'confirm_password']) ? $user->{$input} : '') }}"
                     required={{ true }}
             />
         @endif
