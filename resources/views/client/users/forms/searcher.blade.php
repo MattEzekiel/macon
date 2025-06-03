@@ -53,7 +53,7 @@
                                     <x-forms.floating-select
                                             name="{{ $key }}"
                                             id="{{ $key }}"
-                                            label="{{ __('files.deleted') }}"
+                                            label="{{ __('users.deleted') }}"
                                             error="{{ $errors->has($key) ? $errors->first($key) : null }}"
                                             value="{{ request()->get($key) }}"
                                             :required="false"
@@ -105,7 +105,7 @@
                             <x-forms.floating-select
                                     name="{{ $key }}"
                                     id="{{ $key }}"
-                                    label="{{ __('files.deleted') }}"
+                                    label="{{ __('users.deleted') }}"
                                     error="{{ $errors->has($key) ? $errors->first($key) : null }}"
                                     value="{{ request()->get($key) }}"
                                     :required="false"
