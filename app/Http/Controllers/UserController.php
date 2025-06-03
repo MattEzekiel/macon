@@ -111,7 +111,7 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return back()
-                ->with('error', __('products.created_error'))
+                ->with('error', __('users.created_error'))
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -162,7 +162,7 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return back()
-                ->with('error', __('products.created_error'))
+                ->with('error', __('users.updated_error'))
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -183,13 +183,13 @@ class UserController extends Controller
 
             $route = $isClient ? 'client.users' : 'admin.users';
 
-            return redirect()->route($route)->with('success', __('users.created_successfully'));
+            return redirect()->route($route)->with('success', __('users.updated_successfully'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
             }
 
-            return back()->with('error', __('users.created_error'))->withInput();
+            return back()->with('error', __('users.updated_error'))->withInput();
         }
     }
 

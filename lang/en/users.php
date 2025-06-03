@@ -11,7 +11,9 @@ return [
     'no_client' => 'No client',
     'complete_the_fields' => 'Complete the fields',
     'created_error' => 'There was an error while creating the user',
+    'updated_error' => 'There was an error while updating the user',
     'created_successfully' => 'User created successfully',
+    'updated_successfully' => 'User updated successfully',
     'password_min' => 'The password must be at least 8 characters',
     'deleted_successfully' => 'User deleted successfully',
     'deleted_error' => 'There was an error while deleting the user',
@@ -27,4 +29,5 @@ return [
     'user_updated' => 'User updated successfully',
     'user_deleted' => 'User deleted successfully',
     'edit_permission_error' => 'You are not allowed to edit this user',
+    'deleted' => 'User deleted',
 ];
