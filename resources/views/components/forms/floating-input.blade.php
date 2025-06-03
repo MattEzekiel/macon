@@ -24,7 +24,7 @@
                 @disabled($disabled)
         />
     </label>
-    <p class="validator-hint {{ $error ? 'validator-hint-error bg-error text-error-content p-1.5 rounded' : 'hidden' }}">
+    <p class="validator-hint {{ $error ? 'validator-hint-error bg-error text-error-content p-1.5 rounded visible' : 'hidden' }}">
         {{ $error }}
     </p>
 </div>

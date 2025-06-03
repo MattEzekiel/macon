@@ -151,7 +151,9 @@ class UserController extends Controller
         $messages = [
             'name.required' => __('users.name').' es requerido',
             'email.required' => __('users.email').' es requerido',
+            'password.required' => __('users.password').' es requerido',
             'password.min' => __('users.password_min').' es requerido',
+            'confirm_password.required' => __('users.confirm_password').' es requerido',
             'confirm_password.same' => __('users.confirm_password').' y '.__('users.password').' no coincide',
         ];
         if (! $isClient) {
