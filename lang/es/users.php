@@ -11,7 +11,9 @@ return [
     'no_client' => 'No hay cliente',
     'complete_the_fields' => 'Complete los campos',
     'created_error' => 'Hubo un error al crear el usuario',
+    'updated_error' => 'Hubo un error al actualizar el usuario',
     'created_successfully' => 'Usuario creado correctamente',
+    'updated_successfully' => 'Usuario actualizado correctamente',
     'password_min' => 'La contraseña debe tener al menos 8 caracteres',
     'deleted_successfully' => 'Usuario eliminado correctamente',
     'deleted_error' => 'Hubo un error al eliminar el usuario',
@@ -27,4 +29,5 @@ return [
     'user_updated' => 'Usuario actualizado correctamente',
     'user_deleted' => 'Usuario eliminado correctamente',
     'edit_permission_error' => 'No tienes permisos para editar este usuario',
+    'deleted' => 'Usuario eliminado',
 ];
