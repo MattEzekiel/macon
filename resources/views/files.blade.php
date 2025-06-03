@@ -13,12 +13,18 @@
             @endphp
             <div class="bg-white rounded-xl shadow-lg overflow-hidden">
                 <div id="pdf-viewer"
-                     class="w-full h-[calc(100vh-200px)] flex flex-col items-center justify-start bg-gray-100 overflow-y-auto p-4">
-                    <iframe
-                            src="{{ route('files.get', ['id' => $encryptedId]) }}#toolbar=0"
-                            width="100%"
-                            height="100%"
-                            style="border: none;"
+                    class="w-full h-[calc(100vh-200px)] flex flex-col items-center justify-start bg-gray-100 overflow-y-auto p-4 relative">
+                        <!-- Loader -->
+                        <div id="pdf-loader" class="absolute inset-0 flex items-center justify-center bg-base-200 bg-opacity-90 z-10">
+                            <x-skeleton class="h-full w-full" />
+                        </div>
+                        <iframe
+                                id="pdf-iframe"
+                                src="{{ route('files.get', ['id' => $encryptedId]) }}#toolbar=0"
+                                width="100%"
+                                height="100%"
+                                style="border: none;"
+                                onload="document.getElementById('pdf-loader').style.display = 'none';"
                     >
                     </iframe>
                 </div>
