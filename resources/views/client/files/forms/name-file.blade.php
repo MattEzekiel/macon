@@ -5,8 +5,19 @@
     <div class="flex flex-wrap justify-items-center items-center gap-5 mt-5">
         @foreach($files as $file)
             <div class="flex-1 border rounded shadow border-gray-700 min-w-3xs">
-                <object class="aspect-square w-full mb-3.5 max-h-80"
-                        data="{{ route('files.get', ['id' => $file->id]) }}"></object>
+                <div class="relative w-full aspect-square max-h-80">
+                    <x-skeleton class="absolute inset-0 h-full w-full" />
+                    @php
+                        $encryptedId = Crypt::encrypt($file->id);
+                    @endphp
+                    <iframe
+                        class="absolute inset-0 w-full h-full mb-3.5 hidden"
+                        src="{{ route('files.get', ['id' => $encryptedId]) }}#toolbar=0"
+                        onload="this.classList.remove('hidden'); this.previousElementSibling.classList.add('hidden');"
+                        id="file-iframe-{{$file->id}}"
+                        frameborder="0"
+                    ></iframe>
+                </div>
                 <x-forms.floating-input
                         type="text"
                         name="file_names[]"
