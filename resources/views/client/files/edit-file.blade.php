@@ -28,14 +28,18 @@
         <div class="mt-5 flex flex-wrap items-center justify-center gap-10">
             @forelse($product->files as $file)
                 <div class="w-80 border rounded shadow border-gray-700 p-4 transition-all duration-300 hover:shadow-xl group">
-                    <div class="relative">
-                        <x-skeleton class="h-80 w-full file-loader" />
-                        <object
-                                class="aspect-square w-full mb-3.5 max-w-[250px] mx-auto"
-                                data="{{ route('files.get', ['id' => $file->id]) }}"
-                                onload="hideLoader(this)"
-                                id="file-object-{{$file->id}}"
-                        ></object>
+                    <div class="relative w-full h-80">
+                        <x-skeleton class="absolute inset-0 h-full w-full file-loader" />
+                         @php
+                            $encryptedId = Crypt::encrypt($file->id);
+                        @endphp
+                        <iframe
+                            class="absolute inset-0 w-full h-full mb-3.5 max-w-[250px] mx-auto hidden"
+                            src="{{ route('files.get', ['id' => $encryptedId]) }}#toolbar=0"
+                            onload="this.classList.remove('hidden'); this.previousElementSibling.classList.add('hidden');"
+                            id="file-iframe-{{$file->id}}"
+                            frameborder="0"
+                        ></iframe>
                     </div>
                     <div class="space-y-2">
                         <div class="flex items-center space-x-2">
@@ -134,11 +138,6 @@
         });
     </script>
     <script>
-        function hideLoader(objectElement) {
-            const loaderElement = objectElement.parentElement.querySelector('.skeleton');
-            if (loaderElement) {
-                loaderElement.remove();
-            }
-        }
+        // La función hideLoader ya no es necesaria para los iframes
     </script>
 @endpush 
