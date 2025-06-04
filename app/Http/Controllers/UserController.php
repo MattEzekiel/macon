@@ -198,10 +198,16 @@ class UserController extends Controller
     public function UserDelete(int $id): RedirectResponse
     {
         try {
+            $isClient = str_starts_with(request()->route()->getName(), 'client.');
             $user = User::findOrFail($id);
+
+            if ($isClient && (! auth()->check() || $user->client_id !== auth()->user()->client_id)) {
+                abort(403, __('users.edit_permission_error'));
+            }
+
             $user->delete();
 
-            return redirect()->route('admin.users')->with('success', __('users.deleted_successfully'));
+            return redirect()->back()->with('success', __('users.deleted_successfully'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
