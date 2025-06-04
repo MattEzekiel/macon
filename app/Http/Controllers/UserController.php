@@ -207,9 +207,7 @@ class UserController extends Controller
 
             $user->delete();
 
-            $route = $isClient ? 'client.users' : 'admin.users';
-
-            return redirect()->route($route)->with('success', __('users.deleted_successfully'));
+            return redirect()->back()->with('success', __('users.deleted_successfully'));
         } catch (Exception $exception) {
             if (env('APP_ENV') === 'local') {
                 Log::error($exception->getMessage());
